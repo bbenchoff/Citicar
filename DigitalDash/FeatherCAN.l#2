@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE eagle SYSTEM "eagle.dtd">
+<eagle version="9.6.2">
+<drawing>
+<settings>
+<setting alwaysvectorfont="no"/>
+<setting verticaltext="up"/>
+</settings>
+<grid distance="50" unitdist="mil" unit="mm" style="lines" multiple="1" display="no" altdistance="5" altunitdist="mil" altunit="mil"/>
+<layers>
+<layer number="1" name="Top" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="2" name="Route2" color="16" fill="1" visible="no" active="yes"/>
+<layer number="3" name="Route3" color="17" fill="1" visible="no" active="yes"/>
+<layer number="4" name="Route4" color="18" fill="1" visible="no" active="yes"/>
+<layer number="5" name="Route5" color="19" fill="1" visible="no" active="yes"/>
+<layer number="6" name="Route6" color="25" fill="1" visible="no" active="yes"/>
+<layer number="7" name="Route7" color="26" fill="1" visible="no" active="yes"/>
+<layer number="8" name="Route8" color="27" fill="1" visible="no" active="yes"/>
+<layer number="9" name="Route9" color="28" fill="1" visible="no" active="yes"/>
+<layer number="10" name="Route10" color="29" fill="1" visible="no" active="yes"/>
+<layer number="11" name="Route11" color="30" fill="1" visible="no" active="yes"/>
+<layer number="12" name="Route12" color="20" fill="1" visible="no" active="yes"/>
+<layer number="13" name="Route13" color="21" fill="1" visible="no" active="yes"/>
+<layer number="14" name="Route14" color="22" fill="1" visible="no" active="yes"/>
+<layer number="15" name="Route15" color="23" fill="1" visible="no" active="yes"/>
+<layer number="16" name="Bottom" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="17" name="Pads" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="18" name="Vias" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="19" name="Unrouted" color="6" fill="1" visible="yes" active="yes"/>
+<layer number="20" name="Dimension" color="24" fill="1" visible="yes" active="yes"/>
+<layer number="21" name="tPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="27" name="tValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="28" name="bValues" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="29" name="tStop" color="7" fill="3" visible="no" active="yes"/>
+<layer number="30" name="bStop" color="7" fill="6" visible="no" active="yes"/>
+<layer number="31" name="tCream" color="7" fill="4" visible="no" active="yes"/>
+<layer number="32" name="bCream" color="7" fill="5" visible="no" active="yes"/>
+<layer number="33" name="tFinish" color="6" fill="3" visible="no" active="yes"/>
+<layer number="34" name="bFinish" color="6" fill="6" visible="no" active="yes"/>
+<layer number="35" name="tGlue" color="7" fill="4" visible="no" active="yes"/>
+<layer number="36" name="bGlue" color="7" fill="5" visible="no" active="yes"/>
+<layer number="37" name="tTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="38" name="bTest" color="7" fill="1" visible="no" active="yes"/>
+<layer number="39" name="tKeepout" color="4" fill="11" visible="yes" active="yes"/>
+<layer number="40" name="bKeepout" color="1" fill="11" visible="yes" active="yes"/>
+<layer number="41" name="tRestrict" color="4" fill="10" visible="yes" active="yes"/>
+<layer number="42" name="bRestrict" color="1" fill="10" visible="yes" active="yes"/>
+<layer number="43" name="vRestrict" color="2" fill="10" visible="yes" active="yes"/>
+<layer number="44" name="Drills" color="7" fill="1" visible="no" active="yes"/>
+<layer number="45" name="Holes" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="46" name="Milling" color="3" fill="1" visible="no" active="yes"/>
+<layer number="47" name="Measures" color="7" fill="1" visible="no" active="yes"/>
+<layer number="48" name="Document" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="49" name="Reference" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="51" name="tDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="52" name="bDocu" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="88" name="SimResults" color="9" fill="1" visible="yes" active="yes"/>
+<layer number="89" name="SimProbes" color="9" fill="1" visible="yes" active="yes"/>
+<layer number="90" name="Modules" color="5" fill="1" visible="yes" active="yes"/>
+<layer number="91" name="Nets" color="2" fill="1" visible="yes" active="yes"/>
+<layer number="92" name="Busses" color="1" fill="1" visible="yes" active="yes"/>
+<layer number="93" name="Pins" color="2" fill="1" visible="no" active="yes"/>
+<layer number="94" name="Symbols" color="4" fill="1" visible="yes" active="yes"/>
+<layer number="95" name="Names" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="96" name="Values" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="97" name="Info" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="98" name="Guide" color="6" fill="1" visible="yes" active="yes"/>
+</layers>
+<library>
+<packages>
+<package name="FEATHERCAN">
+<pad name="BAT" x="0" y="10.16" drill="1"/>
+<pad name="EN" x="2.54" y="10.16" drill="1"/>
+<pad name="USB" x="5.08" y="10.16" drill="1"/>
+<pad name="13" x="7.62" y="10.16" drill="1"/>
+<pad name="12" x="10.16" y="10.16" drill="1"/>
+<pad name="11" x="12.7" y="10.16" drill="1"/>
+<pad name="10" x="15.24" y="10.16" drill="1"/>
+<pad name="9" x="17.78" y="10.16" drill="1"/>
+<pad name="6" x="20.32" y="10.16" drill="1"/>
+<pad name="5" x="22.86" y="10.16" drill="1"/>
+<pad name="SCL" x="25.4" y="10.16" drill="1"/>
+<pad name="SDA" x="27.94" y="10.16" drill="1"/>
+<pad name="D4" x="27.94" y="-10.16" drill="1"/>
+<pad name="TX" x="25.4" y="-10.16" drill="1"/>
+<pad name="RX" x="22.86" y="-10.16" drill="1"/>
+<pad name="MISO" x="20.32" y="-10.16" drill="1"/>
+<pad name="MOSI" x="17.78" y="-10.16" drill="1"/>
+<pad name="SCK" x="15.24" y="-10.16" drill="1"/>
+<pad name="A5" x="12.7" y="-10.16" drill="1"/>
+<pad name="A4" x="10.16" y="-10.16" drill="1"/>
+<pad name="A3" x="7.62" y="-10.16" drill="1"/>
+<pad name="A2" x="5.08" y="-10.16" drill="1"/>
+<pad name="A1" x="2.54" y="-10.16" drill="1"/>
+<pad name="A0" x="0" y="-10.16" drill="1"/>
+<pad name="GND2" x="-2.54" y="-10.16" drill="1"/>
+<pad name="ARF" x="-5.08" y="-10.16" drill="1"/>
+<pad name="3V" x="-7.62" y="-10.16" drill="1"/>
+<pad name="RST" x="-10.16" y="-10.16" drill="1"/>
+<wire x1="-13.97" y1="-11.43" x2="31.75" y2="-11.43" width="0" layer="21"/>
+<wire x1="31.75" y1="-11.43" x2="34.29" y2="-8.89" width="0" layer="21" curve="90"/>
+<wire x1="34.29" y1="-8.89" x2="34.29" y2="8.89" width="0" layer="21"/>
+<wire x1="34.29" y1="8.89" x2="31.75" y2="11.43" width="0" layer="21" curve="90"/>
+<wire x1="31.75" y1="11.43" x2="-13.97" y2="11.43" width="0" layer="21"/>
+<wire x1="-13.97" y1="11.43" x2="-16.51" y2="8.89" width="0" layer="21" curve="90"/>
+<wire x1="-16.51" y1="8.89" x2="-16.51" y2="-8.89" width="0" layer="21"/>
+<wire x1="-16.51" y1="-8.89" x2="-13.97" y2="-11.43" width="0" layer="21" curve="90"/>
+<text x="5.08" y="7.747" size="1.016" layer="21" font="vector" ratio="12" rot="R90" align="center">USB</text>
+<text x="-10.16" y="-7.874" size="1.016" layer="21" font="vector" ratio="12" rot="R270" align="center">RST</text>
+<text x="-5.207" y="-8.001" size="1.016" layer="21" font="vector" ratio="12" rot="R270" align="center">ARf</text>
+<text x="-7.62" y="-8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">3V</text>
+<text x="12.7" y="-8.001" size="1.016" layer="21" font="vector" ratio="12" rot="R270" align="center">A5</text>
+<text x="10.16" y="-8.001" size="1.016" layer="21" font="vector" ratio="12" rot="R270" align="center">A4</text>
+<text x="7.62" y="-8.382" size="1.016" layer="21" font="vector" ratio="12" align="center">A3</text>
+<text x="5.08" y="-8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">A2</text>
+<text x="2.794" y="-8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">A1</text>
+<text x="0" y="-8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">A0</text>
+<text x="7.62" y="8.382" size="1.016" layer="21" font="vector" ratio="12" align="center">13</text>
+<text x="22.86" y="8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">5</text>
+<text x="12.7" y="8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">11</text>
+<text x="15.24" y="8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">10</text>
+<text x="17.78" y="8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">9</text>
+<text x="15.367" y="-7.493" size="1.016" layer="21" font="vector" ratio="12" rot="R270" align="center">SCK</text>
+<text x="17.7165" y="-7.0485" size="1.016" layer="21" font="vector" ratio="12" rot="R90" align="center">MOSI</text>
+<text x="20.32" y="-7.112" size="1.016" layer="21" font="vector" ratio="12" rot="R90" align="center">MISO</text>
+<text x="25.527" y="8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">SCL</text>
+<text x="28.575" y="8.382" size="1.016" layer="21" font="vector" ratio="12" align="center">SDA</text>
+<text x="22.86" y="-8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">RX</text>
+<text x="25.4" y="-8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">TX</text>
+<text x="0.127" y="7.874" size="1.016" layer="21" font="vector" ratio="12" rot="R270" align="center">BAT</text>
+<text x="10.16" y="8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">12</text>
+<text x="20.32" y="8.382" size="1.016" layer="21" font="vector" ratio="12" align="center">6</text>
+<text x="-2.54" y="-7.747" size="1.016" layer="21" font="vector" ratio="12" rot="R90" align="center">GND</text>
+<text x="2.54" y="8.382" size="1.016" layer="21" font="vector" ratio="12" rot="R180" align="center">En</text>
+<text x="27.94" y="-8.382" size="1.016" layer="21" font="vector" ratio="12" align="center">D4</text>
+<text x="28.3845" y="-0.0635" size="1.27" layer="21" font="vector" ratio="14" rot="R90" align="center">CANBUS</text>
+<text x="28.3845" y="-0.0635" size="1.27" layer="21" font="vector" ratio="14" rot="R90" align="center">CANBUS</text>
+<text x="28.3845" y="-0.0635" size="1.27" layer="21" font="vector" ratio="14" rot="R90" align="center">CANBUS</text>
+<pad name="CAN_L" x="30.607" y="3.556" drill="1"/>
+<pad name="GND" x="30.607" y="0" drill="1"/>
+<pad name="CAN_H" x="30.607" y="-3.556" drill="1"/>
+<text x="33.02" y="-3.556" size="1.778" layer="21" rot="R90" align="center">H</text>
+<text x="32.893" y="3.683" size="1.778" layer="21" rot="R90" align="center">L</text>
+<text x="33.02" y="0" size="1.27" layer="21" ratio="15" rot="R90" align="center">GND</text>
+<text x="13.97" y="0" size="1.778" layer="21" ratio="15" align="center">Feather M4
+CAN Express</text>
+</package>
+</packages>
+<symbols>
+</symbols>
+<devicesets>
+</devicesets>
+</library>
+</drawing>
+<compatibility>
+<note version="6.3" minversion="6.2.2" severity="warning">
+Since Version 6.2.2 text objects can contain more than one line,
+which will not be processed correctly with this version.
+</note>
+</compatibility>
+</eagle>
