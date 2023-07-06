@@ -199,12 +199,12 @@
 <wire x1="-50" y1="23.53646875" x2="-50" y2="-24" width="0.001" layer="49"/>
 <wire x1="-50" y1="-24" x2="-44" y2="-30" width="0.001" layer="49" curve="90"/>
 <wire x1="-44" y1="-30" x2="44.275209375" y2="-30" width="0.001" layer="49"/>
-<text x="-1.778" y="18.669" size="1.27" layer="21" font="vector" rot="R270" align="center-left">INPUT</text>
-<text x="1.778" y="18.796" size="1.27" layer="21" font="vector" rot="R270" align="center-left">REVERSE</text>
-<text x="5.334" y="18.796" size="1.27" layer="21" font="vector" rot="R270" align="center-left">NEUTRAL</text>
-<text x="8.763" y="18.796" size="1.27" layer="21" font="vector" rot="R270" align="center-left">DRIVE</text>
-<text x="-5.207" y="18.669" size="1.27" layer="21" font="vector" rot="R270" align="center-left">GND</text>
-<text x="-9.017" y="18.669" size="1.27" layer="21" font="vector" rot="R270" align="center-left">+12V</text>
+<text x="-1.778" y="18.669" size="1.27" layer="21" font="vector" ratio="20" rot="R270" align="center-left">INPUT</text>
+<text x="1.778" y="18.796" size="1.27" layer="21" font="vector" ratio="20" rot="R270" align="center-left">REVERSE</text>
+<text x="5.334" y="18.796" size="1.27" layer="21" font="vector" ratio="20" rot="R270" align="center-left">NEUTRAL</text>
+<text x="8.763" y="18.796" size="1.27" layer="21" font="vector" ratio="20" rot="R270" align="center-left">DRIVE</text>
+<text x="-5.207" y="18.669" size="1.27" layer="21" font="vector" ratio="20" rot="R270" align="center-left">GND</text>
+<text x="-9.017" y="18.669" size="1.27" layer="21" font="vector" ratio="20" rot="R270" align="center-left">+12V</text>
 <text x="-3" y="-17.635" size="0.6096" layer="21" font="vector" rot="R90" align="center-left">VCC</text>
 <text x="-0.508" y="-17.653" size="0.6096" layer="21" font="vector" rot="R90" align="center-left">MOSI</text>
 <text x="2.032" y="-17.653" size="0.6096" layer="21" font="vector" rot="R90" align="center-left">GND</text>

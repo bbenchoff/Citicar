@@ -11065,41 +11065,24 @@ CONN_04
 <package name="DT154P">
 <description>&lt;b&gt;DT15-4P-1&lt;/b&gt;&lt;br&gt;
 </description>
-<pad name="3" x="0" y="0" drill="2.01" diameter="3.015"/>
-<pad name="4" x="0" y="4.45" drill="2.01" diameter="3.015"/>
-<pad name="1" x="9.12" y="4.45" drill="2.01" diameter="3.015"/>
-<pad name="2" x="9.12" y="0" drill="2.01" diameter="3.015"/>
-<pad name="MH1" x="-6.11" y="-6.425" drill="3.56" diameter="5.34"/>
-<pad name="MH2" x="-6.11" y="10.875" drill="3.56" diameter="5.34"/>
-<pad name="MH3" x="15.23" y="10.875" drill="3.56" diameter="5.34"/>
-<pad name="MH4" x="15.23" y="-6.425" drill="3.56" diameter="5.34"/>
+<pad name="3" x="-4.5212" y="-2.2352" drill="2.01" diameter="3.015"/>
+<pad name="4" x="-4.5212" y="2.2148" drill="2.01" diameter="3.015"/>
+<pad name="1" x="4.5988" y="2.2148" drill="2.01" diameter="3.015"/>
+<pad name="2" x="4.5988" y="-2.2352" drill="2.01" diameter="3.015"/>
+<pad name="MH1" x="-10.6312" y="-8.6602" drill="3.56" diameter="5.34"/>
+<pad name="MH2" x="-10.6312" y="8.6398" drill="3.56" diameter="5.34"/>
+<pad name="MH3" x="10.7088" y="8.6398" drill="3.56" diameter="5.34"/>
+<pad name="MH4" x="10.7088" y="-8.6602" drill="3.56" diameter="5.34"/>
 <text x="3.942" y="2.225" size="1.27" layer="25" align="center">&gt;NAME</text>
 <text x="3.942" y="2.225" size="1.27" layer="27" align="center">&gt;VALUE</text>
-<wire x1="-13.065" y1="-16.95" x2="22.185" y2="-16.95" width="0.2" layer="51"/>
-<wire x1="22.185" y1="-16.95" x2="22.185" y2="21.4" width="0.2" layer="51"/>
-<wire x1="22.185" y1="21.4" x2="-13.065" y2="21.4" width="0.2" layer="51"/>
-<wire x1="-13.065" y1="21.4" x2="-13.065" y2="-16.95" width="0.2" layer="51"/>
-<wire x1="-13.065" y1="22.67" x2="22.185" y2="22.67" width="0.1" layer="21"/>
-<wire x1="22.185" y1="22.67" x2="22.185" y2="-15.68" width="0.1" layer="21"/>
-<wire x1="22.185" y1="-15.68" x2="-13.065" y2="-15.68" width="0.1" layer="21"/>
-<wire x1="-13.065" y1="-15.68" x2="-13.065" y2="22.67" width="0.1" layer="21"/>
-<wire x1="-15.3" y1="22.4" x2="23.185" y2="22.4" width="0.1" layer="51"/>
-<wire x1="23.185" y1="22.4" x2="23.185" y2="-17.95" width="0.1" layer="51"/>
-<wire x1="23.185" y1="-17.95" x2="-15.3" y2="-17.95" width="0.1" layer="51"/>
-<wire x1="-15.3" y1="-17.95" x2="-15.3" y2="22.4" width="0.1" layer="51"/>
-<wire x1="-14.3" y1="0" x2="-14.2" y2="0" width="0.2" layer="21" curve="180"/>
-<wire x1="-14.2" y1="0" x2="-14.3" y2="0" width="0.2" layer="21" curve="180"/>
-<wire x1="-14.3" y1="0" x2="-14.2" y2="0" width="0.2" layer="21" curve="180"/>
-<wire x1="5.08" y1="20.32" x2="8.89" y2="20.32" width="0.127" layer="21"/>
-<wire x1="8.89" y1="20.447" x2="8.89" y2="22.606" width="0.127" layer="21"/>
-<wire x1="3.81" y1="20.32" x2="0" y2="20.32" width="0.127" layer="21"/>
-<wire x1="0" y1="22.606" x2="0" y2="20.32" width="0.127" layer="21"/>
-<wire x1="3.81" y1="20.32" x2="5.08" y2="20.32" width="0.127" layer="21"/>
-<wire x1="8.89" y1="20.32" x2="8.89" y2="20.447" width="0.127" layer="21"/>
-<text x="12.7" y="3.81" size="1.27" layer="22" ratio="20" rot="MR0">1</text>
-<text x="-2.54" y="3.81" size="1.27" layer="22" ratio="20" rot="MR0">4</text>
-<text x="12.7" y="-0.635" size="1.27" layer="22" ratio="20" rot="MR0">2</text>
-<text x="-2.54" y="-0.635" size="1.27" layer="22" ratio="20" rot="MR0">3</text>
+<wire x1="-17.5862" y1="-19.1852" x2="17.6638" y2="-19.1852" width="0.2" layer="51"/>
+<wire x1="17.6638" y1="-19.1852" x2="17.6638" y2="19.1648" width="0.2" layer="51"/>
+<wire x1="17.6638" y1="19.1648" x2="-17.5862" y2="19.1648" width="0.2" layer="51"/>
+<wire x1="-17.5862" y1="19.1648" x2="-17.5862" y2="-19.1852" width="0.2" layer="51"/>
+<text x="8.1788" y="1.5748" size="1.27" layer="22" ratio="20" rot="MR0">1</text>
+<text x="-7.0612" y="1.5748" size="1.27" layer="22" ratio="20" rot="MR0">4</text>
+<text x="8.1788" y="-2.8702" size="1.27" layer="22" ratio="20" rot="MR0">2</text>
+<text x="-7.0612" y="-2.8702" size="1.27" layer="22" ratio="20" rot="MR0">3</text>
 </package>
 </packages>
 <symbols>
@@ -11455,6 +11438,7 @@ CAN Express</text>
 <part name="J2" library="DT15-4P" deviceset="DT15-4P" device=""/>
 <part name="J3" library="DT15-4P" deviceset="DT15-4P" device=""/>
 <part name="U$5" library="FeatherCAN" deviceset="FEATHERM4CAN" device=""/>
+<part name="GND19" library="SparkFun-PowerSymbols" library_urn="urn:adsk.eagle:library:530" deviceset="GND" device=""/>
 </parts>
 <sheets>
 <sheet>
@@ -11921,6 +11905,9 @@ CAN Express</text>
 <attribute name="VALUE" x="364.49" y="30.48" size="1.778" layer="96" align="center-left"/>
 </instance>
 <instance part="U$5" gate="G$1" x="195.58" y="33.02" smashed="yes"/>
+<instance part="GND19" gate="1" x="327.66" y="10.16" smashed="yes">
+<attribute name="VALUE" x="327.66" y="9.906" size="1.778" layer="96" align="top-center"/>
+</instance>
 </instances>
 <busses>
 </busses>
@@ -12034,6 +12021,16 @@ CAN Express</text>
 <pinref part="J1" gate="G$1" pin="1"/>
 <wire x1="35.56" y1="38.1" x2="48.26" y2="38.1" width="0.1524" layer="91"/>
 <label x="43.18" y="38.1" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="4"/>
+<pinref part="GND19" gate="1" pin="GND"/>
+<wire x1="345.44" y1="17.78" x2="327.66" y2="17.78" width="0.1524" layer="91"/>
+<wire x1="327.66" y1="17.78" x2="327.66" y2="12.7" width="0.1524" layer="91"/>
+<pinref part="J2" gate="G$1" pin="4"/>
+<wire x1="342.9" y1="48.26" x2="327.66" y2="48.26" width="0.1524" layer="91"/>
+<wire x1="327.66" y1="48.26" x2="327.66" y2="17.78" width="0.1524" layer="91"/>
+<junction x="327.66" y="17.78"/>
 </segment>
 </net>
 <net name="VCC" class="0">
@@ -13619,6 +13616,52 @@ CAN Express</text>
 <wire x1="-20.32" y1="-106.68" x2="-20.32" y2="-294.64" width="0.1524" layer="91"/>
 <pinref part="U$3" gate="G$1" pin="P$2"/>
 <wire x1="0" y1="-294.64" x2="-20.32" y2="-294.64" width="0.1524" layer="91"/>
+</segment>
+</net>
+<net name="CANH" class="0">
+<segment>
+<pinref part="J2" gate="G$1" pin="2"/>
+<wire x1="342.9" y1="53.34" x2="327.66" y2="53.34" width="0.1524" layer="91"/>
+<label x="327.66" y="53.34" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="2"/>
+<wire x1="345.44" y1="22.86" x2="330.2" y2="22.86" width="0.1524" layer="91"/>
+<label x="330.2" y="22.86" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="CAN_H"/>
+<wire x1="177.8" y1="27.94" x2="167.64" y2="27.94" width="0.1524" layer="91"/>
+<label x="167.64" y="27.94" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="CANL" class="0">
+<segment>
+<pinref part="J2" gate="G$1" pin="3"/>
+<wire x1="342.9" y1="50.8" x2="327.66" y2="50.8" width="0.1524" layer="91"/>
+<label x="327.66" y="50.8" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="J3" gate="G$1" pin="3"/>
+<wire x1="345.44" y1="20.32" x2="330.2" y2="20.32" width="0.1524" layer="91"/>
+<label x="330.2" y="20.32" size="1.778" layer="95"/>
+</segment>
+<segment>
+<pinref part="U$5" gate="G$1" pin="CAN_L"/>
+<wire x1="177.8" y1="30.48" x2="167.64" y2="30.48" width="0.1524" layer="91"/>
+<label x="167.64" y="30.48" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="+12V" class="0">
+<segment>
+<pinref part="J3" gate="G$1" pin="1"/>
+<wire x1="345.44" y1="25.4" x2="322.58" y2="25.4" width="0.1524" layer="91"/>
+<wire x1="322.58" y1="25.4" x2="322.58" y2="55.88" width="0.1524" layer="91"/>
+<label x="322.58" y="68.58" size="1.778" layer="95"/>
+<pinref part="J2" gate="G$1" pin="1"/>
+<wire x1="322.58" y1="55.88" x2="322.58" y2="68.58" width="0.1524" layer="91"/>
+<wire x1="342.9" y1="55.88" x2="322.58" y2="55.88" width="0.1524" layer="91"/>
+<junction x="322.58" y="55.88"/>
 </segment>
 </net>
 </nets>

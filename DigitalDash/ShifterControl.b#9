@@ -157,7 +157,7 @@
 <layer number="255" name="routoute" color="7" fill="1" visible="yes" active="yes"/>
 </layers>
 <board>
-<fusionsync huburn="a.cGVyc29uYWw6dWUyOTEyZWFh" projecturn="a.cGVyc29uYWw6dWUyOTEyZWFhIzIwMjIwMTA4NDgzMTIxODgx" f3durn="urn:adsk.wipprod:dm.lineage:5dbbumO4SiWpU_0x8sVqgA" pcbguid="" lastpulledtime="" lastsyncedchangeguid="" latestrevisionid="4745afc5-4c8a-4661-81f2-efc5b37d4d32" lastsyncedrevisionid="4745afc5-4c8a-4661-81f2-efc5b37d4d32" lastboardhashguid="67ae42c3-79d6-77e2-37d1-b81cc2ac52da" lastpushedtime="2023-06-14T03:58:32Z" linktopcb3d="true"/>
+<fusionsync huburn="a.cGVyc29uYWw6dWUyOTEyZWFh" projecturn="a.cGVyc29uYWw6dWUyOTEyZWFhIzIwMjIwMTA4NDgzMTIxODgx" f3durn="urn:adsk.wipprod:dm.lineage:5dbbumO4SiWpU_0x8sVqgA" pcbguid="" lastpulledtime="" lastsyncedchangeguid="" latestrevisionid="f764b54b-79d6-4bdf-a35e-c84006ac35e9" lastsyncedrevisionid="f764b54b-79d6-4bdf-a35e-c84006ac35e9" lastboardhashguid="26c95ca0-c4c8-ef5d-a981-1cd8fa647e60" lastpushedtime="2023-06-14T04:10:40Z" linktopcb3d="true"/>
 <plain>
 <hole x="-44.037" y="23.5275" drill="4"/>
 <hole x="44.291" y="23.5275" drill="4"/>
@@ -903,13 +903,13 @@ design rules under a new name.</description>
 <attribute name="POPULARITY" value="35" x="26" y="19" size="1.778" layer="28" font="vector" rot="MR270" display="off"/>
 <attribute name="VALUE" x="37.049" y="11.634" size="1.778" layer="28" ratio="10" rot="MR0"/>
 </element>
-<element name="Y1" library="SparkFun-Clocks" library_urn="urn:adsk.eagle:library:511" package="HC49U" package3d_urn="urn:adsk.eagle:package:37511/1" value="16MHz" x="-44" y="-42" smashed="yes">
-<attribute name="NAME" x="-44" y="-39.333" size="0.6096" layer="25" font="vector" ratio="20" align="bottom-center"/>
-<attribute name="VALUE" x="-44" y="-44.667" size="0.6096" layer="27" font="vector" ratio="20" align="top-center"/>
+<element name="Y1" library="SparkFun-Clocks" library_urn="urn:adsk.eagle:library:511" package="HC49U" package3d_urn="urn:adsk.eagle:package:37511/1" value="16MHz" x="-7" y="-17" smashed="yes" rot="MR180">
+<attribute name="NAME" x="-7" y="-19.667" size="0.6096" layer="26" font="vector" ratio="20" rot="MR180" align="bottom-center"/>
+<attribute name="VALUE" x="-7" y="-14.333" size="0.6096" layer="28" font="vector" ratio="20" rot="MR180" align="top-center"/>
 </element>
-<element name="Y2" library="SparkFun-Clocks" library_urn="urn:adsk.eagle:library:511" package="HC49U" package3d_urn="urn:adsk.eagle:package:37511/1" value="8MHz" x="18" y="-20" smashed="yes" rot="R270">
-<attribute name="NAME" x="20.667" y="-20" size="0.6096" layer="25" font="vector" ratio="20" rot="R270" align="bottom-center"/>
-<attribute name="VALUE" x="15.333" y="-20" size="0.6096" layer="27" font="vector" ratio="20" rot="R270" align="top-center"/>
+<element name="Y2" library="SparkFun-Clocks" library_urn="urn:adsk.eagle:library:511" package="HC49U" package3d_urn="urn:adsk.eagle:package:37511/1" value="8MHz" x="18" y="-20" smashed="yes" rot="MR270">
+<attribute name="NAME" x="15.333" y="-20" size="0.6096" layer="26" font="vector" ratio="20" rot="MR270" align="bottom-center"/>
+<attribute name="VALUE" x="20.667" y="-20" size="0.6096" layer="28" font="vector" ratio="20" rot="MR270" align="top-center"/>
 </element>
 </elements>
 <signals>
@@ -990,12 +990,12 @@ design rules under a new name.</description>
 <signal name="N$5">
 <contactref element="U1" pad="8"/>
 <contactref element="Y1" pad="1"/>
-<wire x1="1.7074" y1="-17.2" x2="-46.413" y2="-42" width="0" layer="19" extent="16-16"/>
+<wire x1="1.7074" y1="-17.2" x2="-9.413" y2="-17" width="0" layer="19" extent="16-16"/>
 </signal>
 <signal name="N$6">
 <contactref element="U1" pad="7"/>
 <contactref element="Y1" pad="2"/>
-<wire x1="1.7074" y1="-18" x2="-41.587" y2="-42" width="0" layer="19" extent="16-16"/>
+<wire x1="1.7074" y1="-18" x2="-4.587" y2="-17" width="0" layer="19" extent="16-16"/>
 </signal>
 </signals>
 <mfgpreviewcolors>
