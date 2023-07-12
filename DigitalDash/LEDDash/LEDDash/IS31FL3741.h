@@ -5,13 +5,19 @@
 
 void writeByte(uint8_t Dev_Add, uint8_t Reg_Add, uint8_t Reg_Dat);
 
-class IS41
-{
-  public:
-    IS41(int Address);
-    void begin();
+class MyIS41 {
   private:
-    int _Address;
+    uint8_t chipAddress;
+
+  public:
+    MyIS41(uint8_t address);
+    void begin();
+    void printFramebuffer(uint8_t buffer[18][39]);
+    void sendData(uint8_t data);
+    void printTestPattern();
+    void clearDisplay();
+    void setGlobalCurrent(uint8_t brightness);
+
 };
 
 #endif
