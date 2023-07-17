@@ -81,7 +81,7 @@ void Display::printSpeed(uint8_t speed)
       }
     }
   }
-  
+
   //the Ones Digit
   for(int i = 0 ; i < 10; i++)
   {
@@ -90,10 +90,23 @@ void Display::printSpeed(uint8_t speed)
       framebuffer[i+7][(j-heavyNumbersWidth[onesDigit])-2] = heavyNumbers[onesDigit][i][j]; 
     }
   }
-
-
-
   is41_1.printFramebuffer(framebuffer);
   is41_2.printFramebuffer(framebuffer);
 
+}
+
+void Display::introGraphic()
+{
+  for(int i = 0 ; i < 185 ; i++ )
+  {   //iterate over all of the intro graphic
+    for(int framebufferRow = 0 ; framebufferRow < 18 ; framebufferRow++)
+    {
+      for(int framebufferColumn = 0 ; framebufferColumn < 39 ; framebufferColumn++)
+      {
+        framebuffer[framebufferRow][framebufferColumn] = scrollPattern[framebufferRow][framebufferColumn + i];
+      }
+    }
+    is41_1.printFramebuffer(framebuffer);
+    is41_2.printFramebuffer(framebuffer);
+  }
 }

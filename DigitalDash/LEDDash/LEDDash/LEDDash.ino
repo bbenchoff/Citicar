@@ -36,6 +36,8 @@ void setup() {
 void loop() {
   //display.clearScreen();
   //display.LFSRfade();
+  display.clearScreen();
+  display.introGraphic();
 
   for(int i = 0; i < 3 ; i++)
   {

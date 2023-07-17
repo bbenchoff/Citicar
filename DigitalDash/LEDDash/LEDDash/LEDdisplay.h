@@ -11,6 +11,7 @@ class Display {
     void setBrightness(uint8_t brightness);
     void clearScreen();
     void printSpeed(uint8_t speed);
+    void introGraphic();
 };
 
 #endif
