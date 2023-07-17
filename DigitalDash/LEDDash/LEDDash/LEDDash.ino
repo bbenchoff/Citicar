@@ -22,7 +22,12 @@ void setup() {
   display.begin();
 
   Serial.begin(115200);
-  while(!Serial);
+  
+  delay(500);
+
+  //we can't use while(!serial) because this will run without a computer.
+  //while(!Serial);
+  
   Serial.println("\n\nBegin LED Dash");  
 }
 
