@@ -1,0 +1,38 @@
+from PIL import Image
+import numpy as np
+
+# Load the PNG image
+image = Image.open('bottom.png')
+
+# Convert the image to RGB if it's not already
+if image.mode != 'RGB':
+    image = image.convert('RGB')
+
+# Convert the image to a NumPy array
+array = np.array(image)
+
+# Get the dimensions of the array
+height, width, _ = array.shape
+
+# Generate the C array string
+array_string = 'uint8_t testPattern[{}][{}] = {{\n'.format(height, width)
+for i in range(height):
+    row_string = '  {'
+    for j in range(width):
+        r, g, b = array[i, j]
+        average_value = int((r + g + b) / 3)
+        row_string += '0x{:02X}, '.format(average_value)
+    row_string = row_string.rstrip(', ') + '},\n'
+    array_string += row_string
+array_string += '};'
+
+# Print the C array string
+print(array_string)
+
+
+
+
+
+
+
+

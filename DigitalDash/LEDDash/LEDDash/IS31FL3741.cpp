@@ -265,7 +265,7 @@ void MyIS41::printTestPattern()
     {
       currentX = page0_Bottom[i].x;
       currentY = page0_Bottom[i].y;
-      Wire.write(checkerboard1[currentY][currentX]);
+      Wire.write(testPattern[currentY][currentX]);
     }
     Wire.endTransmission();
 
@@ -281,7 +281,7 @@ void MyIS41::printTestPattern()
     {
       currentX = page1_Bottom[i].x;
       currentY = page1_Bottom[i].y;
-      Wire.write(checkerboard1[currentY][currentX]);
+      Wire.write(testPattern[currentY][currentX]);
     }
     Wire.endTransmission();
 
@@ -300,7 +300,7 @@ void MyIS41::printTestPattern()
     {
       currentX = page0_Top[i].x;
       currentY = page0_Top[i].y;
-      Wire.write(checkerboard1[currentY][currentX]);
+      Wire.write(testPattern[currentY][currentX]);
     }
     Wire.endTransmission();
 
@@ -316,7 +316,7 @@ void MyIS41::printTestPattern()
     {
       currentX = page1_Top[i].x;
       currentY = page1_Top[i].y;
-      Wire.write(checkerboard1[currentY][currentX]);
+      Wire.write(testPattern[currentY][currentX]);
     }
     Wire.endTransmission();
 
