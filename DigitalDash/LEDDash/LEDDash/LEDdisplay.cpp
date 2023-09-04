@@ -1,7 +1,11 @@
+
 #include "IS31FL3741.h"
 #include "Globals.h"
 #include "LEDdisplay.h"
 #include "Fonts.h"
+#include <CANSAME5x.h>
+
+extern CANSAME5x CAN;
 
 MyIS41 is41_1(0x30);
 MyIS41 is41_2(0x33);
@@ -52,6 +56,42 @@ void Display::clearScreen()
   is41_2.printFramebuffer(framebuffer);
 }
 
+void Display::printGears()   ///do this better
+{
+  for(int i = 0 ; i < 6 ; i++)
+  {
+    for(int j = 0 ; j < 6 ; j++)
+    {
+      if(gearDrive == false)
+      {
+        framebuffer[i][j+1] = gearSelect[0][i][j];
+      }
+      else
+      {
+        framebuffer[i][j+1] = gearSelect[0][i][j] ^ 0xFF; 
+      }
+      
+      if(gearNeutral == false)
+      {
+        framebuffer[i+6][j+1] = gearSelect[1][i][j];
+      }
+      else
+      {
+        framebuffer[i+6][j+1] = gearSelect[1][i][j] ^ 0xFF; 
+      }
+
+      if(gearReverse == false)
+      {
+        framebuffer[i+12][j+1] = gearSelect[2][i][j];
+      }
+      else
+      {
+        framebuffer[i+12][j+1] = gearSelect[2][i][j] ^ 0xFF; 
+      }
+    }
+  }
+}
+
 void Display::printSpeed(uint8_t speed)
 {
   uint8_t tensDigit;
@@ -60,6 +100,8 @@ void Display::printSpeed(uint8_t speed)
 
   tensDigit = speed / 10;
   onesDigit = speed % 10;
+
+
 
   //clear the framebuffer in previous speed
   for(int i = 0 ; i < 10; i++)
@@ -106,7 +148,17 @@ void Display::introGraphic()
         framebuffer[framebufferRow][framebufferColumn] = scrollPattern[framebufferRow][framebufferColumn + i];
       }
     }
+
+    if(i == 0)
+    {
+      CAN.beginExtendedPacket(0x420011);
+      CAN.write('C');
+      CAN.endPacket();
+    }
+
+
     is41_1.printFramebuffer(framebuffer);
     is41_2.printFramebuffer(framebuffer);
+    delay(10);
   }
 }

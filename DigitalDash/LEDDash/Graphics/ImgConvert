@@ -2,7 +2,7 @@ from PIL import Image
 import numpy as np
 
 # Load the PNG image
-image = Image.open('bottom.png')
+image = Image.open('.png')
 
 # Convert the image to RGB if it's not already
 if image.mode != 'RGB':

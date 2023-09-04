@@ -1,6 +1,12 @@
 #include <Arduino.h>
 #include "Globals.h"
 
+bool gearDrive = false;
+bool gearNeutral = true;
+bool gearReverse = false;
+
+uint32_t timestamp;
+
 uint8_t framebuffer[18][39];
 
 uint8_t testPattern[18][39] = {

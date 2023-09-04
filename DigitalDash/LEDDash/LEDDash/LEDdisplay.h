@@ -1,7 +1,9 @@
 #ifndef LEDDISPLAY_H
 #define LEDDISPLAY_H
 
+
 #include "Arduino.h"
+
 
 class Display {
   public:
@@ -12,6 +14,7 @@ class Display {
     void clearScreen();
     void printSpeed(uint8_t speed);
     void introGraphic();
+    void printGears();
 };
 
 #endif
