@@ -68,6 +68,25 @@ void setup ()
 
 void loop() {
 
+  if(!digitalRead(CAN0_INT))
+  {
+    CAN0.readMsgBuf(&rxId, &len, rxBuf);
+
+    if((rxId & 0x80000000) == 0x80000000)     // Determine if ID is standard (11 bits) or extended (29 bits)
+      sprintf(msgString, "Extended ID: 0x%.8lX  DLC: %1d  Data:", (rxId & 0x1FFFFFFF), len);
+    else
+      sprintf(msgString, "Standard ID: 0x%.3lX       DLC: %1d  Data:", rxId, len);
+
+    if((rxId & 0x40000000) == 0x40000000){    // Determine if message is a remote request frame.
+      sprintf(msgString, " REMOTE REQUEST FRAME");
+      Serial.print(msgString);
+    } 
+    if((rxId & 0x1FFFFFFF) == 0x420011)
+    {
+      comutacar(); 
+    }
+  }
+
   //digitalWrite(output1, HIGH);  // turn the LED on (HIGH is the voltage level)
   //digitalWrite(output2, HIGH);  // turn the LED on (HIGH is the voltage level)
   //digitalWrite(output3, HIGH);  // turn the LED on (HIGH is the voltage level)

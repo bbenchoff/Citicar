@@ -1,0 +1,955 @@
+
+C:\Users\Benchoff\AppData\Local\Temp\arduino\sketches\15697E12E11EB15793E3F583D9D2F6DD/ShifterKnob.ino.elf:     file format elf32-avr
+
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+__vectors():
+   0:	0c 94 61 00 	jmp	0xc2	; 0xc2 <__ctors_end>
+   4:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+   8:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+   c:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  10:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  14:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  18:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  1c:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  20:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  24:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  28:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  2c:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  30:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  34:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  38:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  3c:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  40:	0c 94 59 01 	jmp	0x2b2	; 0x2b2 <__vector_16>
+  44:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  48:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  4c:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  50:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  54:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  58:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  5c:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  60:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+  64:	0c 94 7e 00 	jmp	0xfc	; 0xfc <__bad_interrupt>
+
+00000068 <__trampolines_end>:
+__trampolines_start():
+  68:	00 00       	nop
+  6a:	00 09       	sbc	r16, r0
+  6c:	00 03       	mulsu	r16, r16
+  6e:	02 00       	.word	0x0002	; ????
+  70:	00 04       	cpc	r0, r0
+  72:	05 08       	sbc	r0, r5
+	...
+
+0000007f <port_to_output_PGM>:
+  7f:	00 00 00 00 25 00 28 00 2b 00                       ....%.(.+.
+
+00000089 <port_to_mode_PGM>:
+  89:	00 00 00 00 24 00 27 00 2a 00                       ....$.'.*.
+
+00000093 <digital_pin_to_port_PGM>:
+  93:	04 04 04 04 04 04 04 04 02 02 02 02 02 02 03 03     ................
+  a3:	03 03 03 03 02 02 03                                .......
+
+000000aa <digital_pin_to_bit_mask_PGM>:
+  aa:	01 02 04 08 10 20 40 80 01 02 04 08 10 20 01 02     ..... @...... ..
+  ba:	04 08 10 20 40 80 40 00                             ... @.@.
+
+000000c2 <__ctors_end>:
+__dtors_end():
+  c2:	11 24       	eor	r1, r1
+  c4:	1f be       	out	0x3f, r1	; 63
+  c6:	cf ef       	ldi	r28, 0xFF	; 255
+  c8:	d8 e0       	ldi	r29, 0x08	; 8
+  ca:	de bf       	out	0x3e, r29	; 62
+  cc:	cd bf       	out	0x3d, r28	; 61
+
+000000ce <__do_copy_data>:
+__do_copy_data():
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2409
+  ce:	12 e0       	ldi	r17, 0x02	; 2
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2410
+  d0:	a0 e0       	ldi	r26, 0x00	; 0
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2411
+  d2:	b1 e0       	ldi	r27, 0x01	; 1
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2412
+  d4:	e4 e2       	ldi	r30, 0x24	; 36
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2413
+  d6:	f4 e0       	ldi	r31, 0x04	; 4
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2414
+  d8:	02 c0       	rjmp	.+4      	; 0xde <__do_copy_data+0x10>
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2417
+  da:	05 90       	lpm	r0, Z+
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2422
+  dc:	0d 92       	st	X+, r0
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2424
+  de:	a0 30       	cpi	r26, 0x00	; 0
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2425
+  e0:	b1 07       	cpc	r27, r17
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2426
+  e2:	d9 f7       	brne	.-10     	; 0xda <__do_copy_data+0xc>
+
+000000e4 <__do_clear_bss>:
+__do_clear_bss():
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2441
+  e4:	22 e0       	ldi	r18, 0x02	; 2
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2442
+  e6:	a0 e0       	ldi	r26, 0x00	; 0
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2443
+  e8:	b2 e0       	ldi	r27, 0x02	; 2
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2444
+  ea:	01 c0       	rjmp	.+2      	; 0xee <.do_clear_bss_start>
+
+000000ec <.do_clear_bss_loop>:
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2446
+  ec:	1d 92       	st	X+, r1
+
+000000ee <.do_clear_bss_start>:
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2448
+  ee:	a9 30       	cpi	r26, 0x09	; 9
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2449
+  f0:	b2 07       	cpc	r27, r18
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2450
+  f2:	e1 f7       	brne	.-8      	; 0xec <.do_clear_bss_loop>
+.do_clear_bss_start():
+  f4:	0e 94 a3 01 	call	0x346	; 0x346 <main>
+  f8:	0c 94 10 02 	jmp	0x420	; 0x420 <_exit>
+
+000000fc <__bad_interrupt>:
+__vector_22():
+  fc:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000100 <pinMode.constprop.1>:
+pinMode.constprop.1():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:31
+#include "wiring_private.h"
+#include "pins_arduino.h"
+
+void pinMode(uint8_t pin, uint8_t mode)
+{
+  uint8_t bit = digitalPinToBitMask(pin);
+ 100:	90 e0       	ldi	r25, 0x00	; 0
+ 102:	fc 01       	movw	r30, r24
+ 104:	e6 55       	subi	r30, 0x56	; 86
+ 106:	ff 4f       	sbci	r31, 0xFF	; 255
+ 108:	24 91       	lpm	r18, Z
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:32
+  uint8_t port = digitalPinToPort(pin);
+ 10a:	8d 56       	subi	r24, 0x6D	; 109
+ 10c:	9f 4f       	sbci	r25, 0xFF	; 255
+ 10e:	fc 01       	movw	r30, r24
+ 110:	84 91       	lpm	r24, Z
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:35
+  volatile uint8_t *reg, *out;
+
+  if (port == NOT_A_PIN) return;
+ 112:	88 23       	and	r24, r24
+ 114:	99 f0       	breq	.+38     	; 0x13c <pinMode.constprop.1+0x3c>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:38
+
+  // JWS: can I let the optimizer do this?
+  reg = portModeRegister(port);
+ 116:	90 e0       	ldi	r25, 0x00	; 0
+ 118:	88 0f       	add	r24, r24
+ 11a:	99 1f       	adc	r25, r25
+ 11c:	fc 01       	movw	r30, r24
+ 11e:	e7 57       	subi	r30, 0x77	; 119
+ 120:	ff 4f       	sbci	r31, 0xFF	; 255
+ 122:	a5 91       	lpm	r26, Z+
+ 124:	b4 91       	lpm	r27, Z
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:39
+  out = portOutputRegister(port);
+ 126:	fc 01       	movw	r30, r24
+ 128:	e1 58       	subi	r30, 0x81	; 129
+ 12a:	ff 4f       	sbci	r31, 0xFF	; 255
+ 12c:	85 91       	lpm	r24, Z+
+ 12e:	94 91       	lpm	r25, Z
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:54
+    cli();
+    *reg &= ~bit;
+    *out |= bit;
+    SREG = oldSREG;
+  } else {
+    uint8_t oldSREG = SREG;
+ 130:	8f b7       	in	r24, 0x3f	; 63
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:55
+    cli();
+ 132:	f8 94       	cli
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:56
+    *reg |= bit;
+ 134:	ec 91       	ld	r30, X
+ 136:	e2 2b       	or	r30, r18
+ 138:	ec 93       	st	X, r30
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:57
+    SREG = oldSREG;
+ 13a:	8f bf       	out	0x3f, r24	; 63
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:59
+  }
+}
+ 13c:	08 95       	ret
+
+0000013e <digitalWrite>:
+digitalWrite():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:189
+  }
+}
+
+void digitalWrite(uint8_t pin, uint8_t val)
+{
+  uint8_t timer = digitalPinToTimer(pin);
+ 13e:	90 e0       	ldi	r25, 0x00	; 0
+ 140:	fc 01       	movw	r30, r24
+ 142:	e8 59       	subi	r30, 0x98	; 152
+ 144:	ff 4f       	sbci	r31, 0xFF	; 255
+ 146:	24 91       	lpm	r18, Z
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:190
+  uint8_t bit = digitalPinToBitMask(pin);
+ 148:	fc 01       	movw	r30, r24
+ 14a:	e6 55       	subi	r30, 0x56	; 86
+ 14c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 14e:	34 91       	lpm	r19, Z
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:191
+  uint8_t port = digitalPinToPort(pin);
+ 150:	fc 01       	movw	r30, r24
+ 152:	ed 56       	subi	r30, 0x6D	; 109
+ 154:	ff 4f       	sbci	r31, 0xFF	; 255
+ 156:	e4 91       	lpm	r30, Z
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:194
+  volatile uint8_t *out;
+
+  if (port == NOT_A_PIN) return;
+ 158:	ee 23       	and	r30, r30
+ 15a:	c9 f0       	breq	.+50     	; 0x18e <digitalWrite+0x50>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:198
+
+  // If the pin that support PWM output, we need to turn it off
+  // before doing a digital write.
+  if (timer != NOT_ON_TIMER) turnOffPWM(timer);
+ 15c:	22 23       	and	r18, r18
+ 15e:	39 f0       	breq	.+14     	; 0x16e <digitalWrite+0x30>
+turnOffPWM():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:77
+//
+//static inline void turnOffPWM(uint8_t timer) __attribute__ ((always_inline));
+//static inline void turnOffPWM(uint8_t timer)
+static void turnOffPWM(uint8_t timer)
+{
+  switch (timer)
+ 160:	24 30       	cpi	r18, 0x04	; 4
+ 162:	01 f1       	breq	.+64     	; 0x1a4 <digitalWrite+0x66>
+ 164:	a8 f4       	brcc	.+42     	; 0x190 <digitalWrite+0x52>
+ 166:	22 30       	cpi	r18, 0x02	; 2
+ 168:	69 f1       	breq	.+90     	; 0x1c4 <digitalWrite+0x86>
+ 16a:	23 30       	cpi	r18, 0x03	; 3
+ 16c:	79 f1       	breq	.+94     	; 0x1cc <digitalWrite+0x8e>
+digitalWrite():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:200
+
+  // If the pin that support PWM output, we need to turn it off
+  // before doing a digital write.
+  if (timer != NOT_ON_TIMER) turnOffPWM(timer);
+
+  out = portOutputRegister(port);
+ 16e:	f0 e0       	ldi	r31, 0x00	; 0
+ 170:	ee 0f       	add	r30, r30
+ 172:	ff 1f       	adc	r31, r31
+ 174:	e1 58       	subi	r30, 0x81	; 129
+ 176:	ff 4f       	sbci	r31, 0xFF	; 255
+ 178:	a5 91       	lpm	r26, Z+
+ 17a:	b4 91       	lpm	r27, Z
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:202
+
+  uint8_t oldSREG = SREG;
+ 17c:	8f b7       	in	r24, 0x3f	; 63
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:203
+  cli();
+ 17e:	f8 94       	cli
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:206
+
+  if (val == LOW) {
+    *out &= ~bit;
+ 180:	ec 91       	ld	r30, X
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:205
+  out = portOutputRegister(port);
+
+  uint8_t oldSREG = SREG;
+  cli();
+
+  if (val == LOW) {
+ 182:	61 11       	cpse	r22, r1
+ 184:	26 c0       	rjmp	.+76     	; 0x1d2 <digitalWrite+0x94>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:206
+    *out &= ~bit;
+ 186:	30 95       	com	r19
+ 188:	3e 23       	and	r19, r30
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:208
+  } else {
+    *out |= bit;
+ 18a:	3c 93       	st	X, r19
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:211
+  }
+
+  SREG = oldSREG;
+ 18c:	8f bf       	out	0x3f, r24	; 63
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:212
+}
+ 18e:	08 95       	ret
+turnOffPWM():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:77
+//
+//static inline void turnOffPWM(uint8_t timer) __attribute__ ((always_inline));
+//static inline void turnOffPWM(uint8_t timer)
+static void turnOffPWM(uint8_t timer)
+{
+  switch (timer)
+ 190:	28 30       	cpi	r18, 0x08	; 8
+ 192:	71 f0       	breq	.+28     	; 0x1b0 <digitalWrite+0x72>
+ 194:	29 30       	cpi	r18, 0x09	; 9
+ 196:	91 f0       	breq	.+36     	; 0x1bc <digitalWrite+0x7e>
+ 198:	25 30       	cpi	r18, 0x05	; 5
+ 19a:	49 f7       	brne	.-46     	; 0x16e <digitalWrite+0x30>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:87
+        TCCR1A &= ~_BV(COM1A1);
+        break;
+    #endif
+    #if defined(TCCR1A) && defined(COM1B1)
+      case TIMER1B:
+        TCCR1A &= ~_BV(COM1B1);
+ 19c:	80 91 80 00 	lds	r24, 0x0080	; 0x800080 <__DATA_REGION_ORIGIN__+0x20>
+ 1a0:	8f 7d       	andi	r24, 0xDF	; 223
+ 1a2:	03 c0       	rjmp	.+6      	; 0x1aa <digitalWrite+0x6c>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:82
+  switch (timer)
+  {
+    // Timer1
+    #if defined(TCCR1A) && defined(COM1A1)
+      case TIMER1A:
+        TCCR1A &= ~_BV(COM1A1);
+ 1a4:	80 91 80 00 	lds	r24, 0x0080	; 0x800080 <__DATA_REGION_ORIGIN__+0x20>
+ 1a8:	8f 77       	andi	r24, 0x7F	; 127
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:87
+        break;
+    #endif
+    #if defined(TCCR1A) && defined(COM1B1)
+      case TIMER1B:
+        TCCR1A &= ~_BV(COM1B1);
+ 1aa:	80 93 80 00 	sts	0x0080, r24	; 0x800080 <__DATA_REGION_ORIGIN__+0x20>
+ 1ae:	df cf       	rjmp	.-66     	; 0x16e <digitalWrite+0x30>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:104
+        TCCR2 &= ~_BV(COM21);
+        break;
+    #endif
+    #if defined(TCCR2A) && defined(COM2A1)
+      case TIMER2A:
+        TCCR2A &= ~_BV(COM2A1);
+ 1b0:	80 91 b0 00 	lds	r24, 0x00B0	; 0x8000b0 <__DATA_REGION_ORIGIN__+0x50>
+ 1b4:	8f 77       	andi	r24, 0x7F	; 127
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:109
+        break;
+    #endif
+    #if defined(TCCR2A) && defined(COM2B1)
+      case TIMER2B:
+        TCCR2A &= ~_BV(COM2B1);
+ 1b6:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__DATA_REGION_ORIGIN__+0x50>
+ 1ba:	d9 cf       	rjmp	.-78     	; 0x16e <digitalWrite+0x30>
+ 1bc:	80 91 b0 00 	lds	r24, 0x00B0	; 0x8000b0 <__DATA_REGION_ORIGIN__+0x50>
+ 1c0:	8f 7d       	andi	r24, 0xDF	; 223
+ 1c2:	f9 cf       	rjmp	.-14     	; 0x1b6 <digitalWrite+0x78>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:176
+        TCCR0 &= ~_BV(COM01);
+        break;
+    #endif
+    #if defined(TCCR0A) && defined(COM0A1)
+      case TIMER0A:
+        TCCR0A &= ~_BV(COM0A1);
+ 1c4:	84 b5       	in	r24, 0x24	; 36
+ 1c6:	8f 77       	andi	r24, 0x7F	; 127
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:181
+        break;
+    #endif
+    #if defined(TCCR0A) && defined(COM0B1)
+      case TIMER0B:
+        TCCR0A &= ~_BV(COM0B1);
+ 1c8:	84 bd       	out	0x24, r24	; 36
+ 1ca:	d1 cf       	rjmp	.-94     	; 0x16e <digitalWrite+0x30>
+ 1cc:	84 b5       	in	r24, 0x24	; 36
+ 1ce:	8f 7d       	andi	r24, 0xDF	; 223
+ 1d0:	fb cf       	rjmp	.-10     	; 0x1c8 <digitalWrite+0x8a>
+digitalWrite():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_digital.c:208
+  cli();
+
+  if (val == LOW) {
+    *out &= ~bit;
+  } else {
+    *out |= bit;
+ 1d2:	3e 2b       	or	r19, r30
+ 1d4:	da cf       	rjmp	.-76     	; 0x18a <digitalWrite+0x4c>
+
+000001d6 <micros>:
+micros():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:237
+  unsigned char f; // temporary storage for millis fraction counter
+  unsigned char q = 0; // record whether an overflow is flagged
+#endif
+  // t will be the number where the timer0 counter stopped
+  uint8_t t;
+  uint8_t oldSREG = SREG;
+ 1d6:	3f b7       	in	r19, 0x3f	; 63
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:240
+
+  // Stop all interrupts
+  cli();
+ 1d8:	f8 94       	cli
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:247
+#ifdef CORRECT_EXACT_MICROS
+  // combine exact millisec and 8usec counters
+  m = timer0_millis;
+  f = timer0_fract;
+#else
+  m = timer0_overflow_count;
+ 1da:	80 91 05 02 	lds	r24, 0x0205	; 0x800205 <timer0_overflow_count>
+ 1de:	90 91 06 02 	lds	r25, 0x0206	; 0x800206 <timer0_overflow_count+0x1>
+ 1e2:	a0 91 07 02 	lds	r26, 0x0207	; 0x800207 <timer0_overflow_count+0x2>
+ 1e6:	b0 91 08 02 	lds	r27, 0x0208	; 0x800208 <timer0_overflow_count+0x3>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:252
+#endif
+
+  // TCNT0 : The Timer Counter Register
+#if defined(TCNT0)
+  t = TCNT0;
+ 1ea:	26 b5       	in	r18, 0x26	; 38
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:261
+  #error TIMER 0 not defined
+#endif
+
+  // Timer0 Interrupt Flag Register
+#ifdef TIFR0
+  if ((TIFR0 & _BV(TOV0)) && (t < 255))
+ 1ec:	a8 9b       	sbis	0x15, 0	; 21
+ 1ee:	05 c0       	rjmp	.+10     	; 0x1fa <micros+0x24>
+ 1f0:	2f 3f       	cpi	r18, 0xFF	; 255
+ 1f2:	19 f0       	breq	.+6      	; 0x1fa <micros+0x24>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:263
+#ifndef CORRECT_EXACT_MICROS
+    m++;
+ 1f4:	01 96       	adiw	r24, 0x01	; 1
+ 1f6:	a1 1d       	adc	r26, r1
+ 1f8:	b1 1d       	adc	r27, r1
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:276
+#else
+    q = 1;
+#endif
+#endif
+  // Restore SREG
+  SREG = oldSREG;
+ 1fa:	3f bf       	out	0x3f, r19	; 63
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:292
+      ((t * MICROSECONDS_PER_TIMER0_OVERFLOW) >> 8);
+  return q ? m + MICROSECONDS_PER_TIMER0_OVERFLOW : m;
+#elif 1
+  /* All power-of-two Megahertz frequencies enter here, as well as 12.8 MHz.
+     We only end up here if right shift before multiplication is exact. */
+  return ((m << 8) + t) * (MICROSECONDS_PER_TIMER0_OVERFLOW >> 8);
+ 1fc:	ba 2f       	mov	r27, r26
+ 1fe:	a9 2f       	mov	r26, r25
+ 200:	98 2f       	mov	r25, r24
+ 202:	88 27       	eor	r24, r24
+ 204:	bc 01       	movw	r22, r24
+ 206:	cd 01       	movw	r24, r26
+ 208:	62 0f       	add	r22, r18
+ 20a:	71 1d       	adc	r23, r1
+ 20c:	81 1d       	adc	r24, r1
+ 20e:	91 1d       	adc	r25, r1
+ 210:	42 e0       	ldi	r20, 0x02	; 2
+ 212:	66 0f       	add	r22, r22
+ 214:	77 1f       	adc	r23, r23
+ 216:	88 1f       	adc	r24, r24
+ 218:	99 1f       	adc	r25, r25
+ 21a:	4a 95       	dec	r20
+ 21c:	d1 f7       	brne	.-12     	; 0x212 <micros+0x3c>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:393
+  // m & t are multiplied by 4 (since it was already multiplied by 256)
+  // t is multiplied by 4
+  return ((m << 8) + t) * (64 / clockCyclesPerMicrosecond());
+#endif
+#endif // 0
+}
+ 21e:	08 95       	ret
+
+00000220 <delay>:
+delay():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:396
+
+void delay(unsigned long ms)
+{
+ 220:	8f 92       	push	r8
+ 222:	9f 92       	push	r9
+ 224:	af 92       	push	r10
+ 226:	bf 92       	push	r11
+ 228:	cf 92       	push	r12
+ 22a:	df 92       	push	r13
+ 22c:	ef 92       	push	r14
+ 22e:	ff 92       	push	r15
+ 230:	4b 01       	movw	r8, r22
+ 232:	5c 01       	movw	r10, r24
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:397
+  unsigned long start = micros();
+ 234:	0e 94 eb 00 	call	0x1d6	; 0x1d6 <micros>
+ 238:	6b 01       	movw	r12, r22
+ 23a:	7c 01       	movw	r14, r24
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:401
+
+  while (ms > 0UL) {
+    yield();
+    while (ms > 0UL && (micros() - start) >= 1000UL) {
+ 23c:	0e 94 eb 00 	call	0x1d6	; 0x1d6 <micros>
+ 240:	6c 19       	sub	r22, r12
+ 242:	7d 09       	sbc	r23, r13
+ 244:	8e 09       	sbc	r24, r14
+ 246:	9f 09       	sbc	r25, r15
+ 248:	68 3e       	cpi	r22, 0xE8	; 232
+ 24a:	73 40       	sbci	r23, 0x03	; 3
+ 24c:	81 05       	cpc	r24, r1
+ 24e:	91 05       	cpc	r25, r1
+ 250:	a8 f3       	brcs	.-22     	; 0x23c <delay+0x1c>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:402
+      ms--;
+ 252:	21 e0       	ldi	r18, 0x01	; 1
+ 254:	82 1a       	sub	r8, r18
+ 256:	91 08       	sbc	r9, r1
+ 258:	a1 08       	sbc	r10, r1
+ 25a:	b1 08       	sbc	r11, r1
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:403
+      start += 1000UL;
+ 25c:	88 ee       	ldi	r24, 0xE8	; 232
+ 25e:	c8 0e       	add	r12, r24
+ 260:	83 e0       	ldi	r24, 0x03	; 3
+ 262:	d8 1e       	adc	r13, r24
+ 264:	e1 1c       	adc	r14, r1
+ 266:	f1 1c       	adc	r15, r1
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:401
+{
+  unsigned long start = micros();
+
+  while (ms > 0UL) {
+    yield();
+    while (ms > 0UL && (micros() - start) >= 1000UL) {
+ 268:	81 14       	cp	r8, r1
+ 26a:	91 04       	cpc	r9, r1
+ 26c:	a1 04       	cpc	r10, r1
+ 26e:	b1 04       	cpc	r11, r1
+ 270:	29 f7       	brne	.-54     	; 0x23c <delay+0x1c>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:406
+      ms--;
+      start += 1000UL;
+    }
+  }
+}
+ 272:	ff 90       	pop	r15
+ 274:	ef 90       	pop	r14
+ 276:	df 90       	pop	r13
+ 278:	cf 90       	pop	r12
+ 27a:	bf 90       	pop	r11
+ 27c:	af 90       	pop	r10
+ 27e:	9f 90       	pop	r9
+ 280:	8f 90       	pop	r8
+ 282:	08 95       	ret
+
+00000284 <shiftOut.constprop.0>:
+shiftOut.constprop.0():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_shift.c:40
+    digitalWrite(clockPin, LOW);
+  }
+  return value;
+}
+
+void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
+ 284:	cf 93       	push	r28
+ 286:	df 93       	push	r29
+ 288:	d8 2f       	mov	r29, r24
+ 28a:	c8 e0       	ldi	r28, 0x08	; 8
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_shift.c:46
+{
+  uint8_t i;
+
+  for (i = 0; i < 8; i++)  {
+    if (bitOrder == LSBFIRST) {
+      digitalWrite(dataPin, val & 1);
+ 28c:	6d 2f       	mov	r22, r29
+ 28e:	61 70       	andi	r22, 0x01	; 1
+ 290:	85 e0       	ldi	r24, 0x05	; 5
+ 292:	0e 94 9f 00 	call	0x13e	; 0x13e <digitalWrite>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_shift.c:47
+      val >>= 1;
+ 296:	d6 95       	lsr	r29
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_shift.c:52
+      } else {
+      digitalWrite(dataPin, (val & 0x80) != 0);
+      val <<= 1;
+    }
+    digitalWrite(clockPin, HIGH);
+ 298:	61 e0       	ldi	r22, 0x01	; 1
+ 29a:	87 e0       	ldi	r24, 0x07	; 7
+ 29c:	0e 94 9f 00 	call	0x13e	; 0x13e <digitalWrite>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_shift.c:53
+    digitalWrite(clockPin, LOW);
+ 2a0:	60 e0       	ldi	r22, 0x00	; 0
+ 2a2:	87 e0       	ldi	r24, 0x07	; 7
+ 2a4:	0e 94 9f 00 	call	0x13e	; 0x13e <digitalWrite>
+ 2a8:	c1 50       	subi	r28, 0x01	; 1
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_shift.c:44
+
+void shiftOut(uint8_t dataPin, uint8_t clockPin, uint8_t bitOrder, uint8_t val)
+{
+  uint8_t i;
+
+  for (i = 0; i < 8; i++)  {
+ 2aa:	81 f7       	brne	.-32     	; 0x28c <shiftOut.constprop.0+0x8>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring_shift.c:55
+      val <<= 1;
+    }
+    digitalWrite(clockPin, HIGH);
+    digitalWrite(clockPin, LOW);
+  }
+}
+ 2ac:	df 91       	pop	r29
+ 2ae:	cf 91       	pop	r28
+ 2b0:	08 95       	ret
+
+000002b2 <__vector_16>:
+__vector_16():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:159
+#if defined(__AVR_ATtiny24__) || defined(__AVR_ATtiny44__) || defined(__AVR_ATtiny84__)
+ISR(TIM0_OVF_vect)
+#else
+ISR(TIMER0_OVF_vect)
+#endif
+{
+ 2b2:	1f 92       	push	r1
+ 2b4:	0f 92       	push	r0
+ 2b6:	0f b6       	in	r0, 0x3f	; 63
+ 2b8:	0f 92       	push	r0
+ 2ba:	11 24       	eor	r1, r1
+ 2bc:	2f 93       	push	r18
+ 2be:	3f 93       	push	r19
+ 2c0:	8f 93       	push	r24
+ 2c2:	9f 93       	push	r25
+ 2c4:	af 93       	push	r26
+ 2c6:	bf 93       	push	r27
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:167
+  static unsigned char timer0_exact = 0;
+#endif
+
+  // copy these to local variables so they can be stored in registers
+  // (volatile variables must be read from memory on every access, so this saves time)
+  unsigned long m = timer0_millis;
+ 2c8:	80 91 01 02 	lds	r24, 0x0201	; 0x800201 <timer0_millis>
+ 2cc:	90 91 02 02 	lds	r25, 0x0202	; 0x800202 <timer0_millis+0x1>
+ 2d0:	a0 91 03 02 	lds	r26, 0x0203	; 0x800203 <timer0_millis+0x2>
+ 2d4:	b0 91 04 02 	lds	r27, 0x0204	; 0x800204 <timer0_millis+0x3>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:168
+  unsigned char f = timer0_fract;
+ 2d8:	30 91 00 02 	lds	r19, 0x0200	; 0x800200 <__data_end>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:170
+
+  f += FRACT_INC FRACT_INC_PLUS;
+ 2dc:	23 e0       	ldi	r18, 0x03	; 3
+ 2de:	23 0f       	add	r18, r19
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:200
+    ++f;
+  }
+#endif
+#endif // CORRECT_EXACT_MILLIS
+
+  if (f >= FRACT_MAX) {
+ 2e0:	2d 37       	cpi	r18, 0x7D	; 125
+ 2e2:	68 f1       	brcs	.+90     	; 0x33e <__vector_16+0x8c>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:201
+    f -= FRACT_MAX;
+ 2e4:	26 e8       	ldi	r18, 0x86	; 134
+ 2e6:	23 0f       	add	r18, r19
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:202
+    m += MILLIS_INC + 1;
+ 2e8:	02 96       	adiw	r24, 0x02	; 2
+ 2ea:	a1 1d       	adc	r26, r1
+ 2ec:	b1 1d       	adc	r27, r1
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:208
+  }
+  else {
+    m += MILLIS_INC;
+  }
+
+  timer0_fract = f;
+ 2ee:	20 93 00 02 	sts	0x0200, r18	; 0x800200 <__data_end>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:209
+  timer0_millis = m;
+ 2f2:	80 93 01 02 	sts	0x0201, r24	; 0x800201 <timer0_millis>
+ 2f6:	90 93 02 02 	sts	0x0202, r25	; 0x800202 <timer0_millis+0x1>
+ 2fa:	a0 93 03 02 	sts	0x0203, r26	; 0x800203 <timer0_millis+0x2>
+ 2fe:	b0 93 04 02 	sts	0x0204, r27	; 0x800204 <timer0_millis+0x3>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:211
+#ifndef CORRECT_EXACT_MICROS
+  timer0_overflow_count++;
+ 302:	80 91 05 02 	lds	r24, 0x0205	; 0x800205 <timer0_overflow_count>
+ 306:	90 91 06 02 	lds	r25, 0x0206	; 0x800206 <timer0_overflow_count+0x1>
+ 30a:	a0 91 07 02 	lds	r26, 0x0207	; 0x800207 <timer0_overflow_count+0x2>
+ 30e:	b0 91 08 02 	lds	r27, 0x0208	; 0x800208 <timer0_overflow_count+0x3>
+ 312:	01 96       	adiw	r24, 0x01	; 1
+ 314:	a1 1d       	adc	r26, r1
+ 316:	b1 1d       	adc	r27, r1
+ 318:	80 93 05 02 	sts	0x0205, r24	; 0x800205 <timer0_overflow_count>
+ 31c:	90 93 06 02 	sts	0x0206, r25	; 0x800206 <timer0_overflow_count+0x1>
+ 320:	a0 93 07 02 	sts	0x0207, r26	; 0x800207 <timer0_overflow_count+0x2>
+ 324:	b0 93 08 02 	sts	0x0208, r27	; 0x800208 <timer0_overflow_count+0x3>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:213
+#endif
+}
+ 328:	bf 91       	pop	r27
+ 32a:	af 91       	pop	r26
+ 32c:	9f 91       	pop	r25
+ 32e:	8f 91       	pop	r24
+ 330:	3f 91       	pop	r19
+ 332:	2f 91       	pop	r18
+ 334:	0f 90       	pop	r0
+ 336:	0f be       	out	0x3f, r0	; 63
+ 338:	0f 90       	pop	r0
+ 33a:	1f 90       	pop	r1
+ 33c:	18 95       	reti
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:205
+  if (f >= FRACT_MAX) {
+    f -= FRACT_MAX;
+    m += MILLIS_INC + 1;
+  }
+  else {
+    m += MILLIS_INC;
+ 33e:	01 96       	adiw	r24, 0x01	; 1
+ 340:	a1 1d       	adc	r26, r1
+ 342:	b1 1d       	adc	r27, r1
+ 344:	d4 cf       	rjmp	.-88     	; 0x2ee <__vector_16+0x3c>
+
+00000346 <main>:
+main():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:945
+
+void init()
+{
+  // this needs to be called before setup() or some functions won't
+  // work there
+  sei();
+ 346:	78 94       	sei
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:957
+
+  // On the ATmega168, timer 0 is also used for fast hardware pwm
+  // (using phase-correct PWM would mean that timer 0 overflowed half as often
+  // resulting in different millis() behavior on the ATmega8 and ATmega168)
+#if defined(TCCR0A) && defined(WGM01)
+  TCCR0A |= _BV(WGM01) | _BV(WGM00);
+ 348:	84 b5       	in	r24, 0x24	; 36
+ 34a:	83 60       	ori	r24, 0x03	; 3
+ 34c:	84 bd       	out	0x24, r24	; 36
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:972
+  #if defined(WGM00) && defined(WGM01) // The ATmega8 doesn't have WGM00 and WGM01
+    TCCR0 |= _BV(WGM01) | _BV(WGM00);
+  #endif
+#elif defined(TCCR0B) && defined(CS01) && defined(CS00)
+  // This combination is for the standard 168/328/640/1280/1281/2560/2561
+  TCCR0B |= _BV(CS01) | _BV(CS00);
+ 34e:	85 b5       	in	r24, 0x25	; 37
+ 350:	83 60       	ori	r24, 0x03	; 3
+ 352:	85 bd       	out	0x25, r24	; 37
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:984
+
+// Enable timer 0 overflow interrupt
+#if defined(TIMSK) && defined(TOIE0)
+  TIMSK |= _BV(TOIE0);
+#elif defined(TIMSK0) && defined(TOIE0)
+  TIMSK0 |= _BV(TOIE0);
+ 354:	80 91 6e 00 	lds	r24, 0x006E	; 0x80006e <__DATA_REGION_ORIGIN__+0xe>
+ 358:	81 60       	ori	r24, 0x01	; 1
+ 35a:	80 93 6e 00 	sts	0x006E, r24	; 0x80006e <__DATA_REGION_ORIGIN__+0xe>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:995
+// this is better for motors as it ensures an even waveform
+// note, however, that fast pwm mode can achieve a frequency of up
+// 8 MHz (with a 16 MHz clock) at 50% duty cycle
+
+#if defined(TCCR1B) && defined(CS11) && defined(CS10)
+  TCCR1B = _BV(CS11); // Set timer 1 prescale factor to 64
+ 35e:	82 e0       	ldi	r24, 0x02	; 2
+ 360:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__DATA_REGION_ORIGIN__+0x21>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:997
+#if F_CPU >= 8000000L
+  TCCR1B |= _BV(CS10);
+ 364:	80 91 81 00 	lds	r24, 0x0081	; 0x800081 <__DATA_REGION_ORIGIN__+0x21>
+ 368:	81 60       	ori	r24, 0x01	; 1
+ 36a:	80 93 81 00 	sts	0x0081, r24	; 0x800081 <__DATA_REGION_ORIGIN__+0x21>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:1006
+#if F_CPU >= 8000000L
+  TCCR1 |= _BV(CS10);
+#endif
+#endif
+#if defined(TCCR1A) && defined(WGM10)
+  TCCR1A |= _BV(WGM10); // Put timer 1 in 8-bit phase correct pwm mode
+ 36e:	80 91 80 00 	lds	r24, 0x0080	; 0x800080 <__DATA_REGION_ORIGIN__+0x20>
+ 372:	81 60       	ori	r24, 0x01	; 1
+ 374:	80 93 80 00 	sts	0x0080, r24	; 0x800080 <__DATA_REGION_ORIGIN__+0x20>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:1013
+
+// Set timer 2 prescale factor to 64
+#if defined(TCCR2) && defined(CS22)
+  TCCR2 |= _BV(CS22);
+#elif defined(TCCR2B) && defined(CS22)
+  TCCR2B |= _BV(CS22);
+ 378:	80 91 b1 00 	lds	r24, 0x00B1	; 0x8000b1 <__DATA_REGION_ORIGIN__+0x51>
+ 37c:	84 60       	ori	r24, 0x04	; 4
+ 37e:	80 93 b1 00 	sts	0x00B1, r24	; 0x8000b1 <__DATA_REGION_ORIGIN__+0x51>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:1022
+
+// Configure timer 2 for phase correct pwm (8-bit)
+#if defined(TCCR2) && defined(WGM20)
+  TCCR2 |= _BV(WGM20);
+#elif defined(TCCR2A) && defined(WGM20)
+  TCCR2A |= _BV(WGM20);
+ 382:	80 91 b0 00 	lds	r24, 0x00B0	; 0x8000b0 <__DATA_REGION_ORIGIN__+0x50>
+ 386:	81 60       	ori	r24, 0x01	; 1
+ 388:	80 93 b0 00 	sts	0x00B0, r24	; 0x8000b0 <__DATA_REGION_ORIGIN__+0x50>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:1050
+#endif
+
+#if defined(ADCSRA)
+  // set a2d prescaler so we are inside the desired 50-200 KHz range.
+  #if F_CPU >= 16000000 // 16 MHz / 128 = 125 KHz
+    ADCSRA = _BV(ADPS2) | _BV(ADPS1) | _BV(ADPS0) | _BV(ADEN);
+ 38c:	87 e8       	ldi	r24, 0x87	; 135
+ 38e:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__DATA_REGION_ORIGIN__+0x1a>
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/wiring.c:1070
+  // here so they can be used as normal digital i/o; they will be
+  // reconnected in Serial.begin()
+#if defined(UCSRB)
+  UCSRB = 0;
+#elif defined(UCSR0B)
+  UCSR0B = 0;
+ 392:	10 92 c1 00 	sts	0x00C1, r1	; 0x8000c1 <__DATA_REGION_ORIGIN__+0x61>
+setup():
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:139
+    };
+
+void setup ()
+{
+  // Setup pins as Outputs
+  pinMode(latchPin, OUTPUT);
+ 396:	86 e0       	ldi	r24, 0x06	; 6
+ 398:	0e 94 80 00 	call	0x100	; 0x100 <pinMode.constprop.1>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:140
+  pinMode(clockPin, OUTPUT);
+ 39c:	87 e0       	ldi	r24, 0x07	; 7
+ 39e:	0e 94 80 00 	call	0x100	; 0x100 <pinMode.constprop.1>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:141
+  pinMode(dataPin, OUTPUT);
+ 3a2:	85 e0       	ldi	r24, 0x05	; 5
+ 3a4:	0e 94 80 00 	call	0x100	; 0x100 <pinMode.constprop.1>
+main():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/main.cpp:47
+  
+  setup();
+    
+  for (;;) {
+    loop();
+    if (serialEventRun) serialEventRun();
+ 3a8:	00 e0       	ldi	r16, 0x00	; 0
+ 3aa:	10 e0       	ldi	r17, 0x00	; 0
+ 3ac:	c0 e0       	ldi	r28, 0x00	; 0
+ 3ae:	d1 e0       	ldi	r29, 0x01	; 1
+loop():
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:150
+  // Count from 0 to 127 and display in binary
+  //for(int characterNumber = 48; characterNumber <= 122; characterNumber++)
+  for(int characterNumber = 0; characterNumber <= 127; characterNumber++)
+  {
+    //latch
+    digitalWrite(latchPin, LOW);
+ 3b0:	60 e0       	ldi	r22, 0x00	; 0
+ 3b2:	86 e0       	ldi	r24, 0x06	; 6
+ 3b4:	0e 94 9f 00 	call	0x13e	; 0x13e <digitalWrite>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:151
+    delay(1);
+ 3b8:	61 e0       	ldi	r22, 0x01	; 1
+ 3ba:	70 e0       	ldi	r23, 0x00	; 0
+ 3bc:	80 e0       	ldi	r24, 0x00	; 0
+ 3be:	90 e0       	ldi	r25, 0x00	; 0
+ 3c0:	0e 94 10 01 	call	0x220	; 0x220 <delay>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:153
+    // Shift out the bits
+    shiftOut(dataPin, clockPin, LSBFIRST, highByte(character[characterNumber]));
+ 3c4:	f8 80       	ld	r15, Y
+ 3c6:	89 81       	ldd	r24, Y+1	; 0x01
+ 3c8:	22 96       	adiw	r28, 0x02	; 2
+ 3ca:	0e 94 42 01 	call	0x284	; 0x284 <shiftOut.constprop.0>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:154
+    delay(1);
+ 3ce:	61 e0       	ldi	r22, 0x01	; 1
+ 3d0:	70 e0       	ldi	r23, 0x00	; 0
+ 3d2:	80 e0       	ldi	r24, 0x00	; 0
+ 3d4:	90 e0       	ldi	r25, 0x00	; 0
+ 3d6:	0e 94 10 01 	call	0x220	; 0x220 <delay>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:155
+    shiftOut(dataPin, clockPin, LSBFIRST, lowByte(character[characterNumber]));
+ 3da:	8f 2d       	mov	r24, r15
+ 3dc:	0e 94 42 01 	call	0x284	; 0x284 <shiftOut.constprop.0>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:156
+    delay(1);
+ 3e0:	61 e0       	ldi	r22, 0x01	; 1
+ 3e2:	70 e0       	ldi	r23, 0x00	; 0
+ 3e4:	80 e0       	ldi	r24, 0x00	; 0
+ 3e6:	90 e0       	ldi	r25, 0x00	; 0
+ 3e8:	0e 94 10 01 	call	0x220	; 0x220 <delay>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:158
+    //latch
+    digitalWrite(latchPin, HIGH);
+ 3ec:	61 e0       	ldi	r22, 0x01	; 1
+ 3ee:	86 e0       	ldi	r24, 0x06	; 6
+ 3f0:	0e 94 9f 00 	call	0x13e	; 0x13e <digitalWrite>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:159
+    delay(1);
+ 3f4:	61 e0       	ldi	r22, 0x01	; 1
+ 3f6:	70 e0       	ldi	r23, 0x00	; 0
+ 3f8:	80 e0       	ldi	r24, 0x00	; 0
+ 3fa:	90 e0       	ldi	r25, 0x00	; 0
+ 3fc:	0e 94 10 01 	call	0x220	; 0x220 <delay>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:160
+    delay(200);
+ 400:	68 ec       	ldi	r22, 0xC8	; 200
+ 402:	70 e0       	ldi	r23, 0x00	; 0
+ 404:	80 e0       	ldi	r24, 0x00	; 0
+ 406:	90 e0       	ldi	r25, 0x00	; 0
+ 408:	0e 94 10 01 	call	0x220	; 0x220 <delay>
+C:\Users\Benchoff\Documents\GitHub\Citicar\DigitalDash\ShifterKnob/ShifterKnob.ino:147
+}
+
+void loop() {
+  // Count from 0 to 127 and display in binary
+  //for(int characterNumber = 48; characterNumber <= 122; characterNumber++)
+  for(int characterNumber = 0; characterNumber <= 127; characterNumber++)
+ 40c:	82 e0       	ldi	r24, 0x02	; 2
+ 40e:	c0 30       	cpi	r28, 0x00	; 0
+ 410:	d8 07       	cpc	r29, r24
+ 412:	71 f6       	brne	.-100    	; 0x3b0 <main+0x6a>
+main():
+C:\Users\Benchoff\AppData\Local\Arduino15\packages\MiniCore\hardware\avr\2.2.2\cores\MCUdude_corefiles/main.cpp:47
+ 414:	01 15       	cp	r16, r1
+ 416:	11 05       	cpc	r17, r1
+ 418:	49 f2       	breq	.-110    	; 0x3ac <main+0x66>
+ 41a:	0e 94 00 00 	call	0	; 0x0 <__vectors>
+ 41e:	c6 cf       	rjmp	.-116    	; 0x3ac <main+0x66>
+
+00000420 <_exit>:
+exit():
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2278
+ 420:	f8 94       	cli
+
+00000422 <__stop_program>:
+__stop_program():
+/home/jenkins-mingw32/workspace/avr-gcc-staging/label/Ubuntu14.04x64-mingw32/gcc-build/avr/avr5/libgcc/../../../../gcc/libgcc/config/avr/lib1funcs.S:2280
+ 422:	ff cf       	rjmp	.-2      	; 0x422 <__stop_program>
