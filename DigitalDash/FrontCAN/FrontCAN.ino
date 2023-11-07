@@ -20,8 +20,6 @@ const int output7 = 6;
 const int output8 = 5;
 const int output9 = 4;
 const int output10 = 3;
-const int output11 = 0;
-const int output12 = 19; 
 
 long unsigned int rxId;
 unsigned char len = 0;
@@ -61,8 +59,6 @@ void setup ()
   pinMode(output8, OUTPUT);
   pinMode(output9, OUTPUT);
   pinMode(output10, OUTPUT);
-  pinMode(output11, OUTPUT);
-  pinMode(output12, OUTPUT);
 
   digitalWrite(output1, LOW);
   digitalWrite(output2, LOW);
@@ -74,38 +70,50 @@ void setup ()
   digitalWrite(output8, LOW);
   digitalWrite(output9, LOW);
   digitalWrite(output10, LOW);
-  digitalWrite(output11, LOW);
-  digitalWrite(output12, LOW);
+
 }
 
 void loop() {
 
   digitalWrite(output1, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output1, LOW);
+
   digitalWrite(output2, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output2, LOW);
+
   digitalWrite(output3, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output3, LOW);
+
   digitalWrite(output4, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output4, LOW);
+
   digitalWrite(output5, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output5, LOW);
+
   digitalWrite(output6, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output6, LOW);
+
   digitalWrite(output7, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output7, LOW);
+
   digitalWrite(output8, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output8, LOW);
+
   digitalWrite(output9, HIGH);  // turn the LED on (HIGH is the voltage level)
+  delay(1000);
+  digitalWrite(output9, LOW);
+
   digitalWrite(output10, HIGH);  // turn the LED on (HIGH is the voltage level)
-  digitalWrite(output11, HIGH);  // turn the LED on (HIGH is the voltage level)
-  digitalWrite(output12, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);                      // wait for a second
-  digitalWrite(output1, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output2, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output3, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output4, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output5, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output6, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output7, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output8, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output9, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output10, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output11, LOW);   // turn the LED off by making the voltage LOW
-  digitalWrite(output12, LOW);   // turn the LED off by making the voltage LOW
-  delay(1000);                      // wait for a second
+  delay(1000);
+  digitalWrite(output10, LOW);
 
   
 }
