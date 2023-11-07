@@ -20,8 +20,6 @@ const int output7 = 6;
 const int output8 = 5;
 const int output9 = 4;
 const int output10 = 3;
-const int output11 = 0;
-const int output12 = 19; 
 
 long unsigned int rxId;
 unsigned char len = 0;
@@ -61,8 +59,6 @@ void setup ()
   pinMode(output8, OUTPUT);
   pinMode(output9, OUTPUT);
   pinMode(output10, OUTPUT);
-  pinMode(output11, OUTPUT);
-  pinMode(output12, OUTPUT);
 
   digitalWrite(output1, LOW);
   digitalWrite(output2, LOW);
@@ -74,43 +70,113 @@ void setup ()
   digitalWrite(output8, LOW);
   digitalWrite(output9, LOW);
   digitalWrite(output10, LOW);
-  digitalWrite(output11, LOW);
-  digitalWrite(output12, LOW);
+
 }
 
 void loop() {
 
-  digitalWrite(output1, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);
-  digitalWrite(output1, LOW);  // turn the LED on (HIGH is the voltage level)
+  if(!digitalRead(CAN0_INT))
+  {
+    CAN0.readMsgBuf(&rxId, &len, rxBuf);
 
-  digitalWrite(output2, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);
-  digitalWrite(output2, LOW);  // turn the LED on (HIGH is the voltage level)
+    if((rxId & 0x80000000) == 0x80000000)     // Determine if ID is standard (11 bits) or extended (29 bits)
+      sprintf(msgString, "Extended ID: 0x%.8lX  DLC: %1d  Data:", (rxId & 0x1FFFFFFF), len);
+    else
+      sprintf(msgString, "Standard ID: 0x%.3lX       DLC: %1d  Data:", rxId, len);
 
-  digitalWrite(output3, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);
-  digitalWrite(output3, LOW);  // turn the LED on (HIGH is the voltage level)
-
-  digitalWrite(output4, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);
-  digitalWrite(output4, LOW);  // turn the LED on (HIGH is the voltage level)
-
-  digitalWrite(output5, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);
-  digitalWrite(output5, LOW);  // turn the LED on (HIGH is the voltage level)
-
-  digitalWrite(output6, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);
-  digitalWrite(output6, LOW);  // turn the LED on (HIGH is the voltage level)
-
-  digitalWrite(output7, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);
-  digitalWrite(output7, LOW);  // turn the LED on (HIGH is the voltage level)
-
-  digitalWrite(output8, HIGH);  // turn the LED on (HIGH is the voltage level)
-  delay(1000);
-  digitalWrite(output8, LOW);  // turn the LED on (HIGH is the voltage level)
-
-  
+    if((rxId & 0x40000000) == 0x40000000){    // Determine if message is a remote request frame.
+      sprintf(msgString, " REMOTE REQUEST FRAME");
+      Serial.print(msgString);
+    } 
+    if((rxId & 0x1FFFFFFF) == 0x420101)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output1, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output1, HIGH);
+      }
+    }
+    if((rxId & 0x1FFFFFFF) == 0x420102)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output2, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output2, HIGH);
+      }
+    }
+    if((rxId & 0x1FFFFFFF) == 0x420103)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output3, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output3, HIGH);
+      }
+    }
+    if((rxId & 0x1FFFFFFF) == 0x420104)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output4, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output4, HIGH);
+      }
+    }
+    if((rxId & 0x1FFFFFFF) == 0x420105)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output5, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output5, HIGH);
+      }
+    }
+    if((rxId & 0x1FFFFFFF) == 0x420106)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output6, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output6, HIGH);
+      }
+    }
+    if((rxId & 0x1FFFFFFF) == 0x420107)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output7, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output7, HIGH);
+      }
+    }
+    if((rxId & 0x1FFFFFFF) == 0x420108)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output8, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output8, HIGH);
+      }
+    }
+        if((rxId & 0x1FFFFFFF) == 0x420109)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output9, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output9, HIGH);
+      }
+    }
+        if((rxId & 0x1FFFFFFF) == 0x420110)
+    {
+      if(rxBuf[0] == 0x00) {      // Check the first byte of the received message
+        digitalWrite(output10, LOW);
+      }
+      else if(rxBuf[0] == 0xFF) {
+        digitalWrite(output10, HIGH);
+      }
+    }
+  }
 }
