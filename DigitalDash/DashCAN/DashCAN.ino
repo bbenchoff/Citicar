@@ -125,38 +125,38 @@ void loop() {
   
   if((digitalRead(input5)) == LOW)
  {
-   digitalWrite(output5, HIGH);
+   digitalWrite(output5, LOW);
  }
   if((digitalRead(input5)) == HIGH)
  {
-   digitalWrite(output5, LOW);
+   digitalWrite(output5, HIGH);
  }
 
   if((digitalRead(input6)) == LOW)
  {
-   digitalWrite(output6, HIGH);
+   digitalWrite(output6, LOW);
  }
   if((digitalRead(input6)) == HIGH)
  {
-   digitalWrite(output6, LOW);
+   digitalWrite(output6, HIGH);
  }
 
   if((digitalRead(input7)) == LOW)
  {
-   digitalWrite(output7, HIGH);
+   digitalWrite(output7, LOW);
  }
   if((digitalRead(input7)) == HIGH)
  {
-   digitalWrite(output7, LOW);
+   digitalWrite(output7, HIGH);
  }
 
    if((digitalRead(input8)) == LOW)
  {
-   digitalWrite(output8, HIGH);
+   digitalWrite(output8, LOW);
  }
   if((digitalRead(input8)) == HIGH)
  {
-   digitalWrite(output8, LOW);
+   digitalWrite(output8, HIGH);
  }
 
 }
