@@ -33,14 +33,14 @@ const int input6 = 9; // Wiper Switch
 const int input7 = 8; // Defrost Switch
 const int input8 = 7;  // Hazard Switch
                 
-
-
-
 MCP_CAN CAN0(SPI_CS_PIN);//set CS pin to 10
 
 byte drive[1] = {0xAA};
 byte neutral[1] = {0x55};
 byte reverse[1] = {0xFF};
+
+byte CANon[1] = {0xFF};
+byte CANoff[1] = {0x00};
 
 
 void setup ()
@@ -95,45 +95,13 @@ void loop() {
 
   byte sndStat;
 
-  digitalWrite(output1, HIGH);
   sndStat = CAN0.sendMsgBuf(0x420010, 1, 1, drive);
-  sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420203, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420204, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420205, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420207, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420101, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420103, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420104, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420105, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420106, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420107, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420108, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420109, 1, 1, (byte*)"\xFF");
-  sndStat = CAN0.sendMsgBuf(0x420110, 1, 1, (byte*)"\xFF");
+
+
   delay(1000);
-  digitalWrite(output1, LOW);
+
   sndStat = CAN0.sendMsgBuf(0x420010, 1, 1, neutral);
-  sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420203, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420204, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420205, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420207, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420101, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420103, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420104, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420105, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420106, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420107, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420108, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420109, 1, 1, (byte*)"\x00");
-  sndStat = CAN0.sendMsgBuf(0x420110, 1, 1, (byte*)"\x00");
+
   delay(1000);
 
  if((digitalRead(input1)) == LOW)
