@@ -9,19 +9,6 @@
 
 const int SPI_CS_PIN = 10;
 
-
-<<<<<<< Updated upstream
-const int output1 = 17; // Passenger Marker
-const int output2 = 16; //Passenger High Beam
-const int output3 = 15; //Passenger Low Beam
-const int output4 = 14; // Passenger Turn High
-const int output5 = 26; // Passenger Turn Low
-const int output6 = 25; // Driver Marker
-const int output7 = 6; //Driver High Beam
-const int output8 = 5; //Driver Low Beam
-const int output9 = 4; // Driver Turn High
-const int output10 = 3; // Driver Turn Low
-=======
 const int output1 = 17; //Front Passenger Marker
 const int output2 = 16; //Passenger High Beam
 const int output3 = 15; //Passenger Low Beam
@@ -32,7 +19,6 @@ const int output7 = 6;  //Driver High Beam
 const int output8 = 5;  //Driver Low Beam
 const int output9 = 4;  //Driver Turn High
 const int output10 = 3; //Driver Turn Low
->>>>>>> Stashed changes
 
 long unsigned int rxId;
 unsigned char len = 0;
