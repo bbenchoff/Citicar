@@ -10,16 +10,16 @@
 const int SPI_CS_PIN = 10;
 
 
-const int output1 = 17;
-const int output2 = 16;
-const int output3 = 15;
-const int output4 = 14;
-const int output5 = 26;
-const int output6 = 25;
-const int output7 = 6;
-const int output8 = 5;
-const int output9 = 4;
-const int output10 = 3;
+const int output1 = 17; // Passenger Marker
+const int output2 = 16; //Passenger High Beam
+const int output3 = 15; //Passenger Low Beam
+const int output4 = 14; // Passenger Turn High
+const int output5 = 26; // Passenger Turn Low
+const int output6 = 25; // Driver Marker
+const int output7 = 6; //Driver High Beam
+const int output8 = 5; //Driver Low Beam
+const int output9 = 4; // Driver Turn High
+const int output10 = 3; // Driver Turn Low
 
 long unsigned int rxId;
 unsigned char len = 0;
@@ -39,6 +39,8 @@ void setup ()
   if(CAN0.begin(MCP_ANY, CAN_500KBPS, MCP_8MHZ) == CAN_OK)
   {
     Serial.println("CAN Bus init successful");
+    pinMode(output1, OUTPUT);
+    digitalWrite(output1, HIGH);
   }
   else
   {
@@ -70,6 +72,8 @@ void setup ()
   digitalWrite(output8, LOW);
   digitalWrite(output9, LOW);
   digitalWrite(output10, LOW);
+
+
 
 }
 
