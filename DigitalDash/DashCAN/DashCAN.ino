@@ -105,7 +105,7 @@ void setup ()
   digitalWrite(output8, LOW);
 
   //half second-ish delay for reasons
-  delay(450);
+  delay(520);
 
   //Turn off all lights.
   sndStat = CAN0.sendMsgBuf(0x420101, 1, 1, CANoff);  //Front passenger marker
@@ -149,12 +149,15 @@ void loop() {
         // Check the state of the shift knob
         if (rxBuf[0] == 0xAA) { // 0xAA is Drive
           shiftState = 0xAA;
+          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
         } else if (rxBuf[0] == 0x55) {
           // 0x55 is Neutral
           shiftState = 0x55;
+          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
         } else if (rxBuf[0] == 0xFF) {
           // 0xFF is Reverse
           shiftState = 0xFF;
+          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
         }
       }
     }
@@ -179,8 +182,20 @@ void loop() {
   if((digitalRead(input3)) == LOW) ///High Beams
   {
     digitalWrite(output3, LOW);
+    sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANoff);  //Front passenger High beam
+    sndStat = CAN0.sendMsgBuf(0x420107, 1, 1, CANoff);  //Front Driver High beam
   } else if((digitalRead(input3)) == HIGH)
   {
+    if((digitalRead(input5)) == HIGH) //If lights are also on
+    {
+      sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANon);  //Front passenger High beam
+      sndStat = CAN0.sendMsgBuf(0x420107, 1, 1, CANon);  //Front Driver High beam
+    }
+    else if
+    {
+      sndStat = CAN0.sendMsgBuf(0x420103, 1, 1, CANon);  //Front passenger low beam
+      sndStat = CAN0.sendMsgBuf(0x420108, 1, 1, CANon);  //Front Driver Low Beam
+    }
     digitalWrite(output3, HIGH);
   }
 
