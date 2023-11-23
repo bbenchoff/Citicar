@@ -26,14 +26,23 @@ const int output5 = 26; // Light Switch MOS
 const int output6 = 25; // Wiper Switch MOS
 const int output7 = 6; // Defrost Switch MOS
 const int output8 = 5; // Hazard Switch MOS
-const int input1 = 4; // Right Blink
-const int input2 = 3; // Left Blink
-const int input3 = 0; // High Beam
-const int input4 = 19; // Brake
-const int input5 = 18; // Light Switch
-const int input6 = 9; // Wiper Switch
-const int input7 = 8; // Defrost Switch
-const int input8 = 7;  // Hazard Switch
+const int input1 = 4; // Right Blink  - PCINT20
+const int input2 = 3; // Left Blink - PCINT19
+const int input3 = 0; // High Beam - PCINT16
+const int input4 = 19; // Brake - PCINT13
+const int input5 = 18; // Light Switch - PCINT12
+const int input6 = 9; // Wiper Switch - PCINT1
+const int input7 = 8; // Defrost Switch - PCINT0
+const int input8 = 7;  // Hazard Switch - PCINT23
+
+volatile bool input1State = LOW;
+volatile bool input2State = LOW;
+volatile bool input3State = LOW;
+volatile bool input4State = LOW;
+volatile bool input5State = LOW;
+volatile bool input6State = LOW;
+volatile bool input7State = LOW;
+volatile bool input8State = LOW;
                 
 MCP_CAN CAN0(SPI_CS_PIN);//set CS pin to 10
 
@@ -86,14 +95,15 @@ void setup ()
   pinMode(output7, OUTPUT);
   pinMode(output8, OUTPUT);
   //setup optos as inputs
-  pinMode(input1, INPUT);
-  pinMode(input2, INPUT);
-  pinMode(input3, INPUT);
-  pinMode(input4, INPUT);
-  pinMode(input5, INPUT);
-  pinMode(input6, INPUT);
-  pinMode(input7, INPUT);
-  pinMode(input8, INPUT);
+  // Initialize inputs
+  pinMode(input1, INPUT_PULLUP);
+  pinMode(input2, INPUT_PULLUP);
+  pinMode(input3, INPUT_PULLUP);
+  pinMode(input4, INPUT_PULLUP);
+  pinMode(input5, INPUT_PULLUP);
+  pinMode(input6, INPUT_PULLUP);
+  pinMode(input7, INPUT_PULLUP);
+  pinMode(input8, INPUT_PULLUP);
   //Write all outputs Low
   digitalWrite(output1, LOW);
   digitalWrite(output2, LOW);
@@ -103,6 +113,26 @@ void setup ()
   digitalWrite(output6, LOW);
   digitalWrite(output7, LOW);
   digitalWrite(output8, LOW);
+
+  // Enable Pin Change Interrupts for the specified pins
+  PCICR |= (1 << PCIE0); // Enable PCIE0 for pins 0-7 (PCINT0-PCINT7)
+  PCICR |= (1 << PCIE1); // Enable PCIE1 for pins 8-15 (PCINT8-PCINT15)
+  PCICR |= (1 << PCIE2); // Enable PCIE2 for pins 16-23 (PCINT16-PCINT23)
+
+  // Set the corresponding PCMSK registers to enable PCINTs for the specific pins
+  PCMSK0 |= (1 << PCINT0) | (1 << PCINT1) | (1 << PCINT4) | (1 << PCINT5);
+  PCMSK1 |= (1 << PCINT1) | (1 << PCINT2) | (1 << PCINT3);
+  PCMSK2 |= (1 << PCINT0) | (1 << PCINT7);
+  
+  // Attach interrupt service routine to the PCINT vector
+  attachInterrupt(digitalPinToInterrupt(input1), inputChangeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input2), inputChangeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input3), inputChangeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input4), inputChangeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input5), inputChangeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input6), inputChangeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input7), inputChangeHandler, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input8), inputChangeHandler, CHANGE);
 
   //half second-ish delay for reasons
   delay(520);
@@ -237,4 +267,19 @@ ISR(TIMER1_COMPA_vect) {
 
 void BlinkerTimer() {
   blinkstate = !blinkstate;
+}
+
+// Interrupt service routine for pin changes
+void inputChangeHandler() {
+  // Update the input state flags when an input changes
+  input1State = digitalRead(input1);
+  input2State = digitalRead(input2);
+  input3State = digitalRead(input3);
+  input4State = digitalRead(input4);
+  input5State = digitalRead(input5);
+  input6State = digitalRead(input6);
+  input7State = digitalRead(input7);
+  input8State = digitalRead(input8);
+
+  // Perform actions based on the input changes here
 }
