@@ -233,4 +233,9 @@ ISR(TIMER1_COMPA_vect) {
 
 void BlinkerTimer() {
   blinkstate = !blinkstate;
+
+  if(blinkstate)
+    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
+  else
+    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
 }
