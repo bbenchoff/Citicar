@@ -5,6 +5,8 @@
 #include <avr/io.h>
 #include <util/delay.h>
 #include <SPI.h>
+#include <avr/io.h>
+#include <avr/interrupt.h>
 
 #define CAN0_INT 2      //set int pin to 2
 
@@ -16,7 +18,7 @@ unsigned char rxBuf[8];
 char msgString[128];                   
 
 
-const int output1 = 17;
+const int output1 = 17; // I might put a relay here for turn signal noise
 const int output2 = 16;
 const int output3 = 15;
 const int output4 = 14;
@@ -35,13 +37,13 @@ const int input8 = 7;  // Hazard Switch
                 
 MCP_CAN CAN0(SPI_CS_PIN);//set CS pin to 10
 
-byte drive[1] = {0xAA};
-byte neutral[1] = {0x55};
-byte reverse[1] = {0xFF};
+byte sndStat;
+byte shiftState = 0; // 0xAA: Drive, 0x55: Neutral, 0xFF: Reverse
 
 byte CANon[1] = {0xFF};
 byte CANoff[1] = {0x00};
 
+bool blinkstate = false;
 
 void setup ()
 {
@@ -57,6 +59,20 @@ void setup ()
     Serial.println("error init can bus");
   }
 
+  // Configure Timer1 to generate an interrupt every 500 ms
+  cli(); // Disable interrupts
+
+  // Set Timer1 to CTC (Clear Timer on Compare Match) mode
+  TCCR1A = 0;
+  TCCR1B = 0;
+  TCNT1 = 0; // Initialize counter value
+  OCR1A = 15624; // Set the compare match value (16MHz / 1024 / 2Hz - 1)
+  TCCR1B |= (1 << WGM12); // Enable CTC mode
+  TCCR1B |= (1 << CS12) | (1 << CS10); // Set prescaler to 1024
+  TIMSK1 |= (1 << OCIE1A); // Enable Timer1 compare match A interrupt
+
+  sei(); // Enable interrupts
+
   CAN0.setMode(MCP_NORMAL); 
   pinMode(CAN0_INT, INPUT);
 
@@ -69,7 +85,7 @@ void setup ()
   pinMode(output6, OUTPUT);
   pinMode(output7, OUTPUT);
   pinMode(output8, OUTPUT);
-
+  //setup optos as inputs
   pinMode(input1, INPUT);
   pinMode(input2, INPUT);
   pinMode(input3, INPUT);
@@ -78,8 +94,7 @@ void setup ()
   pinMode(input6, INPUT);
   pinMode(input7, INPUT);
   pinMode(input8, INPUT);
- 
-
+  //Write all outputs Low
   digitalWrite(output1, LOW);
   digitalWrite(output2, LOW);
   digitalWrite(output3, LOW);
@@ -89,91 +104,133 @@ void setup ()
   digitalWrite(output7, LOW);
   digitalWrite(output8, LOW);
 
+  //half second-ish delay for reasons
+  delay(450);
+
+  //Turn off all lights.
+  sndStat = CAN0.sendMsgBuf(0x420101, 1, 1, CANoff);  //Front passenger marker
+  sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANoff);  //Front passenger High beam
+  sndStat = CAN0.sendMsgBuf(0x420103, 1, 1, CANoff);  //Front passenger low beam
+  sndStat = CAN0.sendMsgBuf(0x420104, 1, 1, CANoff);  //Front passenger turn high
+  sndStat = CAN0.sendMsgBuf(0x420105, 1, 1, CANoff);  //Front passenger turn low
+  sndStat = CAN0.sendMsgBuf(0x420106, 1, 1, CANoff);  //Front Driver marker
+  sndStat = CAN0.sendMsgBuf(0x420107, 1, 1, CANoff);  //Front Driver High beam
+  sndStat = CAN0.sendMsgBuf(0x420108, 1, 1, CANoff);  //Front Driver Low Beam
+  sndStat = CAN0.sendMsgBuf(0x420109, 1, 1, CANoff);  //Front Driver Turn High
+  sndStat = CAN0.sendMsgBuf(0x420110, 1, 1, CANoff);  //Front Driver Turn Low
+
+  sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //Rear Driver Tail Low
+  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
+  sndStat = CAN0.sendMsgBuf(0x420203, 1, 1, CANoff);  //Rear passenger marker
+  sndStat = CAN0.sendMsgBuf(0x420204, 1, 1, CANoff);  //Rear Driver Tail High
+  sndStat = CAN0.sendMsgBuf(0x420205, 1, 1, CANoff);  //Rear Passenger Tail High
+  sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //Rear Passenger Tail Low
+  sndStat = CAN0.sendMsgBuf(0x420207, 1, 1, CANoff);  //Rear License
+  sndStat = CAN0.sendMsgBuf(0x420208, 1, 1, CANoff);  //Rear Driver marker
+
 }
 
 void loop() {
 
-  byte sndStat;
+  if(!digitalRead(CAN0_INT))
+    {
+      CAN0.readMsgBuf(&rxId, &len, rxBuf);
 
-  sndStat = CAN0.sendMsgBuf(0x420010, 1, 1, drive);
+      if((rxId & 0x80000000) == 0x80000000)     // Determine if ID is standard (11 bits) or extended (29 bits)
+        sprintf(msgString, "Extended ID: 0x%.8lX  DLC: %1d  Data:", (rxId & 0x1FFFFFFF), len);
+      else
+        sprintf(msgString, "Standard ID: 0x%.3lX       DLC: %1d  Data:", rxId, len);
+
+      if((rxId & 0x40000000) == 0x40000000){    // Determine if message is a remote request frame.
+        sprintf(msgString, " REMOTE REQUEST FRAME");
+        Serial.print(msgString);
+      } 
+      if ((rxId & 0x1FFFFFFF) == 0x420010) {
+        // Check the state of the shift knob
+        if (rxBuf[0] == 0xAA) { // 0xAA is Drive
+          shiftState = 0xAA;
+        } else if (rxBuf[0] == 0x55) {
+          // 0x55 is Neutral
+          shiftState = 0x55;
+        } else if (rxBuf[0] == 0xFF) {
+          // 0xFF is Reverse
+          shiftState = 0xFF;
+        }
+      }
+    }
 
 
-  delay(1000);
+  if((digitalRead(input1)) == LOW) /// Right Blink
+  {
+    digitalWrite(output1, LOW);
+  } else if((digitalRead(input1)) == HIGH)
+  {
+    digitalWrite(output1, HIGH);
+  }
 
-  sndStat = CAN0.sendMsgBuf(0x420010, 1, 1, neutral);
+  if((digitalRead(input2)) == LOW)  ///Left Blink
+  {
+    digitalWrite(output2, LOW);
+  } else if((digitalRead(input2)) == HIGH)
+  {
+    digitalWrite(output2, HIGH);
+  }
 
-  delay(1000);
+  if((digitalRead(input3)) == LOW) ///High Beams
+  {
+    digitalWrite(output3, LOW);
+  } else if((digitalRead(input3)) == HIGH)
+  {
+    digitalWrite(output3, HIGH);
+  }
 
- if((digitalRead(input1)) == LOW)
- {
-   digitalWrite(output1, HIGH);
- }
-  if((digitalRead(input1)) == HIGH)
- {
-   digitalWrite(output1, LOW);
- }
-
-  if((digitalRead(input2)) == LOW)
- {
-   digitalWrite(output2, HIGH);
- }
-  if((digitalRead(input2)) == HIGH)
- {
-   digitalWrite(output2, LOW);
- }
-
-   if((digitalRead(input3)) == LOW)
- {
-   digitalWrite(output3, HIGH);
- }
-  if((digitalRead(input3)) == HIGH)
- {
-   digitalWrite(output3, LOW);
- }
-
-  if((digitalRead(input4)) == LOW)
- {
-   digitalWrite(output4, HIGH);
- }
-  if((digitalRead(input4)) == HIGH)
- {
-   digitalWrite(output4, LOW);
- }
+  if((digitalRead(input4)) == LOW) ///Brake Switch
+  {
+    digitalWrite(output4, LOW);
+  } else if((digitalRead(input4)) == HIGH)
+  {
+    digitalWrite(output4, HIGH);
+  }
   
-  if((digitalRead(input5)) == LOW)
- {
-   digitalWrite(output5, LOW);
- }
-  if((digitalRead(input5)) == HIGH)
- {
-   digitalWrite(output5, HIGH);
- }
+  if((digitalRead(input5)) == LOW) ///Lights
+  {
+    digitalWrite(output5, LOW);
+  } else if((digitalRead(input5)) == HIGH)
+  {
+    digitalWrite(output5, HIGH);
+  }
 
-  if((digitalRead(input6)) == LOW)
- {
-   digitalWrite(output6, LOW);
- }
-  if((digitalRead(input6)) == HIGH)
- {
-   digitalWrite(output6, HIGH);
- }
+  if((digitalRead(input6)) == LOW) ///Wiper
+  {
+    digitalWrite(output6, LOW);
+  } else if((digitalRead(input6)) == HIGH)
+  {
+    digitalWrite(output6, HIGH);
+  }
 
-  if((digitalRead(input7)) == LOW)
- {
-   digitalWrite(output7, LOW);
- }
-  if((digitalRead(input7)) == HIGH)
- {
-   digitalWrite(output7, HIGH);
- }
+  if((digitalRead(input7)) == LOW) ///Defrost
+  {
+    digitalWrite(output7, LOW);
+  } else if((digitalRead(input7)) == HIGH)
+  {
+    digitalWrite(output7, HIGH);
+  }
 
-   if((digitalRead(input8)) == LOW)
- {
-   digitalWrite(output8, LOW);
- }
-  if((digitalRead(input8)) == HIGH)
- {
-   digitalWrite(output8, HIGH);
- }
+  if((digitalRead(input8)) == LOW) ///Hazard Lights
+  {
+    digitalWrite(output8, LOW);
+  } else if((digitalRead(input8)) == HIGH)
+  {
+    digitalWrite(output8, HIGH);
+  }
+}
 
+// Timer1 compare match A interrupt handler
+ISR(TIMER1_COMPA_vect) {
+  // This function will be called every 500 ms
+  BlinkerTimer();
+}
+
+void BlinkerTimer() {
+  blinkstate = !blinkstate;
 }
