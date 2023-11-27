@@ -178,6 +178,7 @@ void setup ()
   else
   {
     Serial.println("error init can bus");
+    writeChar('C');
   }
 
   CAN0.setMode(MCP_NORMAL); 
@@ -236,10 +237,6 @@ void loop() {
   }
   else
     writeChar('Z');
-
-  delay(100);
-
-
 }
 
 void comutacar(void)
