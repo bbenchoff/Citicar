@@ -191,7 +191,7 @@ void loop() {
       sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANon);  //Front passenger High beam
       sndStat = CAN0.sendMsgBuf(0x420107, 1, 1, CANon);  //Front Driver High beam
     }
-    else if
+    else
     {
       sndStat = CAN0.sendMsgBuf(0x420103, 1, 1, CANon);  //Front passenger low beam
       sndStat = CAN0.sendMsgBuf(0x420108, 1, 1, CANon);  //Front Driver Low Beam
@@ -249,8 +249,4 @@ ISR(TIMER1_COMPA_vect) {
 void BlinkerTimer() {
   blinkstate = !blinkstate;
 
-  if(blinkstate)
-    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
-  else
-    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
 }
