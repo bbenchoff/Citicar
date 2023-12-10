@@ -94,6 +94,7 @@ void setup ()
   pinMode(input6, INPUT);
   pinMode(input7, INPUT);
   pinMode(input8, INPUT);
+  
   //Write all outputs Low
   digitalWrite(output1, LOW);
   digitalWrite(output2, LOW);
