@@ -197,7 +197,10 @@ void loop() {
         } else if (rxBuf[0] == 0xFF) {
           // 0xFF is Reverse
           shiftState = 0xFF;
-          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
+          if(lightstate)
+          {
+            sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
+          }
           sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANon);  //DriverTailLow Light
           sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANon);  //PassengerTailLow Light
         }
@@ -244,6 +247,10 @@ void loop() {
   } else if((digitalRead(input5)) == HIGH)
   {
     lightstate = true;
+    if(shiftState == 0xFF)
+    {
+      sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
+    }
     digitalWrite(output5, HIGH);
   }
 
