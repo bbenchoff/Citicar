@@ -8,6 +8,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
+#include "BlinkingLight.h"
+
 #define CAN0_INT 2      //set int pin to 2
 
 const int SPI_CS_PIN = 10;
@@ -44,6 +46,29 @@ byte CANon[1] = {0xFF};
 byte CANoff[1] = {0x00};
 
 bool blinkstate = false;
+bool lightstate = false;
+
+// Create an instance of BlinkingLight for each blinker light
+BlinkingLight RearDriverTailLow(0x420201);
+BlinkingLight RearReverseLight(0x420202);
+BlinkingLight RearPassengerMarker(0x420203);
+BlinkingLight RearDriverTailHigh(0x420204);
+BlinkingLight RearPassengerTailHigh(0x420205);
+BlinkingLight RearPassengerTailLow(0x420206);
+BlinkingLight RearLicense(0x420207);
+BlinkingLight RearDriverMarker(0x420208);
+
+BlinkingLight FrontPassengerMarker(0x420101);
+BlinkingLight FrontPassengerHighBeam(0x420202);
+BlinkingLight FrontPassengerLowBeam(0x420203);
+BlinkingLight FrontPassengerTurnHigh(0x420204);
+BlinkingLight FrontPassengerTurnLow(0x420205);
+BlinkingLight FrontDriverMarker(0x420206);
+BlinkingLight FrontDriverHighBeam(0x420207);
+BlinkingLight FrontDriverLowBeam(0x420208);
+BlinkingLight FrontDriverTurnHigh(0x420209);
+BlinkingLight FrontDriverTurnLow(0x420210);
+
 
 void setup ()
 {
@@ -129,6 +154,16 @@ void setup ()
   sndStat = CAN0.sendMsgBuf(0x420207, 1, 1, CANoff);  //Rear License
   sndStat = CAN0.sendMsgBuf(0x420208, 1, 1, CANoff);  //Rear Driver marker
 
+  // Set up interrupts for the input pins
+  attachInterrupt(digitalPinToInterrupt(input1), handleInput1, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input2), handleInput2, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input3), handleInput3, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input4), handleInput4, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input5), handleInput5, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input6), handleInput6, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input7), handleInput7, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input8), handleInput8, CHANGE);
+
 }
 
 void loop() {
@@ -150,15 +185,21 @@ void loop() {
         // Check the state of the shift knob
         if (rxBuf[0] == 0xAA) { // 0xAA is Drive
           shiftState = 0xAA;
-          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
+          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
+          sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //DriverTailLow Light
+          sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //PassengerTailLow Light
         } else if (rxBuf[0] == 0x55) {
           // 0x55 is Neutral
           shiftState = 0x55;
-          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
+          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
+          sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //DriverTailLow Light
+          sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //PassengerTailLow Light
         } else if (rxBuf[0] == 0xFF) {
           // 0xFF is Reverse
           shiftState = 0xFF;
-          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
+          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
+          sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANon);  //DriverTailLow Light
+          sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANon);  //PassengerTailLow Light
         }
       }
     }
@@ -183,20 +224,8 @@ void loop() {
   if((digitalRead(input3)) == LOW) ///High Beams
   {
     digitalWrite(output3, LOW);
-    sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANoff);  //Front passenger High beam
-    sndStat = CAN0.sendMsgBuf(0x420107, 1, 1, CANoff);  //Front Driver High beam
   } else if((digitalRead(input3)) == HIGH)
   {
-    if((digitalRead(input5)) == HIGH) //If lights are also on
-    {
-      sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANon);  //Front passenger High beam
-      sndStat = CAN0.sendMsgBuf(0x420107, 1, 1, CANon);  //Front Driver High beam
-    }
-    else
-    {
-      sndStat = CAN0.sendMsgBuf(0x420103, 1, 1, CANon);  //Front passenger low beam
-      sndStat = CAN0.sendMsgBuf(0x420108, 1, 1, CANon);  //Front Driver Low Beam
-    }
     digitalWrite(output3, HIGH);
   }
 
@@ -210,9 +239,11 @@ void loop() {
   
   if((digitalRead(input5)) == LOW) ///Lights
   {
+    lightstate = false;
     digitalWrite(output5, LOW);
   } else if((digitalRead(input5)) == HIGH)
   {
+    lightstate = true;
     digitalWrite(output5, HIGH);
   }
 
@@ -250,4 +281,52 @@ ISR(TIMER1_COMPA_vect) {
 void BlinkerTimer() {
   blinkstate = !blinkstate;
 
+}
+
+// Interrupt service routines for each input pin
+void handleInput1() {
+    // Handle input1 change
+    //Right Blink
+    digitalWrite(output1, digitalRead(input1));
+}
+
+void handleInput2() {
+    // Handle input2 change
+    // Left Blink
+    digitalWrite(output2, digitalRead(input2));
+}
+
+void handleInput3() {
+    // Handle input3 change
+    // High Beam
+    digitalWrite(output3, digitalRead(input3));
+}
+
+void handleInput4() {
+    // Handle input4 change
+    // Brake Switch
+    digitalWrite(output4, digitalRead(input4));
+}
+
+void handleInput5() {
+    // Handle input5 change
+    //Light switch
+    digitalWrite(output5, digitalRead(input5));
+}
+
+void handleInput6() {
+    // Handle input6 change
+    // Wiper Switch
+    digitalWrite(output6, digitalRead(input6));
+}
+
+void handleInput7() {
+    // Handle input7 change
+    // Defrost Switch
+    digitalWrite(output7, digitalRead(input7));
+}
+
+void handleInput8() {
+    // Hazard Switch
+    digitalWrite(output8, digitalRead(input8));
 }

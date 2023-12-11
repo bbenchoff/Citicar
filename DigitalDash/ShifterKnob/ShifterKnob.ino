@@ -1,7 +1,6 @@
 #include <mcp_can.h>
 #include <mcp_can_dfs.h>
 
-#include <mcp_can.h>
 #include <avr/io.h>
 #include <util/delay.h>
 #include <SPI.h>
@@ -178,7 +177,8 @@ void setup ()
   else
   {
     Serial.println("error init can bus");
-    writeChar('C');
+    writeChar('Z');
+    //delay(1000);
   }
 
   CAN0.setMode(MCP_NORMAL); 
@@ -237,6 +237,8 @@ void loop() {
   }
   else
     writeChar('Z');
+
+  delay(200);
 }
 
 void comutacar(void)
