@@ -69,6 +69,55 @@ BlinkingLight FrontDriverLowBeam(0x420208);
 BlinkingLight FrontDriverTurnHigh(0x420209);
 BlinkingLight FrontDriverTurnLow(0x420210);
 
+struct LightNode {
+    unsigned long address;
+    LightNode* next;
+};
+
+LightNode* head = NULL;
+
+void addLightAddress(unsigned long address) {
+    LightNode* newNode = new LightNode(); // Create a new node
+    newNode->address = address;
+    newNode->next = head;
+    head = newNode;
+}
+
+void removeLightAddress(unsigned long address) {
+    LightNode *temp = head, *prev = NULL;
+    
+    // If head node itself holds the key to be deleted
+    if (temp != NULL && temp->address == address) {
+        head = temp->next; // Changed head
+        delete temp;       // free old head
+        return;
+    }
+
+    // Search for the key to be deleted
+    while (temp != NULL && temp->address != address) {
+        prev = temp;
+        temp = temp->next;
+    }
+
+    // If key was not present in linked list
+    if (temp == NULL) return;
+
+    // Unlink the node from linked list
+    prev->next = temp->next;
+
+    delete temp; // Free memory
+}
+
+void toggleLights() {
+    LightNode* current = head;
+    while (current != NULL) {
+        // Toggle light state here
+        byte toggleState[1] = {blinkstate ? 0xFF : 0x00};
+        sndStat = CAN0.sendMsgBuf(current->address, 1, 1, toggleState);
+        current = current->next;
+    }
+    blinkstate = !blinkstate;
+}
 
 void setup ()
 {
@@ -276,21 +325,24 @@ void loop() {
 
   if((digitalRead(input8)) == LOW) ///Hazard Lights
   {
+    removeLightAddress(0x420104);
+    removeLightAddress(0x420109);
+    removeLightAddress(0x420204);
+    removeLightAddress(0x420205);
     digitalWrite(output8, LOW);
   } else if((digitalRead(input8)) == HIGH)
   {
+    addLightAddress(0x420104);
+    addLightAddress(0x420109);
+    addLightAddress(0x420204);
+    addLightAddress(0x420205);
     digitalWrite(output8, HIGH);
   }
 }
 
 // Timer1 compare match A interrupt handler
 ISR(TIMER1_COMPA_vect) {
-  // This function will be called every 500 ms
-}
-
-void BlinkerTimer() {
-  blinkstate = !blinkstate;
-
+  toggleLights();
 }
 
 // Interrupt service routines for each input pin
