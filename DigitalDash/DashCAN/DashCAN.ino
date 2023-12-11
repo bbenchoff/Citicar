@@ -243,6 +243,10 @@ void loop() {
   if((digitalRead(input5)) == LOW) ///Lights
   {
     lightstate = false;
+    if(shiftState == 0xFF)
+    {
+      sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
+    }
     digitalWrite(output5, LOW);
   } else if((digitalRead(input5)) == HIGH)
   {
@@ -282,12 +286,6 @@ void loop() {
 // Timer1 compare match A interrupt handler
 ISR(TIMER1_COMPA_vect) {
   // This function will be called every 500 ms
-    // Toggle the blinking state of lights if left blinker is activated
-    if (digitalRead(input2) == HIGH) {
-        leftRearTailLightHigh.update(CAN0);
-        leftRearMarkerLight.update(CAN0);
-        leftFrontTurnHigh.update(CAN0);
-    }
 }
 
 void BlinkerTimer() {
