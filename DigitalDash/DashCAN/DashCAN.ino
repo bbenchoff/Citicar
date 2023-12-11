@@ -323,21 +323,13 @@ void loop() {
     digitalWrite(output7, HIGH);
   }
 
-  if((digitalRead(input8)) == LOW) ///Hazard Lights
+  /*if((digitalRead(input8)) == LOW) ///Hazard Lights
   {
-    removeLightAddress(0x420104);
-    removeLightAddress(0x420109);
-    removeLightAddress(0x420204);
-    removeLightAddress(0x420205);
     digitalWrite(output8, LOW);
   } else if((digitalRead(input8)) == HIGH)
   {
-    addLightAddress(0x420104);
-    addLightAddress(0x420109);
-    addLightAddress(0x420204);
-    addLightAddress(0x420205);
     digitalWrite(output8, HIGH);
-  }
+  }*/
 }
 
 // Timer1 compare match A interrupt handler
@@ -390,5 +382,19 @@ void handleInput7() {
 
 void handleInput8() {
     // Hazard Switch
+    if(digitalRead(input8) == LOW)
+    {
+    removeLightAddress(0x420104);
+    removeLightAddress(0x420109);
+    removeLightAddress(0x420204);
+    removeLightAddress(0x420205);
+    }
+    if(digitalRead(input8) == HIGH)
+    {
+    addLightAddress(0x420104);
+    addLightAddress(0x420109);
+    addLightAddress(0x420204);
+    addLightAddress(0x420205);
+    }
     digitalWrite(output8, digitalRead(input8));
 }
