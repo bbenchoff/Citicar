@@ -275,7 +275,12 @@ void loop() {
 // Timer1 compare match A interrupt handler
 ISR(TIMER1_COMPA_vect) {
   // This function will be called every 500 ms
-  BlinkerTimer();
+    // Toggle the blinking state of lights if left blinker is activated
+    if (digitalRead(input2) == HIGH) {
+        leftRearTailLightHigh.update(CAN0);
+        leftRearMarkerLight.update(CAN0);
+        leftFrontTurnHigh.update(CAN0);
+    }
 }
 
 void BlinkerTimer() {
