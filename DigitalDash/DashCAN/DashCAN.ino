@@ -47,6 +47,7 @@ byte CANoff[1] = {0x00};
 
 bool blinkstate = false;
 bool lightstate = false;
+bool highbeamstate = false;
 
 // Create an instance of BlinkingLight for each blinker light
 BlinkingLight RearDriverTailLow(0x420201);
@@ -235,14 +236,32 @@ void loop() {
         if (rxBuf[0] == 0xAA) { // 0xAA is Drive
           shiftState = 0xAA;
           sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
-          sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //DriverTailLow Light
-          sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //PassengerTailLow Light
+          if(lightstate)
+          {
+            
+            sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANon);  //DriverTailLow Light
+            sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANon);  //PassengerTailLow Light
+          }
+          else
+          {
+            sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
+            sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //DriverTailLow Light
+            sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //PassengerTailLow Light
+          }
         } else if (rxBuf[0] == 0x55) {
           // 0x55 is Neutral
           shiftState = 0x55;
-          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
-          sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //DriverTailLow Light
-          sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //PassengerTailLow Light
+          if(lightstate)
+          {
+            sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANon);  //DriverTailLow Light
+            sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANon);  //PassengerTailLow Light
+          }
+          else
+          {
+            sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
+            sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //DriverTailLow Light
+            sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //PassengerTailLow Light
+          }
         } else if (rxBuf[0] == 0xFF) {
           // 0xFF is Reverse
           shiftState = 0xFF;
@@ -276,9 +295,11 @@ void loop() {
   if((digitalRead(input3)) == LOW) ///High Beams
   {
     digitalWrite(output3, LOW);
+    highbeamstate = false;
   } else if((digitalRead(input3)) == HIGH)
   {
     digitalWrite(output3, HIGH);
+    highbeamstate = true;
   }
 
   if((digitalRead(input4)) == LOW) ///Brake Switch
