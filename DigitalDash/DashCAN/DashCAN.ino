@@ -169,7 +169,6 @@ void setup ()
   attachInterrupt(digitalPinToInterrupt(input7), handleInput7, CHANGE); // Defrost Switch
   attachInterrupt(digitalPinToInterrupt(input8), handleInput8, CHANGE); // Hazard Switch
 
-
 }
 
 void loop() {
@@ -283,10 +282,12 @@ void handleInput5() {
     if(digitalRead(input5) == HIGH)
     {
       lightState = 0xFF;
+      digitalWrite(output5, HIGH);
     }
     else
     {
       lightState = 0x00;
+      digitalWrite(output5, LOW);
     }
     digitalWrite(output5, digitalRead(input5));
 }
