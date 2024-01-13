@@ -209,8 +209,6 @@ ISR(TIMER1_COMPA_vect) {
   //toggleLights();
 }
 
-
-
 // Interrupt service routines for each input pin
 void handleInput1() {
     // Handle input1 change
@@ -227,7 +225,6 @@ void handleInput1() {
     {
       turnState = 0xAA;
     }
-
     digitalWrite(output1, digitalRead(input1));
 }
 
