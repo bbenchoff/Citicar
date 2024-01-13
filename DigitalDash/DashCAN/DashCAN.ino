@@ -19,7 +19,7 @@ unsigned char len = 0;
 unsigned char rxBuf[8];
 char msgString[128];          
 
-bool lightstate;
+
 
 const int output1 = 17; // I might put a relay here for turn signal noise
 const int output2 = 16;
@@ -136,7 +136,7 @@ void setup ()
   digitalWrite(output8, LOW);
 
   //half second-ish delay for reasons
-  delay(520);
+  delay(420);
 
   //Turn off all lights.
   sndStat = CAN0.sendMsgBuf(0x420101, 1, 1, CANoff);  //Front passenger marker
@@ -191,122 +191,17 @@ void loop() {
         // Check the state of the shift knob
         if (rxBuf[0] == 0xAA) { // 0xAA is Drive
           shiftState = 0xAA;
-          sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
-          if(lightstate)
-          {
-            
-            sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANon);  //DriverTailLow Light
-            sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANon);  //PassengerTailLow Light
-          }
-          else
-          {
-            sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
-            sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //DriverTailLow Light
-            sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //PassengerTailLow Light
-          }
-        } else if (rxBuf[0] == 0x55) {
+        }
+        else if (rxBuf[0] == 0x55) {
           // 0x55 is Neutral
           shiftState = 0x55;
-          if(lightstate)
-          {
-            sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANon);  //DriverTailLow Light
-            sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANon);  //PassengerTailLow Light
-          }
-          else
-          {
-            sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);  //Reverse Light
-            sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANoff);  //DriverTailLow Light
-            sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //PassengerTailLow Light
-          }
-        } else if (rxBuf[0] == 0xFF) {
+        } 
+        else if (rxBuf[0] == 0xFF) {
           // 0xFF is Reverse
           shiftState = 0xFF;
-          if(lightstate)
-          {
-            sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);  //Reverse Light
-          }
-          sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANon);  //DriverTailLow Light
-          sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANon);  //PassengerTailLow Light
         }
       }
     }
-
-
-  if((digitalRead(input1)) == LOW) /// Right Blink
-  {
-    digitalWrite(output1, LOW);
-  } else if((digitalRead(input1)) == HIGH)
-  {
-    digitalWrite(output1, HIGH);
-  }
-
-  if((digitalRead(input2)) == LOW)  ///Left Blink
-  {
-    digitalWrite(output2, LOW);
-  } else if((digitalRead(input2)) == HIGH)
-  {
-    digitalWrite(output2, HIGH);
-  }
-
-  if((digitalRead(input3)) == LOW) ///High Beams
-  {
-    digitalWrite(output3, LOW);
-    highState = 0x00;
-  } else if((digitalRead(input3)) == HIGH)
-  {
-    digitalWrite(output3, HIGH);
-    highState = 0xFF;
-  }
-
-  if((digitalRead(input4)) == LOW) ///Brake Switch
-  {
-    digitalWrite(output4, LOW);
-  } else if((digitalRead(input4)) == HIGH)
-  {
-    digitalWrite(output4, HIGH);
-  }
-  
-  if((digitalRead(input5)) == LOW) ///Lights
-  {
-    lightstate = false;
-    if(shiftState == 0xFF)
-    {
-      sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
-    }
-    digitalWrite(output5, LOW);
-  } else if((digitalRead(input5)) == HIGH)
-  {
-    lightstate = true;
-    if(shiftState == 0xFF)
-    {
-      sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
-    }
-    digitalWrite(output5, HIGH);
-  }
-
-  if((digitalRead(input6)) == LOW) ///Wiper
-  {
-    digitalWrite(output6, LOW);
-  } else if((digitalRead(input6)) == HIGH)
-  {
-    digitalWrite(output6, HIGH);
-  }
-
-  if((digitalRead(input7)) == LOW) ///Defrost
-  {
-    digitalWrite(output7, LOW);
-  } else if((digitalRead(input7)) == HIGH)
-  {
-    digitalWrite(output7, HIGH);
-  }
-
-  /*if((digitalRead(input8)) == LOW) ///Hazard Lights
-  {
-    digitalWrite(output8, LOW);
-  } else if((digitalRead(input8)) == HIGH)
-  {
-    digitalWrite(output8, HIGH);
-  }*/
 }
 
 // Timer1 compare match A interrupt handler
