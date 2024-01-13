@@ -17,8 +17,9 @@ const int SPI_CS_PIN = 10;
 long unsigned int rxId;
 unsigned char len = 0;
 unsigned char rxBuf[8];
-char msgString[128];                   
+char msgString[128];          
 
+bool lightstate;
 
 const int output1 = 17; // I might put a relay here for turn signal noise
 const int output2 = 16;
@@ -41,13 +42,16 @@ MCP_CAN CAN0(SPI_CS_PIN);//set CS pin to 10
 
 byte sndStat;
 byte shiftState = 0; // 0xAA: Drive, 0x55: Neutral, 0xFF: Reverse
+byte turnState = 0xAA; // 0x55 = Left 0xAA = No Turn, 0xFF = Right
+byte highState = 0x00; // 0x00 = off, 0xFF = on
+byte lightState = 0x00; // 0x00 = off, 0xFF = on
+byte wiperState = 0x00; //0x00 = off, 0xFF = on
+byte defrostState = 0x00; //0x00 = off, 0xFF = on
+byte hazardState = 0x00; //0x00 = off, 0xFF = on
+byte brakeState = 0x00; //0x00 = off, 0xFF = on
 
 byte CANon[1] = {0xFF};
 byte CANoff[1] = {0x00};
-
-bool blinkstate = false;
-bool lightstate = false;
-bool highbeamstate = false;
 
 // Create an instance of BlinkingLight for each blinker light
 BlinkingLight RearDriverTailLow(0x420201);
@@ -70,55 +74,6 @@ BlinkingLight FrontDriverLowBeam(0x420208);
 BlinkingLight FrontDriverTurnHigh(0x420209);
 BlinkingLight FrontDriverTurnLow(0x420210);
 
-struct LightNode {
-    unsigned long address;
-    LightNode* next;
-};
-
-LightNode* head = NULL;
-
-void addLightAddress(unsigned long address) {
-    LightNode* newNode = new LightNode(); // Create a new node
-    newNode->address = address;
-    newNode->next = head;
-    head = newNode;
-}
-
-void removeLightAddress(unsigned long address) {
-    LightNode *temp = head, *prev = NULL;
-    
-    // If head node itself holds the key to be deleted
-    if (temp != NULL && temp->address == address) {
-        head = temp->next; // Changed head
-        delete temp;       // free old head
-        return;
-    }
-
-    // Search for the key to be deleted
-    while (temp != NULL && temp->address != address) {
-        prev = temp;
-        temp = temp->next;
-    }
-
-    // If key was not present in linked list
-    if (temp == NULL) return;
-
-    // Unlink the node from linked list
-    prev->next = temp->next;
-
-    delete temp; // Free memory
-}
-
-void toggleLights() {
-    LightNode* current = head;
-    while (current != NULL) {
-        // Toggle light state here
-        byte toggleState[1] = {blinkstate ? 0xFF : 0x00};
-        sndStat = CAN0.sendMsgBuf(current->address, 1, 1, toggleState);
-        current = current->next;
-    }
-    blinkstate = !blinkstate;
-}
 
 void setup ()
 {
@@ -205,14 +160,15 @@ void setup ()
   sndStat = CAN0.sendMsgBuf(0x420208, 1, 1, CANoff);  //Rear Driver marker
 
   // Set up interrupts for the input pins
-  attachInterrupt(digitalPinToInterrupt(input1), handleInput1, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(input2), handleInput2, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(input3), handleInput3, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(input4), handleInput4, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(input5), handleInput5, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(input6), handleInput6, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(input7), handleInput7, CHANGE);
-  attachInterrupt(digitalPinToInterrupt(input8), handleInput8, CHANGE);
+  attachInterrupt(digitalPinToInterrupt(input1), handleInput1, CHANGE); // Right Blink
+  attachInterrupt(digitalPinToInterrupt(input2), handleInput2, CHANGE); // Left Blink
+  attachInterrupt(digitalPinToInterrupt(input3), handleInput3, CHANGE); // High Beam
+  attachInterrupt(digitalPinToInterrupt(input4), handleInput4, CHANGE); // Brake
+  attachInterrupt(digitalPinToInterrupt(input5), handleInput5, CHANGE); // Light Switch
+  attachInterrupt(digitalPinToInterrupt(input6), handleInput6, CHANGE); // Wiper Switch
+  attachInterrupt(digitalPinToInterrupt(input7), handleInput7, CHANGE); // Defrost Switch
+  attachInterrupt(digitalPinToInterrupt(input8), handleInput8, CHANGE); // Hazard Switch
+
 
 }
 
@@ -295,11 +251,11 @@ void loop() {
   if((digitalRead(input3)) == LOW) ///High Beams
   {
     digitalWrite(output3, LOW);
-    highbeamstate = false;
+    highState = 0x00;
   } else if((digitalRead(input3)) == HIGH)
   {
     digitalWrite(output3, HIGH);
-    highbeamstate = true;
+    highState = 0xFF;
   }
 
   if((digitalRead(input4)) == LOW) ///Brake Switch
@@ -355,67 +311,128 @@ void loop() {
 
 // Timer1 compare match A interrupt handler
 ISR(TIMER1_COMPA_vect) {
-  toggleLights();
+  //toggleLights();
 }
+
+
 
 // Interrupt service routines for each input pin
 void handleInput1() {
     // Handle input1 change
     //Right Blink
+    if(digitalRead(input1) == HIGH)
+    {
+      turnState = 0xFF;
+    }
+    else if(digitalRead(input2) == HIGH)
+    {
+      turnState = 0x55;
+    }
+    else
+    {
+      turnState = 0xAA;
+    }
+
     digitalWrite(output1, digitalRead(input1));
 }
 
 void handleInput2() {
     // Handle input2 change
     // Left Blink
+    if(digitalRead(input1) == HIGH)
+    {
+      turnState = 0xFF;
+    }
+    else if(digitalRead(input2) == HIGH)
+    {
+      turnState = 0x55;
+    }
+    else
+    {
+      turnState = 0xAA;
+    }
     digitalWrite(output2, digitalRead(input2));
 }
 
 void handleInput3() {
     // Handle input3 change
     // High Beam
+    if(digitalRead(input3) == HIGH)
+    {
+      highState = 0xFF;
+    }
+    else
+    {
+      highState = 0x00;
+    }
     digitalWrite(output3, digitalRead(input3));
 }
 
 void handleInput4() {
     // Handle input4 change
     // Brake Switch
+    if(digitalRead(input4) == HIGH)
+    {
+      brakeState = 0xFF;
+    }
+    else
+    {
+      brakeState = 0x00;
+    }
     digitalWrite(output4, digitalRead(input4));
 }
 
 void handleInput5() {
     // Handle input5 change
     //Light switch
+    if(digitalRead(input5) == HIGH)
+    {
+      lightState = 0xFF;
+    }
+    else
+    {
+      lightState = 0x00;
+    }
     digitalWrite(output5, digitalRead(input5));
 }
 
 void handleInput6() {
     // Handle input6 change
     // Wiper Switch
+    if(digitalRead(input6) == HIGH)
+    {
+      wiperState = 0xFF;
+    }
+    else
+    {
+      wiperState = 0x00;
+    }
     digitalWrite(output6, digitalRead(input6));
 }
 
 void handleInput7() {
     // Handle input7 change
     // Defrost Switch
+    if(digitalRead(input7) == HIGH)
+    {
+      defrostState = 0xFF;
+    }
+    else
+    {
+      defrostState = 0x00;
+    }
     digitalWrite(output7, digitalRead(input7));
 }
 
 void handleInput8() {
     // Hazard Switch
-    if(digitalRead(input8) == LOW)
-    {
-    removeLightAddress(0x420104);
-    removeLightAddress(0x420109);
-    removeLightAddress(0x420204);
-    removeLightAddress(0x420205);
-    }
     if(digitalRead(input8) == HIGH)
     {
-    addLightAddress(0x420104);
-    addLightAddress(0x420109);
-    addLightAddress(0x420204);
-    addLightAddress(0x420205);
+      hazardState = 0xFF;
+    }
+    else
+    {
+      hazardState = 0x00;
     }
     digitalWrite(output8, digitalRead(input8));
 }

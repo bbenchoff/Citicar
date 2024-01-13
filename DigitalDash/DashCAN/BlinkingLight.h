@@ -3,6 +3,9 @@
 
 #include <Arduino.h>
 #include <mcp_can.h>
+#include <mcp_can_dfs.h>
+
+#include <mcp_can.h>
 
 struct BlinkingLight {
     uint32_t canId;  // CAN ID for the light
