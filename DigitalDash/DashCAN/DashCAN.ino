@@ -176,7 +176,7 @@ void loop()
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
   else
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
-
+//
   delay(100);
 
 }
