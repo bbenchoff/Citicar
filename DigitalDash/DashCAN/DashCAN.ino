@@ -19,8 +19,6 @@ unsigned char len = 0;
 unsigned char rxBuf[8];
 char msgString[128];          
 
-
-
 const int output1 = 17; // I might put a relay here for turn signal noise
 const int output2 = 16;
 const int output3 = 15;
@@ -41,14 +39,15 @@ const int input8 = 7;  // Hazard Switch
 MCP_CAN CAN0(SPI_CS_PIN);//set CS pin to 10
 
 byte sndStat;
-byte shiftState = 0; // 0xAA: Drive, 0x55: Neutral, 0xFF: Reverse
-byte turnState = 0xAA; // 0x55 = Left 0xAA = No Turn, 0xFF = Right
-byte highState = 0x00; // 0x00 = off, 0xFF = on
-byte lightState = 0x00; // 0x00 = off, 0xFF = on
-byte wiperState = 0x00; //0x00 = off, 0xFF = on
-byte defrostState = 0x00; //0x00 = off, 0xFF = on
-byte hazardState = 0x00; //0x00 = off, 0xFF = on
-byte brakeState = 0x00; //0x00 = off, 0xFF = on
+volatile byte shiftState = 0; // 0xAA: Drive, 0x55: Neutral, 0xFF: Reverse
+volatile byte turnState = 0xAA; // 0x55 = Left 0xAA = No Turn, 0xFF = Right
+volatile byte highState = 0x00; // 0x00 = off, 0xFF = on
+volatile byte lightState = 0x00; // 0x00 = off, 0xFF = on
+volatile byte wiperState = 0x00; //0x00 = off, 0xFF = on
+volatile byte defrostState = 0x00; //0x00 = off, 0xFF = on
+volatile byte hazardState = 0x00; //0x00 = off, 0xFF = on
+volatile byte brakeState = 0x00; //0x00 = off, 0xFF = on
+volatile bool blinkState = false;
 
 byte CANon[1] = {0xFF};
 byte CANoff[1] = {0x00};
@@ -168,46 +167,53 @@ void setup ()
   attachInterrupt(digitalPinToInterrupt(input6), handleInput6, CHANGE); // Wiper Switch
   attachInterrupt(digitalPinToInterrupt(input7), handleInput7, CHANGE); // Defrost Switch
   attachInterrupt(digitalPinToInterrupt(input8), handleInput8, CHANGE); // Hazard Switch
-
+  attachInterrupt(digitalPinToInterrupt(CAN0_INT), canInterrupt, FALLING); //CAN interrupt
 }
 
-void loop() {
+void loop() 
+{
+  if(shiftState == 0xFF)
+    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
+  else
+    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
 
-  if(!digitalRead(CAN0_INT))
-    {
-      CAN0.readMsgBuf(&rxId, &len, rxBuf);
+  delay(100);
 
-      if((rxId & 0x80000000) == 0x80000000)     // Determine if ID is standard (11 bits) or extended (29 bits)
-        sprintf(msgString, "Extended ID: 0x%.8lX  DLC: %1d  Data:", (rxId & 0x1FFFFFFF), len);
-      else
-        sprintf(msgString, "Standard ID: 0x%.3lX       DLC: %1d  Data:", rxId, len);
-
-      if((rxId & 0x40000000) == 0x40000000){    // Determine if message is a remote request frame.
-        sprintf(msgString, " REMOTE REQUEST FRAME");
-        Serial.print(msgString);
-      } 
-      if ((rxId & 0x1FFFFFFF) == 0x420010) {
-        // Check the state of the shift knob
-        if (rxBuf[0] == 0xAA) { // 0xAA is Drive
-          shiftState = 0xAA;
-        }
-        else if (rxBuf[0] == 0x55) {
-          // 0x55 is Neutral
-          shiftState = 0x55;
-        } 
-        else if (rxBuf[0] == 0xFF) {
-          // 0xFF is Reverse
-          shiftState = 0xFF;
-        }
-      }
-    }
 }
 
 // Timer1 compare match A interrupt handler
 ISR(TIMER1_COMPA_vect) {
-  //toggleLights();
+  blinkState = !blinkState;
 }
 
+
+void canInterrupt() {
+  CAN0.readMsgBuf(&rxId, &len, rxBuf);
+
+  if((rxId & 0x80000000) == 0x80000000)     // Determine if ID is standard (11 bits) or extended (29 bits)
+    //sprintf(msgString, "Extended ID: 0x%.8lX  DLC: %1d  Data:", (rxId & 0x1FFFFFFF), len);
+  //else
+    //sprintf(msgString, "Standard ID: 0x%.3lX       DLC: %1d  Data:", rxId, len);
+
+  if((rxId & 0x40000000) == 0x40000000){    // Determine if message is a remote request frame.
+    //sprintf(msgString, " REMOTE REQUEST FRAME");
+    //Serial.print(msgString);
+  } 
+  if ((rxId & 0x1FFFFFFF) == 0x420010) {
+    // Check the state of the shift knob
+    if (rxBuf[0] == 0xAA) { // 0xAA is Drive
+      shiftState = 0xAA;
+    }
+    else if (rxBuf[0] == 0x55) {
+      // 0x55 is Neutral
+      shiftState = 0x55;
+    } 
+    else if (rxBuf[0] == 0xFF) {
+      // 0xFF is Reverse
+      shiftState = 0xFF;
+    }
+  }
+}
 
 
 // Interrupt service routines for each input pin
@@ -217,18 +223,14 @@ void handleInput1() {
     if(digitalRead(input1) == HIGH)
     {
       turnState = 0xFF;
-      digitalWrite(ouput1, HIGH);
     }
     else if(digitalRead(input2) == HIGH)
     {
       turnState = 0x55;
-      digitalWrite(ouput2, HIGH);
     }
-    else if((digitalRead(input1) == LOW) && (digitalRead(input2) == LOW))
+    else
     {
       turnState = 0xAA;
-      digitalWrite(ouput2, LOW);
-      digitalWrite(ouput1, LOW);
     }
 }
 
@@ -238,18 +240,14 @@ void handleInput2() {
     if(digitalRead(input1) == HIGH)
     {
       turnState = 0xFF;
-      digitalWrite(ouput1, HIGH);
     }
     else if(digitalRead(input2) == HIGH)
     {
       turnState = 0x55;
-      digitalWrite(ouput2, HIGH);
     }
-    else if((digitalRead(input1) == LOW) && (digitalRead(input2) == LOW))
+    else
     {
       turnState = 0xAA;
-      digitalWrite(ouput2, LOW);
-      digitalWrite(ouput1, LOW);
     }
 }
 
@@ -260,11 +258,10 @@ void handleInput3() {
     {
       highState = 0xFF;
     }
-    else if((digitalRead(input1) == LOW) && (digitalRead(input2) == LOW))
+    else
     {
       highState = 0x00;
     }
-    digitalWrite(output3, digitalRead(input3));
 }
 
 void handleInput4() {
@@ -278,7 +275,6 @@ void handleInput4() {
     {
       brakeState = 0x00;
     }
-    digitalWrite(output4, digitalRead(input4));
 }
 
 void handleInput5() {
@@ -287,12 +283,10 @@ void handleInput5() {
     if(digitalRead(input5) == HIGH)
     {
       lightState = 0xFF;
-      digitalWrite(output5, HIGH);
     }
     else
     {
       lightState = 0x00;
-      digitalWrite(output5, LOW);
     }
 }
 
@@ -307,7 +301,6 @@ void handleInput6() {
     {
       wiperState = 0x00;
     }
-    digitalWrite(output6, digitalRead(input6));
 }
 
 void handleInput7() {
@@ -321,7 +314,6 @@ void handleInput7() {
     {
       defrostState = 0x00;
     }
-    digitalWrite(output7, digitalRead(input7));
 }
 
 void handleInput8() {
@@ -334,5 +326,4 @@ void handleInput8() {
     {
       hazardState = 0x00;
     }
-    digitalWrite(output8, digitalRead(input8));
 }
