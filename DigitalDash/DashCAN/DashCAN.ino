@@ -167,16 +167,52 @@ void setup ()
   attachInterrupt(digitalPinToInterrupt(input6), handleInput6, CHANGE); // Wiper Switch
   attachInterrupt(digitalPinToInterrupt(input7), handleInput7, CHANGE); // Defrost Switch
   attachInterrupt(digitalPinToInterrupt(input8), handleInput8, CHANGE); // Hazard Switch
-  attachInterrupt(digitalPinToInterrupt(CAN0_INT), canInterrupt, FALLING); //CAN interrupt
 }
 
 void loop() 
 {
+  /*
+  * No you can't put the CAN interrupt in an ISR because dumb shit happens
+  */
+  if(!digitalRead(CAN0_INT))
+  {
+    CAN0.readMsgBuf(&rxId, &len, rxBuf);
+
+    if((rxId & 0x80000000) == 0x80000000)     // Determine if ID is standard (11 bits) or extended (29 bits)
+      //sprintf(msgString, "Extended ID: 0x%.8lX  DLC: %1d  Data:", (rxId & 0x1FFFFFFF), len);
+    //else
+      //sprintf(msgString, "Standard ID: 0x%.3lX       DLC: %1d  Data:", rxId, len);
+
+    if((rxId & 0x40000000) == 0x40000000){    // Determine if message is a remote request frame.
+      //sprintf(msgString, " REMOTE REQUEST FRAME");
+      //Serial.print(msgString);
+    } 
+    if ((rxId & 0x1FFFFFFF) == 0x420010) {
+      // Check the state of the shift knob
+      if (rxBuf[0] == 0xAA) { // 0xAA is Drive
+        shiftState = 0xAA;
+      }
+      else if (rxBuf[0] == 0x55) {
+        // 0x55 is Neutral
+        shiftState = 0x55;
+      } 
+      else if (rxBuf[0] == 0xFF) {
+        // 0xFF is Reverse
+        shiftState = 0xFF;
+      }
+    }
+  }
+
+  /*
+  * Now, state machine shit
+  */
+
+
   if(shiftState == 0xFF)
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
   else
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
-//
+
   delay(100);
 
 }
@@ -185,36 +221,6 @@ void loop()
 ISR(TIMER1_COMPA_vect) {
   blinkState = !blinkState;
 }
-
-
-void canInterrupt() {
-  CAN0.readMsgBuf(&rxId, &len, rxBuf);
-
-  if((rxId & 0x80000000) == 0x80000000)     // Determine if ID is standard (11 bits) or extended (29 bits)
-    //sprintf(msgString, "Extended ID: 0x%.8lX  DLC: %1d  Data:", (rxId & 0x1FFFFFFF), len);
-  //else
-    //sprintf(msgString, "Standard ID: 0x%.3lX       DLC: %1d  Data:", rxId, len);
-
-  if((rxId & 0x40000000) == 0x40000000){    // Determine if message is a remote request frame.
-    //sprintf(msgString, " REMOTE REQUEST FRAME");
-    //Serial.print(msgString);
-  } 
-  if ((rxId & 0x1FFFFFFF) == 0x420010) {
-    // Check the state of the shift knob
-    if (rxBuf[0] == 0xAA) { // 0xAA is Drive
-      shiftState = 0xAA;
-    }
-    else if (rxBuf[0] == 0x55) {
-      // 0x55 is Neutral
-      shiftState = 0x55;
-    } 
-    else if (rxBuf[0] == 0xFF) {
-      // 0xFF is Reverse
-      shiftState = 0xFF;
-    }
-  }
-}
-
 
 // Interrupt service routines for each input pin
 void handleInput1() {
