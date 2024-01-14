@@ -217,17 +217,19 @@ void handleInput1() {
     if(digitalRead(input1) == HIGH)
     {
       turnState = 0xFF;
+      digitalWrite(ouput1, HIGH);
     }
     else if(digitalRead(input2) == HIGH)
     {
       turnState = 0x55;
+      digitalWrite(ouput2, HIGH);
     }
-    else
+    else if((digitalRead(input1) == LOW) && (digitalRead(input2) == LOW))
     {
       turnState = 0xAA;
+      digitalWrite(ouput2, LOW);
+      digitalWrite(ouput1, LOW);
     }
-
-    digitalWrite(output1, digitalRead(input1));
 }
 
 void handleInput2() {
@@ -236,16 +238,19 @@ void handleInput2() {
     if(digitalRead(input1) == HIGH)
     {
       turnState = 0xFF;
+      digitalWrite(ouput1, HIGH);
     }
     else if(digitalRead(input2) == HIGH)
     {
       turnState = 0x55;
+      digitalWrite(ouput2, HIGH);
     }
-    else
+    else if((digitalRead(input1) == LOW) && (digitalRead(input2) == LOW))
     {
       turnState = 0xAA;
+      digitalWrite(ouput2, LOW);
+      digitalWrite(ouput1, LOW);
     }
-    digitalWrite(output2, digitalRead(input2));
 }
 
 void handleInput3() {
@@ -255,7 +260,7 @@ void handleInput3() {
     {
       highState = 0xFF;
     }
-    else
+    else if((digitalRead(input1) == LOW) && (digitalRead(input2) == LOW))
     {
       highState = 0x00;
     }
