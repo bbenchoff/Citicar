@@ -294,7 +294,6 @@ void handleInput5() {
       lightState = 0x00;
       digitalWrite(output5, LOW);
     }
-    digitalWrite(output5, digitalRead(input5));
 }
 
 void handleInput6() {
