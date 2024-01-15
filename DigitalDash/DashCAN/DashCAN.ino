@@ -309,11 +309,11 @@ void handleInput5() {
     //Light switch
     if(digitalRead(input5) == HIGH)
     {
-      lightState = 0xFF;
+      lightState = 0x00;
     }
     else
     {
-      lightState = 0x00;
+      lightState = 0xFF;
     }
 }
 
@@ -322,11 +322,11 @@ void handleInput6() {
     // Wiper Switch
     if(digitalRead(input6) == HIGH)
     {
-      wiperState = 0xFF;
+      wiperState = 0x00;
     }
     else
     {
-      wiperState = 0x00;
+      wiperState = 0xFF;
     }
 }
 
@@ -335,11 +335,11 @@ void handleInput7() {
     // Defrost Switch
     if(digitalRead(input7) == HIGH)
     {
-      defrostState = 0xFF;
+      defrostState = 0x00;
     }
     else
     {
-      defrostState = 0x00;
+      defrostState = 0xFF;
     }
 }
 
@@ -347,10 +347,10 @@ void handleInput8() {
     // Hazard Switch
     if(digitalRead(input8) == HIGH)
     {
-      hazardState = 0xFF;
+      hazardState = 0x00;
     }
     else
     {
-      hazardState = 0x00;
+      hazardState = 0xFF;
     }
 }
