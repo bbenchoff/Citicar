@@ -228,20 +228,22 @@ void handleSwitches(void)
   //Handle the blink stuff / variable turnState
   //// 0x55 = Left 0xAA = No Turn, 0xFF = Right
   // Right blink = input1, left blink = input2
-  if(digitalRead(input1) == HIGH)
-  {
-    digitalWrite(output1, HIGH);
-    turnState = 0xFF;
-  }
-  if(digitalRead(input2) == HIGH)
-  {
-    digitalWrite(output2, HIGH);
-    turnState = 0x55;
-  }
-  if((digitalRead(input1) == LOW) && (digitalRead(input2) == LOW))
+  if(digitalRead(input1) == LOW)
   {
     digitalWrite(output1, LOW);
+    digitalWrite(output2, HIGH);
+    turnState = 0xFF;
+  }
+  if(digitalRead(input2) == LOW)
+  {
     digitalWrite(output2, LOW);
+    digitalWrite(output1, HIGH);
+    turnState = 0x55;
+  }
+  if((digitalRead(input1) == HIGH) && (digitalRead(input2) == HIGH))
+  {
+    digitalWrite(output1, HIGH);
+    digitalWrite(output2, HIGH);
     turnState = 0xAA;
   }
 
@@ -249,23 +251,23 @@ void handleSwitches(void)
   if(digitalRead(input3) == HIGH)
   {
     digitalWrite(output3, HIGH);
-    highState = 0xFF;
+    highState = 0x00;
   }
   else
   {
     digitalWrite(output3, LOW);
-    highState = 0x00;
+    highState = 0xFF;
   }
 
   if(digitalRead(input4) == HIGH)
   {
     digitalWrite(output4, HIGH);
-    brakeState = 0xFF;
+    brakeState = 0x00;
   }
   else
   {
     digitalWrite(output4, LOW);
-    brakeState = 0x00;
+    brakeState = 0xFF;
   }
 
   if(digitalRead(input5) == HIGH)
