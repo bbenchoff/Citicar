@@ -199,6 +199,12 @@ void loop()
   // out into its own function for clarity.
   handleSwitches();
 
+  //This was here for testing
+  if(shiftState == 0xFF)
+    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
+  else
+    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff); 
+
   /*
   * Now, state machine shit
   */
