@@ -130,7 +130,7 @@ void setup ()
   digitalWrite(output2, LOW);
   digitalWrite(output3, LOW);
   digitalWrite(output4, LOW);
-  digitalWrite(output5, LOW);
+  digitalWrite(output5, HIGH);
   digitalWrite(output6, LOW);
   digitalWrite(output7, LOW);
   digitalWrite(output8, LOW);
@@ -160,6 +160,7 @@ void setup ()
   sndStat = CAN0.sendMsgBuf(0x420208, 1, 1, CANoff);  //Rear Driver marker
 
   // Set up interrupts for the input pins
+  /*
   attachInterrupt(digitalPinToInterrupt(input1), handleInput1, CHANGE); // Right Blink
   attachInterrupt(digitalPinToInterrupt(input2), handleInput2, CHANGE); // Left Blink
   attachInterrupt(digitalPinToInterrupt(input3), handleInput3, CHANGE); // High Beam
@@ -168,6 +169,7 @@ void setup ()
   attachInterrupt(digitalPinToInterrupt(input6), handleInput6, CHANGE); // Wiper Switch
   attachInterrupt(digitalPinToInterrupt(input7), handleInput7, CHANGE); // Defrost Switch
   attachInterrupt(digitalPinToInterrupt(input8), handleInput8, CHANGE); // Hazard Switch
+  */
 }
 
 void loop() 
@@ -214,25 +216,15 @@ void loop()
   else
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
 
-  if(lightState == 0xFF)
+  if(digitalRead(input5))
+  {
     digitalWrite(output5, HIGH);
+    lightState = 0xFF;
+  }
   else
     digitalWrite(output5, LOW);
+    lightState = 0x00;
 
-  if(wiperState == 0xFF)
-    digitalWrite(output6, HIGH);
-  else
-    digitalWrite(output6, LOW);
-
-  if(defrostState == 0xFF)
-    digitalWrite(output7, HIGH);
-  else
-    digitalWrite(output7, LOW);
-
-  if(hazardState == 0xFF)
-    digitalWrite(output8, HIGH);
-  else
-    digitalWrite(output8, LOW);
 
   delay(100);
 
