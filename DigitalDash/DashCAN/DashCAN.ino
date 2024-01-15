@@ -39,6 +39,7 @@ const int input8 = 7;  // Hazard Switch
 MCP_CAN CAN0(SPI_CS_PIN);//set CS pin to 10
 
 byte sndStat;
+
 volatile byte shiftState = 0; // 0xAA: Drive, 0x55: Neutral, 0xFF: Reverse
 volatile byte turnState = 0xAA; // 0x55 = Left 0xAA = No Turn, 0xFF = Right
 volatile byte highState = 0x00; // 0x00 = off, 0xFF = on
@@ -212,6 +213,26 @@ void loop()
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
   else
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
+
+  if(lightState == 0xFF)
+    digitalWrite(output5, HIGH);
+  else
+    digitalWrite(output5, LOW);
+
+  if(wiperState == 0xFF)
+    digitalWrite(output6, HIGH);
+  else
+    digitalWrite(output6, LOW);
+
+  if(defrostState == 0xFF)
+    digitalWrite(output7, HIGH);
+  else
+    digitalWrite(output7, LOW);
+
+  if(hazardState == 0xFF)
+    digitalWrite(output8, HIGH);
+  else
+    digitalWrite(output8, LOW);
 
   delay(100);
 
