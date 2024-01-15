@@ -130,7 +130,7 @@ void setup ()
   digitalWrite(output2, LOW);
   digitalWrite(output3, LOW);
   digitalWrite(output4, LOW);
-  digitalWrite(output5, HIGH);
+  digitalWrite(output5, LOW);
   digitalWrite(output6, LOW);
   digitalWrite(output7, LOW);
   digitalWrite(output8, LOW);
@@ -158,18 +158,6 @@ void setup ()
   sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANoff);  //Rear Passenger Tail Low
   sndStat = CAN0.sendMsgBuf(0x420207, 1, 1, CANoff);  //Rear License
   sndStat = CAN0.sendMsgBuf(0x420208, 1, 1, CANoff);  //Rear Driver marker
-
-  // Set up interrupts for the input pins
-  /*
-  attachInterrupt(digitalPinToInterrupt(input1), handleInput1, CHANGE); // Right Blink
-  attachInterrupt(digitalPinToInterrupt(input2), handleInput2, CHANGE); // Left Blink
-  attachInterrupt(digitalPinToInterrupt(input3), handleInput3, CHANGE); // High Beam
-  attachInterrupt(digitalPinToInterrupt(input4), handleInput4, CHANGE); // Brake
-  attachInterrupt(digitalPinToInterrupt(input5), handleInput5, CHANGE); // Light Switch
-  attachInterrupt(digitalPinToInterrupt(input6), handleInput6, CHANGE); // Wiper Switch
-  attachInterrupt(digitalPinToInterrupt(input7), handleInput7, CHANGE); // Defrost Switch
-  attachInterrupt(digitalPinToInterrupt(input8), handleInput8, CHANGE); // Hazard Switch
-  */
 }
 
 void loop() 
@@ -206,28 +194,16 @@ void loop()
     }
   }
 
+  // Now, handle the position of the turn stalk
+  // and the dashboard buttons. This is broken 
+  // out into its own function for clarity.
+  handleSwitches();
+
   /*
   * Now, state machine shit
   */
 
-
-  if(shiftState == 0xFF)
-    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
-  else
-    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
-
-  if(digitalRead(input5))
-  {
-    digitalWrite(output5, HIGH);
-    lightState = 0xFF;
-  }
-  else
-    digitalWrite(output5, LOW);
-    lightState = 0x00;
-
-
   delay(100);
-
 }
 
 // Timer1 compare match A interrupt handler
@@ -235,114 +211,103 @@ ISR(TIMER1_COMPA_vect) {
   blinkState = !blinkState;
 }
 
-// Interrupt service routines for each input pin
-void handleInput1() {
-    // Handle input1 change
-    //Right Blink
-    if(digitalRead(input1) == HIGH)
-    {
-      turnState = 0xFF;
-    }
-    else if(digitalRead(input2) == HIGH)
-    {
-      turnState = 0x55;
-    }
-    else
-    {
-      turnState = 0xAA;
-    }
+void handleSwitches(void)
+{
+  /*
+  * This function handles the global variables responsible for
+  * going into new states of the state machine. 
+  */
+  //if(shiftState == 0xFF)
+  //  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
+  //else
+  //  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
+
+  //Handle the blink stuff / variable turnState
+  //// 0x55 = Left 0xAA = No Turn, 0xFF = Right
+  // Right blink = input1, left blink = input2
+  if(digitalRead(input1) == HIGH)
+  {
+    digitalWrite(output1, HIGH);
+    turnState = 0xFF;
+  }
+  if(digitalRead(input2) == HIGH)
+  {
+    digitalWrite(output2, HIGH);
+    turnState = 0x55;
+  }
+  if((digitalRead(input1) == LOW) && (digitalRead(input2) == LOW))
+  {
+    digitalWrite(output1, LOW);
+    digitalWrite(output2, LOW);
+    turnState = 0xAA;
+  }
+
+
+  if(digitalRead(input3) == HIGH)
+  {
+    digitalWrite(output3, HIGH);
+    highState = 0xFF;
+  }
+  else
+  {
+    digitalWrite(output3, LOW);
+    highState = 0x00;
+  }
+
+  if(digitalRead(input4) == HIGH)
+  {
+    digitalWrite(output4, HIGH);
+    brakeState = 0xFF;
+  }
+  else
+  {
+    digitalWrite(output4, LOW);
+    brakeState = 0x00;
+  }
+
+  if(digitalRead(input5) == HIGH)
+  {
+    digitalWrite(output5, HIGH);
+    lightState = 0xFF;
+  }
+  else
+  {
+    digitalWrite(output5, LOW);
+    lightState = 0x00;
+  }
+
+  if(digitalRead(input6) == HIGH)
+  {
+    digitalWrite(output6, HIGH);
+    wiperState = 0xFF;
+  }
+  else
+  {
+    digitalWrite(output6, LOW);
+    wiperState = 0x00;
+  }
+
+  if(digitalRead(input7) == HIGH)
+  {
+    dititalWrite(output7, HIGH);
+    defrostState = 0xFF;
+  }
+  else
+  {
+    digitalWrite(output7, LOW);
+    defrostState = 0x00;
+  }
+
+  if(digitalRead(input8) == HIGH)
+  {
+    digitalWrite(ouput8, HIGH);
+    hazardState = 0xFF;
+  }
+  else
+  {
+    digitalWrite(output8, LOW);
+    hazardState = 0x00;
+  }
 }
 
-void handleInput2() {
-    // Handle input2 change
-    // Left Blink
-    if(digitalRead(input1) == HIGH)
-    {
-      turnState = 0xFF;
-    }
-    else if(digitalRead(input2) == HIGH)
-    {
-      turnState = 0x55;
-    }
-    else
-    {
-      turnState = 0xAA;
-    }
-}
 
-void handleInput3() {
-    // Handle input3 change
-    // High Beam
-    if(digitalRead(input3) == HIGH)
-    {
-      highState = 0xFF;
-    }
-    else
-    {
-      highState = 0x00;
-    }
-}
-
-void handleInput4() {
-    // Handle input4 change
-    // Brake Switch
-    if(digitalRead(input4) == HIGH)
-    {
-      brakeState = 0xFF;
-    }
-    else
-    {
-      brakeState = 0x00;
-    }
-}
-
-void handleInput5() {
-    // Handle input5 change
-    //Light switch
-    if(digitalRead(input5) == HIGH)
-    {
-      lightState = 0x00;
-    }
-    else
-    {
-      lightState = 0xFF;
-    }
-}
-
-void handleInput6() {
-    // Handle input6 change
-    // Wiper Switch
-    if(digitalRead(input6) == HIGH)
-    {
-      wiperState = 0x00;
-    }
-    else
-    {
-      wiperState = 0xFF;
-    }
-}
-
-void handleInput7() {
-    // Handle input7 change
-    // Defrost Switch
-    if(digitalRead(input7) == HIGH)
-    {
-      defrostState = 0x00;
-    }
-    else
-    {
-      defrostState = 0xFF;
-    }
-}
-
-void handleInput8() {
-    // Hazard Switch
-    if(digitalRead(input8) == HIGH)
-    {
-      hazardState = 0x00;
-    }
-    else
-    {
-      hazardState = 0xFF;
-    }
-}
