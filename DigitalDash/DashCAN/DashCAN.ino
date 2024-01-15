@@ -17,7 +17,11 @@ const int SPI_CS_PIN = 10;
 long unsigned int rxId;
 unsigned char len = 0;
 unsigned char rxBuf[8];
-char msgString[128];          
+char msgString[128];
+
+byte lfsrArray[20];
+unsigned long lfsr = 0xACE1u;
+unsigned long lfsrTap = 0x000B;
 
 const int output1 = 17; // I might put a relay here for turn signal noise
 const int output2 = 16;
@@ -52,8 +56,12 @@ volatile bool blinkState = false;
 
 byte CANon[1] = {0xFF};
 byte CANoff[1] = {0x00};
+byte leftTurn[1] = {0x55};
+byte noTurn[1] = {0xAA};
+byte rightTurn[1] = {0xFF};
 
 // Create an instance of BlinkingLight for each blinker light
+// and CAN status update
 BlinkingLight RearDriverTailLow(0x420201);
 BlinkingLight RearReverseLight(0x420202);
 BlinkingLight RearPassengerMarker(0x420203);
@@ -74,6 +82,23 @@ BlinkingLight FrontDriverLowBeam(0x420208);
 BlinkingLight FrontDriverTurnHigh(0x420209);
 BlinkingLight FrontDriverTurnLow(0x420210);
 
+BlinkingLight HighBeamState(0x420301);
+BlinkingLight LightState(0x420302);
+BlinkingLight WiperState(0x420303);
+BlinkingLight DefrostState(0x420304);
+BlinkingLight HazardState(0x420305);
+BlinkingLight BrakeState(0x420306);
+
+BlinkingLight RightTurnState(0x420310);
+BlinkingLight LeftTurnState(0x420311);
+
+enum StateLights { LIGHTS_OFF, LIGHTS_LOW, LIGHTS_HIGH };
+enum StateBrake { BRAKE_OFF, BRAKE_ON};
+enum StateTurn { TURN_OFF, TURN_LEFT, TURN_RIGHT};
+
+volatile StateLights stateLights = LIGHTS_OFF;
+volatile StateBrake stateBrakes = BRAKE_OFF;
+volatile StateTurn stateTrun = TURN_OFF;
 
 void setup ()
 {
@@ -105,6 +130,8 @@ void setup ()
 
   CAN0.setMode(MCP_NORMAL); 
   pinMode(CAN0_INT, INPUT);
+
+  memset(lfsrArray, 0, sizeof(lfsrArray));
 
   // Setup pins as Outputs
   pinMode(output1, OUTPUT);
@@ -162,6 +189,14 @@ void setup ()
 
 void loop() 
 {
+  // Update LFSR
+  unsigned long newLfsrValue = lfsrIncrement();
+
+  // Update the boolean array based on the LFSR value
+  for (int i = 0; i < sizeof(lfsrArray); ++i) {
+    lfsrArray[i] = newLfsrValue & (1 << i);
+  }
+
   /*
   * No you can't put the CAN interrupt in an ISR because dumb shit happens
   */
@@ -199,15 +234,18 @@ void loop()
   // out into its own function for clarity.
   handleSwitches();
 
+  /*
   //This was here for testing
   if(shiftState == 0xFF)
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
   else
     sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff); 
+  */
 
   /*
   * Now, state machine shit
   */
+  updateLightsState();
 
   delay(100);
 }
@@ -215,6 +253,56 @@ void loop()
 // Timer1 compare match A interrupt handler
 ISR(TIMER1_COMPA_vect) {
   blinkState = !blinkState;
+}
+
+void updateLightsState() {
+    switch(stateLights) {
+        case LIGHTS_OFF:
+            //turn off all the lights
+            FrontPassengerHighBeam.turnOff(CAN0);
+            FrontDriverHighBeam.turnOff(CAN0);
+            FrontPassengerLowBeam.turnOff(CAN0);
+            FrontDriverLowBeam.turnOff(CAN0);
+            if (lightState == 0xFF) {
+                stateLights = LIGHTS_LOW; // Switch to LOW if light switch is on
+            }
+            // Code to turn off all lights
+            break;
+
+        case LIGHTS_LOW:
+            if (highState == 0xFF) {
+                stateLights = LIGHTS_HIGH; // Switch to HIGH if high beam switch is on
+                FrontDriverHighBeam.turnOn(CAN0);
+                FrontPassengerHighBeam.turnOn(CAN0);
+                FrontPassengerLowBeam.turnOff(CAN0);
+                FrontDriverLowBeam.turnOff(CAN0);
+            } else if (lightState == 0x00) {
+                stateLights = LIGHTS_OFF; // Switch to OFF if light switch is off
+                FrontPassengerLowBeam.turnOn(CAN0);
+                FrontDriverLowBeam.turnOn(CAN0);
+                FrontDriverHighBeam.turnOff(CAN0);
+                FrontPassengerHighBeam.turnOff(CAN0);
+            }
+            // Code to set lights to low intensity
+            break;
+
+        case LIGHTS_HIGH:
+            if (highState == 0x00) {
+                stateLights = LIGHTS_LOW; // Switch to LOW if high beam switch is off
+            }
+            // Code to set lights to high intensity
+            break;
+    }
+}
+
+unsigned long lfsrIncrement() {
+  // Shift the LFSR and calculate the new bit
+  unsigned long lsb = lfsr & 1; // Get LSB (bit 0)
+  lfsr >>= 1; // Shift register
+  if (lsb == 1) {
+    lfsr ^= lfsrTap; // Apply the tap if LSB was 1
+  }
+  return lfsr;
 }
 
 void handleSwitches(void)
@@ -252,7 +340,6 @@ void handleSwitches(void)
     digitalWrite(output2, HIGH);
     turnState = 0xAA;
   }
-
 
   if(digitalRead(input3) == HIGH)
   {
@@ -320,7 +407,3 @@ void handleSwitches(void)
     hazardState = 0x00;
   }
 }
-
-  
-
-
