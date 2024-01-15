@@ -217,10 +217,13 @@ void handleSwitches(void)
   * This function handles the global variables responsible for
   * going into new states of the state machine. 
   */
+
+
+  /*This was here for testing
   //if(shiftState == 0xFF)
   //  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
   //else
-  //  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff);
+  //  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff); */
 
   //Handle the blink stuff / variable turnState
   //// 0x55 = Left 0xAA = No Turn, 0xFF = Right
@@ -289,7 +292,7 @@ void handleSwitches(void)
 
   if(digitalRead(input7) == HIGH)
   {
-    dititalWrite(output7, HIGH);
+    digitalWrite(output7, HIGH);
     defrostState = 0xFF;
   }
   else
@@ -300,7 +303,7 @@ void handleSwitches(void)
 
   if(digitalRead(input8) == HIGH)
   {
-    digitalWrite(ouput8, HIGH);
+    digitalWrite(output8, HIGH);
     hazardState = 0xFF;
   }
   else
