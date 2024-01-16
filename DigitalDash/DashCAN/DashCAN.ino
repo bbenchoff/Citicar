@@ -229,6 +229,8 @@ void loop()
     }
   }
 
+
+
   // Now, handle the position of the turn stalk
   // and the dashboard buttons. This is broken 
   // out into its own function for clarity.
@@ -242,11 +244,12 @@ void loop()
     sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANoff); 
   */
 
-  
+  cli();
   /*
   * Now, state machine shit
   */
   updateLightsState();
+  sei();
 }
 
 // Timer1 compare match A interrupt handler
@@ -265,13 +268,16 @@ void updateLightsState() {
             FrontDriverHighBeam.turnOff(CAN0);
             FrontPassengerLowBeam.turnOff(CAN0);
             FrontDriverLowBeam.turnOff(CAN0);
-            FrontPassengerMarker.turnOff(CAN0);
-            FrontPassengerTurnLow.turnOff(CAN0);
-            FrontDriverMarker.turnOff(CAN0);
-            FrontDriverTurnLow.turnOff(CAN0);
-            RearDriverTailLow.turnOff(CAN0);
-            RearPassengerMarker.turnOff(CAN0);
-            RearDriverTailLow.turnOff(CAN0);
+            FrontPassengerMarker.turnOn(CAN0);
+            FrontPassengerTurnLow.turnOn(CAN0);
+            FrontDriverMarker.turnOn(CAN0);
+            FrontDriverTurnLow.turnOn(CAN0);
+            RearDriverTailLow.turnOn(CAN0);
+            RearPassengerMarker.turnOn(CAN0);
+            RearDriverTailLow.turnOn(CAN0);
+            RearPassengerTailLow.turnOn(CAN0);
+            RearDriverMarker.turnOn(CAN0);
+            RearLicense.turnOff(CAN0);
             break;
 
         case LIGHTS_LOW:
@@ -291,11 +297,17 @@ void updateLightsState() {
             RearDriverTailLow.turnOn(CAN0);
             RearPassengerMarker.turnOn(CAN0);
             RearDriverTailLow.turnOn(CAN0);
+            RearDriverMarker.turnOn(CAN0);
+            RearPassengerTailLow.turnOn(CAN0);
+            RearLicense.turnOn(CAN0);
             break;
 
         case LIGHTS_HIGH:
             if (highState == 0x00) {
                 stateLights = LIGHTS_LOW; // Switch to LOW if high beam switch is off
+            }
+            else if (lightState == 0x00) {
+                stateLights = LIGHTS_OFF; // Switch to OFF if light switch is off
             }
             FrontDriverHighBeam.turnOn(CAN0);
             FrontPassengerHighBeam.turnOn(CAN0);
@@ -308,6 +320,9 @@ void updateLightsState() {
             RearDriverTailLow.turnOn(CAN0);
             RearPassengerMarker.turnOn(CAN0);
             RearDriverTailLow.turnOn(CAN0);
+            RearDriverMarker.turnOn(CAN0);
+            RearPassengerTailLow.turnOn(CAN0);
+            RearLicense.turnOn(CAN0);
             break;
     }
 }
