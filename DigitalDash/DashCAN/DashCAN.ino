@@ -72,15 +72,15 @@ BlinkingLight RearLicense(0x420207);
 BlinkingLight RearDriverMarker(0x420208);
 
 BlinkingLight FrontPassengerMarker(0x420101);
-BlinkingLight FrontPassengerHighBeam(0x420202);
-BlinkingLight FrontPassengerLowBeam(0x420203);
-BlinkingLight FrontPassengerTurnHigh(0x420204);
-BlinkingLight FrontPassengerTurnLow(0x420205);
-BlinkingLight FrontDriverMarker(0x420206);
-BlinkingLight FrontDriverHighBeam(0x420207);
-BlinkingLight FrontDriverLowBeam(0x420208);
-BlinkingLight FrontDriverTurnHigh(0x420209);
-BlinkingLight FrontDriverTurnLow(0x420210);
+BlinkingLight FrontPassengerHighBeam(0x420102);
+BlinkingLight FrontPassengerLowBeam(0x420103);
+BlinkingLight FrontPassengerTurnHigh(0x420104);
+BlinkingLight FrontPassengerTurnLow(0x420105);
+BlinkingLight FrontDriverMarker(0x420106);
+BlinkingLight FrontDriverHighBeam(0x420107);
+BlinkingLight FrontDriverLowBeam(0x420108);
+BlinkingLight FrontDriverTurnHigh(0x420109);
+BlinkingLight FrontDriverTurnLow(0x420110);
 
 BlinkingLight HighBeamState(0x420301);
 BlinkingLight LightState(0x420302);
@@ -237,17 +237,16 @@ void loop()
   /*
   //This was here for testing
   if(shiftState == 0xFF)
-    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
+    sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANon);
   else
-    sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff); 
+    sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANoff); 
   */
 
+  
   /*
   * Now, state machine shit
   */
   updateLightsState();
-
-  delay(100);
 }
 
 // Timer1 compare match A interrupt handler
