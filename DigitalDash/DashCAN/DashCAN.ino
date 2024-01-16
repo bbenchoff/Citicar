@@ -258,38 +258,56 @@ void updateLightsState() {
     switch(stateLights) {
         case LIGHTS_OFF:
             //turn off all the lights
+            if (lightState == 0xFF) {
+                stateLights = LIGHTS_LOW; // Switch to LOW if light switch is on
+            }
             FrontPassengerHighBeam.turnOff(CAN0);
             FrontDriverHighBeam.turnOff(CAN0);
             FrontPassengerLowBeam.turnOff(CAN0);
             FrontDriverLowBeam.turnOff(CAN0);
-            if (lightState == 0xFF) {
-                stateLights = LIGHTS_LOW; // Switch to LOW if light switch is on
-            }
-            // Code to turn off all lights
+            FrontPassengerMarker.turnOff(CAN0);
+            FrontPassengerTurnLow.turnOff(CAN0);
+            FrontDriverMarker.turnOff(CAN0);
+            FrontDriverTurnLow.turnOff(CAN0);
+            RearDriverTailLow.turnOff(CAN0);
+            RearPassengerMarker.turnOff(CAN0);
+            RearDriverTailLow.turnOff(CAN0);
             break;
 
         case LIGHTS_LOW:
             if (highState == 0xFF) {
                 stateLights = LIGHTS_HIGH; // Switch to HIGH if high beam switch is on
-                FrontDriverHighBeam.turnOn(CAN0);
-                FrontPassengerHighBeam.turnOn(CAN0);
-                FrontPassengerLowBeam.turnOff(CAN0);
-                FrontDriverLowBeam.turnOff(CAN0);
             } else if (lightState == 0x00) {
                 stateLights = LIGHTS_OFF; // Switch to OFF if light switch is off
-                FrontPassengerLowBeam.turnOn(CAN0);
-                FrontDriverLowBeam.turnOn(CAN0);
-                FrontDriverHighBeam.turnOff(CAN0);
-                FrontPassengerHighBeam.turnOff(CAN0);
             }
-            // Code to set lights to low intensity
+            FrontDriverHighBeam.turnOff(CAN0);
+            FrontPassengerHighBeam.turnOff(CAN0);
+            FrontPassengerLowBeam.turnOn(CAN0);
+            FrontDriverLowBeam.turnOn(CAN0);
+            FrontPassengerMarker.turnOn(CAN0);
+            FrontPassengerTurnLow.turnOn(CAN0);
+            FrontDriverMarker.turnOn(CAN0);
+            FrontDriverTurnLow.turnOn(CAN0);
+            RearDriverTailLow.turnOn(CAN0);
+            RearPassengerMarker.turnOn(CAN0);
+            RearDriverTailLow.turnOn(CAN0);
             break;
 
         case LIGHTS_HIGH:
             if (highState == 0x00) {
                 stateLights = LIGHTS_LOW; // Switch to LOW if high beam switch is off
             }
-            // Code to set lights to high intensity
+            FrontDriverHighBeam.turnOn(CAN0);
+            FrontPassengerHighBeam.turnOn(CAN0);
+            FrontPassengerLowBeam.turnOff(CAN0);
+            FrontDriverLowBeam.turnOff(CAN0);
+            FrontPassengerMarker.turnOn(CAN0);
+            FrontPassengerTurnLow.turnOn(CAN0);
+            FrontDriverMarker.turnOn(CAN0);
+            FrontDriverTurnLow.turnOn(CAN0);
+            RearDriverTailLow.turnOn(CAN0);
+            RearPassengerMarker.turnOn(CAN0);
+            RearDriverTailLow.turnOn(CAN0);
             break;
     }
 }
