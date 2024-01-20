@@ -8,8 +8,6 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 
-#include "BlinkingLight.h"
-
 #define CAN0_INT 2      //set int pin to 2
 
 const int SPI_CS_PIN = 10;
@@ -19,14 +17,10 @@ unsigned char len = 0;
 unsigned char rxBuf[8];
 char msgString[128];
 
-byte lfsrArray[20];
-unsigned long lfsr = 0xACE1u;
-unsigned long lfsrTap = 0x000B;
-
 const int output1 = 17; // I might put a relay here for turn signal noise
-const int output2 = 16;
-const int output3 = 15;
-const int output4 = 14;
+const int output2 = 16; // This is empty but kept for debugging
+const int output3 = 15; // This is empty but kept for debugging
+const int output4 = 14; // This is empty but kept for debugging
 const int output5 = 26; // Light Switch MOS
 const int output6 = 25; // Wiper Switch MOS
 const int output7 = 6; // Defrost Switch MOS
@@ -52,53 +46,13 @@ volatile byte wiperState = 0x00; //0x00 = off, 0xFF = on
 volatile byte defrostState = 0x00; //0x00 = off, 0xFF = on
 volatile byte hazardState = 0x00; //0x00 = off, 0xFF = on
 volatile byte brakeState = 0x00; //0x00 = off, 0xFF = on
-volatile bool blinkState = false;
+volatile bool blinkState = false; 
 
 byte CANon[1] = {0xFF};
 byte CANoff[1] = {0x00};
 byte leftTurn[1] = {0x55};
 byte noTurn[1] = {0xAA};
 byte rightTurn[1] = {0xFF};
-
-// Create an instance of BlinkingLight for each blinker light
-// and CAN status update
-BlinkingLight RearDriverTailLow(0x420201);
-BlinkingLight RearReverseLight(0x420202);
-BlinkingLight RearPassengerMarker(0x420203);
-BlinkingLight RearDriverTailHigh(0x420204);
-BlinkingLight RearPassengerTailHigh(0x420205);
-BlinkingLight RearPassengerTailLow(0x420206);
-BlinkingLight RearLicense(0x420207);
-BlinkingLight RearDriverMarker(0x420208);
-
-BlinkingLight FrontPassengerMarker(0x420101);
-BlinkingLight FrontPassengerHighBeam(0x420102);
-BlinkingLight FrontPassengerLowBeam(0x420103);
-BlinkingLight FrontPassengerTurnHigh(0x420104);
-BlinkingLight FrontPassengerTurnLow(0x420105);
-BlinkingLight FrontDriverMarker(0x420106);
-BlinkingLight FrontDriverHighBeam(0x420107);
-BlinkingLight FrontDriverLowBeam(0x420108);
-BlinkingLight FrontDriverTurnHigh(0x420109);
-BlinkingLight FrontDriverTurnLow(0x420110);
-
-BlinkingLight HighBeamState(0x420301);
-BlinkingLight LightState(0x420302);
-BlinkingLight WiperState(0x420303);
-BlinkingLight DefrostState(0x420304);
-BlinkingLight HazardState(0x420305);
-BlinkingLight BrakeState(0x420306);
-
-BlinkingLight RightTurnState(0x420310);
-BlinkingLight LeftTurnState(0x420311);
-
-enum StateLights { LIGHTS_OFF, LIGHTS_LOW, LIGHTS_HIGH };
-enum StateBrake { BRAKE_OFF, BRAKE_ON};
-enum StateTurn { TURN_OFF, TURN_LEFT, TURN_RIGHT};
-
-volatile StateLights stateLights = LIGHTS_OFF;
-volatile StateBrake stateBrakes = BRAKE_OFF;
-volatile StateTurn stateTrun = TURN_OFF;
 
 void setup ()
 {
@@ -114,14 +68,22 @@ void setup ()
     Serial.println("error init can bus");
   }
 
-  // Configure Timer1 to generate an interrupt every 500 ms
+  // Configure Timer1 to generate an interrupt every 750ms
   cli(); // Disable interrupts
 
   // Set Timer1 to CTC (Clear Timer on Compare Match) mode
+  // This shoud be around 90Hz; the target for blinking is
+  // 60-120 flashes per minute, or 0.75Hz. This value comes
+  // from 67 Pa. Code § 175.66 - Lighting and electrical systems,
+  // "(4) The turn signals shall have a frequency of flash
+  // between 60-120 flashes per minute."
+  //
+  // This must be divided by two because _I believe_ the reg
+  // is interpreted that way. Whatever.
   TCCR1A = 0;
   TCCR1B = 0;
   TCNT1 = 0; // Initialize counter value
-  OCR1A = 15624; // Set the compare match value (16MHz / 1024 / 2Hz - 1)
+  OCR1A = 20832; // Set the compare match value for 0.75Hz (16MHz / 1024 / 0.75Hz - 1)
   TCCR1B |= (1 << WGM12); // Enable CTC mode
   TCCR1B |= (1 << CS12) | (1 << CS10); // Set prescaler to 1024
   TIMSK1 |= (1 << OCIE1A); // Enable Timer1 compare match A interrupt
@@ -130,8 +92,6 @@ void setup ()
 
   CAN0.setMode(MCP_NORMAL); 
   pinMode(CAN0_INT, INPUT);
-
-  memset(lfsrArray, 0, sizeof(lfsrArray));
 
   // Setup pins as Outputs
   pinMode(output1, OUTPUT);
@@ -189,14 +149,6 @@ void setup ()
 
 void loop() 
 {
-  // Update LFSR
-  unsigned long newLfsrValue = lfsrIncrement();
-
-  // Update the boolean array based on the LFSR value
-  for (int i = 0; i < sizeof(lfsrArray); ++i) {
-    lfsrArray[i] = newLfsrValue & (1 << i);
-  }
-
   /*
   * No you can't put the CAN interrupt in an ISR because dumb shit happens
   */
@@ -229,30 +181,11 @@ void loop()
     }
   }
 
-
-
   // Now, handle the position of the turn stalk
   // and the dashboard buttons. This is broken 
   // out into its own function for clarity.
   handleSwitches();
 
-  /*
-  //This was here for testing
-  if(shiftState == 0xFF)
-    sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANon);
-  else
-    sndStat = CAN0.sendMsgBuf(0x420102, 1, 1, CANoff); 
-  */
-  /*
-  sndStat = CAN0.sendMsgBuf(0x420201, 1, 1, CANon);
-  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
-  sndStat = CAN0.sendMsgBuf(0x420203, 1, 1, CANon);
-  sndStat = CAN0.sendMsgBuf(0x420204, 1, 1, CANon);
-  sndStat = CAN0.sendMsgBuf(0x420205, 1, 1, CANon);
-  sndStat = CAN0.sendMsgBuf(0x420206, 1, 1, CANon);
-  sndStat = CAN0.sendMsgBuf(0x420207, 1, 1, CANon);
-  sndStat = CAN0.sendMsgBuf(0x420208, 1, 1, CANon);
-*/
   /*
   * Now, state machine shit
   */
@@ -263,86 +196,62 @@ void loop()
 // Timer1 compare match A interrupt handler
 ISR(TIMER1_COMPA_vect) {
   blinkState = !blinkState;
+
+  if(blinkState)
+  {
+    CAN0.sendMsgBuf(0x420312, 1, 1, CANon);  //Blink State
+  }
+  if(!blinkState)
+  {
+    CAN0.sendMsgBuf(0x420312, 1, 1, CANoff);  //Blink State
+  }
 }
 
 void updateLightsState() {
-    switch(stateLights) {
-        case LIGHTS_OFF:
-            //turn off all the lights
-            if (lightState == 0xFF) {
-                stateLights = LIGHTS_LOW; // Switch to LOW if light switch is on
-            }
-            FrontPassengerHighBeam.turnOff(CAN0);
-            FrontDriverHighBeam.turnOff(CAN0);
-            FrontPassengerLowBeam.turnOff(CAN0);
-            FrontDriverLowBeam.turnOff(CAN0);
-            FrontPassengerMarker.turnOff(CAN0);
-            FrontPassengerTurnLow.turnOff(CAN0);
-            FrontDriverMarker.turnOff(CAN0);
-            FrontDriverTurnLow.turnOff(CAN0);
-            RearDriverTailLow.turnOff(CAN0);
-            RearPassengerMarker.turnOff(CAN0);
-            RearDriverTailLow.turnOff(CAN0);
-            RearPassengerTailLow.turnOff(CAN0);
-            RearDriverMarker.turnOff(CAN0);
-            RearLicense.turnOff(CAN0);
-            break;
 
-        case LIGHTS_LOW:
-            if (highState == 0xFF) {
-                stateLights = LIGHTS_HIGH; // Switch to HIGH if high beam switch is on
-            } else if (lightState == 0x00) {
-                stateLights = LIGHTS_OFF; // Switch to OFF if light switch is off
-            }
-            FrontDriverHighBeam.turnOff(CAN0);
-            FrontPassengerHighBeam.turnOff(CAN0);
-            FrontPassengerLowBeam.turnOn(CAN0);
-            FrontDriverLowBeam.turnOn(CAN0);
-            FrontPassengerMarker.turnOn(CAN0);
-            FrontPassengerTurnLow.turnOn(CAN0);
-            FrontDriverMarker.turnOn(CAN0);
-            FrontDriverTurnLow.turnOn(CAN0);
-            RearDriverTailLow.turnOn(CAN0);
-            RearDriverTailLow.turnOn(CAN0);
-            RearDriverMarker.turnOn(CAN0);
-            RearPassengerTailLow.turnOn(CAN0);
-            RearLicense.turnOn(CAN0);
-            RearPassengerMarker.turnOn(CAN0);
-            break;
-
-        case LIGHTS_HIGH:
-            if (highState == 0x00) {
-                stateLights = LIGHTS_LOW; // Switch to LOW if high beam switch is off
-            }
-            else if (lightState == 0x00) {
-                stateLights = LIGHTS_OFF; // Switch to OFF if light switch is off
-            }
-            FrontDriverHighBeam.turnOn(CAN0);
-            FrontPassengerHighBeam.turnOn(CAN0);
-            FrontPassengerLowBeam.turnOff(CAN0);
-            FrontDriverLowBeam.turnOff(CAN0);
-            FrontPassengerMarker.turnOn(CAN0);
-            FrontPassengerTurnLow.turnOn(CAN0);
-            FrontDriverMarker.turnOn(CAN0);
-            FrontDriverTurnLow.turnOn(CAN0);
-            RearDriverTailLow.turnOn(CAN0);
-            RearPassengerMarker.turnOn(CAN0);
-            RearDriverTailLow.turnOn(CAN0);
-            RearDriverMarker.turnOn(CAN0);
-            RearPassengerTailLow.turnOn(CAN0);
-            RearLicense.turnOn(CAN0);
-            break;
-    }
-}
-
-unsigned long lfsrIncrement() {
-  // Shift the LFSR and calculate the new bit
-  unsigned long lsb = lfsr & 1; // Get LSB (bit 0)
-  lfsr >>= 1; // Shift register
-  if (lsb == 1) {
-    lfsr ^= lfsrTap; // Apply the tap if LSB was 1
+  if(turnState == 0xAA)
+  {
+    CAN0.sendMsgBuf(0x420300, 1, 1, noTurn);  //No turn
   }
-  return lfsr;
+  if(turnState == 0x55)
+  {
+    CAN0.sendMsgBuf(0x420300, 1, 1, leftTurn);
+  }
+  if(turnState == 0xFF)
+  {
+     CAN0.sendMsgBuf(0x420300, 1, 1, rightTurn);
+  }
+
+  if(highState == 0xFF)
+    CAN0.sendMsgBuf(0x420301, 1, 1, CANon);
+  if(highState == 0x00)
+    CAN0.sendMsgBuf(0x420301, 1, 1, CANoff);
+
+  if(lightState == 0xFF)
+    CAN0.sendMsgBuf(0x420302, 1, 1, CANon);
+  if(lightState == 0x00)
+    CAN0.sendMsgBuf(0x420302, 1, 1, CANoff);
+
+  if(defrostState == 0xFF)
+    CAN0.sendMsgBuf(0x420304, 1, 1, CANon);
+  if(defrostState == 0x00)
+    CAN0.sendMsgBuf(0x420304, 1, 1, CANoff);
+
+  if(wiperState == 0xFF)
+    CAN0.sendMsgBuf(0x420303, 1, 1, CANon);
+  if(wiperState == 0x00)
+    CAN0.sendMsgBuf(0x420303, 1, 1, CANoff);
+
+  if(hazardState == 0xFF)
+    CAN0.sendMsgBuf(0x420305, 1, 1, CANon);
+  if(hazardState == 0x00)
+    CAN0.sendMsgBuf(0x420305, 1, 1, CANoff);
+
+  if(brakeState == 0xFF)
+    CAN0.sendMsgBuf(0x420306, 1, 1, CANon);
+  if(brakeState == 0x00)
+    CAN0.sendMsgBuf(0x420306, 1, 1, CANoff);
+
 }
 
 void handleSwitches(void)
@@ -351,13 +260,6 @@ void handleSwitches(void)
   * This function handles the global variables responsible for
   * going into new states of the state machine. 
   */
-
-
-  /*This was here for testing
-  //if(shiftState == 0xFF)
-  //  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANon);
-  //else
-  //  sndStat = CAN0.sendMsgBuf(0x420202, 1, 1, CANoff); */
 
   //Handle the blink stuff / variable turnState
   //// 0x55 = Left 0xAA = No Turn, 0xFF = Right
