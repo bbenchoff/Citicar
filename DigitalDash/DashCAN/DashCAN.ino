@@ -83,7 +83,7 @@ void setup ()
   TCCR1A = 0;
   TCCR1B = 0;
   TCNT1 = 0; // Initialize counter value
-  OCR1A = 20832; // Set the compare match value for 0.75Hz (16MHz / 1024 / 0.75Hz - 1)
+  OCR1A = 10720; // Set the compare match value for 0.75Hz (16MHz / 1024 / 0.75Hz - 1)
   TCCR1B |= (1 << WGM12); // Enable CTC mode
   TCCR1B |= (1 << CS12) | (1 << CS10); // Set prescaler to 1024
   TIMSK1 |= (1 << OCIE1A); // Enable Timer1 compare match A interrupt
@@ -191,20 +191,16 @@ void loop()
   */
   updateLightsState();
 
+  //delay a bit so not to overload CAN bus
+  delay(100);
+
 }
 
 // Timer1 compare match A interrupt handler
 ISR(TIMER1_COMPA_vect) {
   blinkState = !blinkState;
 
-  if(blinkState)
-  {
-    CAN0.sendMsgBuf(0x420312, 1, 1, CANon);  //Blink State
-  }
-  if(!blinkState)
-  {
-    CAN0.sendMsgBuf(0x420312, 1, 1, CANoff);  //Blink State
-  }
+
 }
 
 void updateLightsState() {
@@ -251,6 +247,11 @@ void updateLightsState() {
     CAN0.sendMsgBuf(0x420306, 1, 1, CANon);
   if(brakeState == 0x00)
     CAN0.sendMsgBuf(0x420306, 1, 1, CANoff);
+
+  if(blinkState)
+    CAN0.sendMsgBuf(0x420312, 1, 1, CANon);  //Blink State
+  if(!blinkState)
+    CAN0.sendMsgBuf(0x420312, 1, 1, CANoff);  //Blink State
 
 }
 
