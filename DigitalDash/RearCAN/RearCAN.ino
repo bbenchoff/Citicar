@@ -120,37 +120,57 @@ const int output8 = 5;  //Driver Marker
     out2 = false;
 
   if(lightState == 0xFF)
+  {
     out7 = true;
+    out3 = true;
+    out8 = true;
+    out1 = true;
+    out6 = true;
+  }
   else
+  {
     out7 = false;
-
+    out3 = false;
+    out8 = false;
+    out1 = false;
+    out6 = false;
+  }
 
   if(hazardState == 0xFF)
   {
-    if(lightState == 0xFF)  //lights are on
+    if(blinkState)
     {
-      out4 = true;
-      out5 = true;
-    }
-    if(lightState == 0x00) // This is the normal state
-    {
-        out1 = true;
+      if(lightState == 0xFF)
+      {
+        out4 = true;
+        out5 = true;
+      }
+      if(lightState == 0x00)
+      {
         out6 = true;
+        out1 = true;
+      }
+    }
+    if(!blinkState)
+    {
+      if(lightState == 0xFF)
+      {
+        out4 = false;
+        out5 = false;
+      }
+      if(lightState == 0x00)
+      {
+        out6 = false;
+        out1 = false;
+      }
     }
   }
-  if(hazardState == 0x00)
-    if(lightState == 0xFF)
-    {
-      out4 = false;
-      out5 = false;
-    }
-    if(lightState == 0x00) 
-    {
-      out1 = false;
-      out6 = false;
-    }
-
   
+  if(hazardState == 0x00 && brakeState == 0x00 && turnState == 0xAA)
+  {
+    out4 = false;
+    out5 = false;
+  }
 
   //second, write the outputs
   if(out1)
