@@ -107,12 +107,10 @@ volatile byte brakeState = 0x00; //0x00 = off, 0xFF = on
 volatile bool blinkState = false; 
 
 const int output1 = 17; //Driver tail Low
-const int output2 = 16; //Reverse Light
 const int output3 = 15; //Passenger Marker
 const int output4 = 14; //Driver Tail High
 const int output5 = 26; //Passenger Tail High
 const int output6 = 25; //Passenger Tail Low
-const int output7 = 6;  //License Plate
 const int output8 = 5;  //Driver Marker
 */
   //first, collect into variables so they're only written once
@@ -120,6 +118,39 @@ const int output8 = 5;  //Driver Marker
     out2 = true;
   else
     out2 = false;
+
+  if(lightState == 0xFF)
+    out7 = true;
+  else
+    out7 = false;
+
+
+  if(hazardState == 0xFF)
+  {
+    if(lightState == 0xFF)  //lights are on
+    {
+      out4 = true;
+      out5 = true;
+    }
+    if(lightState == 0x00) // This is the normal state
+    {
+        out1 = true;
+        out6 = true;
+    }
+  }
+  if(hazardState == 0x00)
+    if(lightState == 0xFF)
+    {
+      out4 = false;
+      out5 = false;
+    }
+    if(lightState == 0x00) 
+    {
+      out1 = false;
+      out6 = false;
+    }
+
+  
 
   //second, write the outputs
   if(out1)
