@@ -136,6 +136,17 @@ const int output8 = 5;  //Driver Marker
     out6 = false;
   }
 
+  if(brakeState == 0xFF)
+  {
+    out4 = true;
+    out5 = true;
+  }
+  else
+  {
+    out4 = false;
+    out5 = false;
+  }
+
   if(hazardState == 0xFF)
   {
     if(blinkState)
