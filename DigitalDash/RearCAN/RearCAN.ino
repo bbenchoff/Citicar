@@ -147,6 +147,57 @@ const int output8 = 5;  //Driver Marker
     out5 = false;
   }
 
+  if(turnState == 0xFF)
+  { //Turn Right
+    if(blinkState)
+    {
+      if(lightState == 0xFF)
+      {
+        out5 = true;
+      }
+      if(lightState == 0x00)
+      {
+        out6 = true;
+      }
+    }
+    if(!blinkState)
+    {
+      if(lightState == 0xFF)
+      {
+        out5 = false;
+      }
+      if(lightState == 0x00)
+      {
+        out6 = false;
+      }
+    }
+  }
+  else if(turnState == 0x55)
+  { //Turn Left
+    if(blinkState)
+    {
+      if(lightState == 0xFF)
+      {
+        out4 = true;
+      }
+      if(lightState == 0x00)
+      {
+        out1 = true;
+      }
+    }
+    if(!blinkState)
+    {
+      if(lightState == 0xFF)
+      {
+        out4 = false;
+      }
+      if(lightState == 0x00)
+      {
+        out1 = false;
+      }
+    }
+  }
+
   if(hazardState == 0xFF)
   {
     if(blinkState)
