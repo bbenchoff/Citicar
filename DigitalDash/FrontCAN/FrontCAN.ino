@@ -192,7 +192,7 @@ void handleStates()
   if(out10)
     digitalWrite(output10, HIGH);
   else
-    digitalWrite(outpu10, LOW);
+    digitalWrite(output10, LOW);
 }
 
 void processCAN()
