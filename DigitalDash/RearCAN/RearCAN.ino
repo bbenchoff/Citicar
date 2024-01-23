@@ -95,24 +95,6 @@ void loop() {
 
 void handleStates()
 {
-  /*
-volatile byte shiftState = 0; // 0xAA: Drive, 0x55: Neutral, 0xFF: Reverse
-volatile byte turnState = 0xAA; // 0x55 = Left 0xAA = No Turn, 0xFF = Right
-volatile byte highState = 0x00; // 0x00 = off, 0xFF = on
-volatile byte lightState = 0x00; // 0x00 = off, 0xFF = on
-volatile byte wiperState = 0x00; //0x00 = off, 0xFF = on
-volatile byte defrostState = 0x00; //0x00 = off, 0xFF = on
-volatile byte hazardState = 0x00; //0x00 = off, 0xFF = on
-volatile byte brakeState = 0x00; //0x00 = off, 0xFF = on
-volatile bool blinkState = false; 
-
-const int output1 = 17; //Driver tail Low
-const int output3 = 15; //Passenger Marker
-const int output4 = 14; //Driver Tail High
-const int output5 = 26; //Passenger Tail High
-const int output6 = 25; //Passenger Tail Low
-const int output8 = 5;  //Driver Marker
-*/
   //first, collect into variables so they're only written once
   if(shiftState == 0xFF)
     out2 = true;
