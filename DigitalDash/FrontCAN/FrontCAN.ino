@@ -143,6 +143,51 @@ void handleStates()
     out10 = false;
   }
 
+  //do the turn signals here
+  if(turnState == 0x55)
+  { //left turn
+    if(blinkState)
+    {
+      out9 = true;
+    }
+    if(!blinkState)
+    {
+      out9 = false;
+    }
+  }
+
+  if(turnState == 0xFF)
+  { //right turn
+    if(blinkState)
+    {
+      out4 = true;
+    }
+    if(!blinkState)
+    {
+      out4 = false;
+    }
+  }
+
+  if(hazardState == 0xFF)
+  {
+    if(blinkState)
+    {
+      out4 = true;
+      out9 = true;
+    }
+    if(!blinkState)
+    {
+      out4 = false;
+      out9 = false;
+    }
+  }
+
+  if(hazardState == 0x00 && turnState == 0xAA)
+  {
+    out4 = false;
+    out9 = false;
+  }
+
   //second, write the outputs
   if(out1)
     digitalWrite(output1, HIGH);
