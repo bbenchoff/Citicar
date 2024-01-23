@@ -181,7 +181,7 @@ void handleStates()
       out9 = false;
     }
   }
-  if(hazardState == 0x00 && turnState == 0xAA)
+  if((hazardState == 0x00) && (turnState == 0xAA))
   {
     out4 = false;
     out9 = false;
