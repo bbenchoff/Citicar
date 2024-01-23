@@ -103,7 +103,6 @@ void loop() {
   processCAN();
 
   handleStates();
-
 }
 
 void handleStates()
@@ -169,16 +168,18 @@ void handleStates()
   }
 
   if(hazardState == 0xFF)
-  { 
+  {
     if(blinkState)
     {
       out4 = true;
       out9 = true;
+      out6 = true;
     }
     if(!blinkState)
     {
       out4 = false;
       out9 = false;
+      out6 = false;
     }
   }
   if((hazardState == 0x00) && (turnState == 0xAA))
