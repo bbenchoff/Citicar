@@ -169,7 +169,7 @@ void handleStates()
   }
 
   if(hazardState == 0xFF)
-  {
+  { 
     if(blinkState)
     {
       out4 = true;
@@ -181,7 +181,6 @@ void handleStates()
       out9 = false;
     }
   }
-
   if(hazardState == 0x00 && turnState == 0xAA)
   {
     out4 = false;
